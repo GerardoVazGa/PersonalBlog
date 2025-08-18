@@ -14,16 +14,16 @@
                     <h1>GeraBlog</h1>
                 </div>
                 <div class="nav-links">
-                    <a href="/">Inicio</a>
+                    <a href="/" class="<%= current === 'home' ? 'active' : '' %>">Inicio</a>
                     <div class="dropdown">
                         <a class="dropbtn">Categoria</a>
                         <div class="dropdown-content">
-                            <a href="/category/tech">Tech</a>
+                            <a href="/category/tech" >Tech</a>
                             <a href="/category/anime">Anime</a>
                             <a href="/category/gaming">Gaming</a>
                         </div>
                     </div>
-                    <a href="/about">About</a>
+                    <a href="/about" class="<%= current === 'about' ? 'active' : '' %>">About</a>
                     <a href="/contact">Contact</a>
                 </div>
 

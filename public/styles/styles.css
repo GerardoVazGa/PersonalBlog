@@ -116,7 +116,7 @@ body {
     background-color: var(--shadow-color);
 }
 
-.dropdown-content.active{
+.dropdown-content.open{
     display: flex;
 }
 
