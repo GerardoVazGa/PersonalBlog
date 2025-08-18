@@ -7,6 +7,7 @@
     --pistachio: #86cd82ff;
     --asparagus: #72a276ff;
     --dim-gray: #666b6aff;
+    --shadow-color: rgba(0, 0, 0, 0.2);
 
 }
 
@@ -32,16 +33,15 @@ body {
     position: sticky;
     top: 0;
     left: 0;
-    z-index: 1000;  
+    z-index: 999;  
     background-color: var(--pistachio);
-    overflow: hidden;
 }
 
 .navbar-container {
     width: 100%;
     height: 100%;
     padding: 0.5rem 2rem;
-    box-shadow: 10px 20px 40px 10px #000;
+    box-shadow: 0 0 5px #000;
     display: flex;
     justify-content: space-between;
 }
@@ -79,6 +79,47 @@ body {
     width: 100%;
 }
 
+.nav-links a.active::after {
+    width: 100%;
+}
+
+.dropdown {
+    position: relative;
+    width: 100%;
+}
+
+.dropbtn {
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    z-index: 1000;
+    top: 120%;
+    left: 50%; /* empieza desde el centro */
+    transform: translateX(-50%); /* lo centra respecto al botón */
+    padding: 0.5rem 0;
+    border: 1px solid var(--dim-gray);
+    border-radius: 8px;
+    background-color: var(--pistachio);
+    /* display: flex; */
+    flex-direction: column;
+}
+
+.dropdown-content a {
+    padding: 0.5rem 1rem;
+    width: 100%;
+}
+
+.dropdown-content a:hover {
+    background-color: var(--shadow-color);
+}
+
+.dropdown-content.active{
+    display: flex;
+}
+
 .navbar-container .hambutton {
     width: 3rem;
     height: 3rem;
@@ -99,14 +140,14 @@ body {
 }
 
 .hambutton.open span:first-child {
-    transform: rotate(-315deg);
+    transform: rotate(45deg);
 }
 .hambutton.open span:nth-child(2) {
-    transform: translateX(200%);
+    transform: translateX(-200%);
     opacity: 0;
 }
 .hambutton.open span:last-child {
-    transform: rotate(315deg);
+    transform: rotate(-45deg);
 }
 
 @media screen and (max-width: 760px) {
