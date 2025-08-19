@@ -94,20 +94,19 @@ body {
 }
 
 .dropdown-content {
-    display: none;
     position: absolute;
     z-index: 1000;
     top: 120%;
     left: 50%;
-    /* empieza desde el centro */
-    transform: translateX(-50%);
-    /* lo centra respecto al botón */
+    transform: translateX(-50%) translateY(-10px);
     padding: 0.5rem 0;
     border: 1px solid var(--dim-gray);
     border-radius: 8px;
     background-color: var(--pistachio);
-    /* display: flex; */
-    flex-direction: column;
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+    transition: all 0.3s ease-in-out;
 }
 
 .dropdown-content a {
@@ -120,7 +119,10 @@ body {
 }
 
 .dropdown-content.open {
-    display: flex;
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
 }
 
 .navbar-container .hambutton {

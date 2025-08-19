@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="/styles/styles.css">
     <title>GeraBlog</title>
 </head>
 <body>
@@ -18,9 +18,14 @@
                     <div class="dropdown">
                         <a class="dropbtn">Categoria</a>
                         <div class="dropdown-content">
-                            <a href="/category/tech" >Tech</a>
-                            <a href="/category/anime">Anime</a>
-                            <a href="/category/gaming">Gaming</a>
+                            <% categories.forEach(category => { %>
+                                    <a 
+                                        href="/category/<%= category %>" 
+                                        class="<%= current === category ? 'active' : '' %>"
+                                    > 
+                                        <%= category %>
+                                    </a>
+                            <% }) %>
                         </div>
                     </div>
                     <a href="/about" class="<%= current === 'about' ? 'active' : '' %>">About</a>
