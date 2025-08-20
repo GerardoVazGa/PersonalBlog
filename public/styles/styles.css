@@ -167,16 +167,6 @@ body {
     }
 }
 
-.main-content {
-    flex: 1;
-    padding: 2rem;
-    background-color: var(--celadon);
-}
-
-.main-content div {
-    min-height: 400px;
-}
-
 .blog-footer {
     background-color: var(--pistachio);
     color: white;

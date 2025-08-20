@@ -3,8 +3,10 @@ import bodyParser from "body-parser"
 import ejs from "ejs"
 import path from "path"
 import { fileURLToPath } from "url"
-import {PORT} from "../configs/env.js"
+import {PORT, ADMIN_PASS} from "../configs/env.js"
 import pool from "../db/db.js"
+import session from "express-session";
+import {sessionConfig} from "../configs/session_config.js"
 
 const app = express()
 
@@ -15,6 +17,7 @@ const categories = ['Technology', 'Animation', 'Programming', 'Cibersegurity']
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(express.json())
 
+app.use(session(sessionConfig))
 app.use(express.static('public'))
 
 const useCategories = (req, res, next) => {
@@ -24,12 +27,12 @@ const useCategories = (req, res, next) => {
 
 app.use(useCategories)
 
+
+
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
 
 app.get('/', async (req, res) => {
-    const [rows] = await pool.query("SELECT  * FROM posts")
-    console.log(rows)
     res.render('index.ejs', {current: 'home'})
 })
 
@@ -42,6 +45,35 @@ app.get('/category/:category', (req, res) => {
     res.render('category', {current: category})
 })
 
+app.post('/unlock', (req, res) => {
+    const {password} = req.body
+    if(password === ADMIN_PASS){
+        req.session.admin = true
+        return res.json({success: true})
+    }
+
+    return res.json({success: false})
+})
+
+function isAdmin(req, res, next) {
+    if(req.session.admin){
+        return next()
+    }
+
+    return res.status(403).json({error: "Unauthorized access"})
+}
+
+app.post('/posts/add', isAdmin, (req, res) => {
+
+})
+
+app.put('/posts/edit/:id', isAdmin, (req, res) => {
+
+})
+
+app.delete('/posts/delete/:id', isAdmin, (req, res) => {
+    
+})
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
