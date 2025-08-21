@@ -48,8 +48,13 @@
     display: block;
 }
 
-.modal-content {
-    
+.modal-content .form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.65rem;
+    margin: 1rem 0;
 }
 
 .btnSend {

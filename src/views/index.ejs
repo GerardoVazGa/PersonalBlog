@@ -6,9 +6,15 @@
             Blog Personal
         </h1>
 
-        <button id="modifyBtn" class="">
-            <i class="fa-solid fa-lock"></i>
-        </button>
+        <% if(!isAdmin) { %>
+            <button id="loginBtn">
+                <i class="fa-solid fa-lock"></i>
+            </button>
+        <% } else { %>
+            <button id="logoutBtn">
+                <i class="fa-solid fa-unlock"></i>
+            </button>
+        <% } %>
     </div>
     <div class="hello">Hola mundo</div>
     <div class="hello">Hola mundo</div>
@@ -17,9 +23,10 @@
 <modal id="passwordModal" class="modal">
     <div class="modal-content">
         <h2>Ingrese la contraseña</h2>
-        <form id="passwordForm">
+        <form id="passwordForm" class="form">
             <input type="password" id="passwordInput" placeholder="Password" required>
-            <button type="submit" class="btnSend">Enviar</button>
+            <button type="button" class="btnSend">Enviar</button>
+            <div id="messageBox"></div>
         </form>
     </div>
 </modal>

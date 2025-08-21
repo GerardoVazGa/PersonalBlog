@@ -20,14 +20,17 @@ app.use(express.json())
 app.use(session(sessionConfig))
 app.use(express.static('public'))
 
+app.use((req, res, next) => {
+    res.locals.isAdmin = req.session.admin || false
+    next()
+})
+
 const useCategories = (req, res, next) => {
     res.locals.categories = categories
     next()
 }
 
 app.use(useCategories)
-
-
 
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
@@ -45,14 +48,24 @@ app.get('/category/:category', (req, res) => {
     res.render('category', {current: category})
 })
 
-app.post('/unlock', (req, res) => {
+app.post('/login', (req, res) => {
     const {password} = req.body
     if(password === ADMIN_PASS){
         req.session.admin = true
-        return res.json({success: true})
+        return res.json({success: true, message: "Admin access granted"})
     }
 
-    return res.json({success: false})
+    return res.json({success: false, message: "Invalid password"})
+})
+
+app.post('/logout', (req, res) => {
+    req.session.destroy((err) => {
+        if(err) {
+            return res.status(500).json({success: false, message: "Error al cerrar sesion"})
+        }
+
+        return res.json({success: true, message: "Se cerro la sesion correctamente"})
+    })
 })
 
 function isAdmin(req, res, next) {
@@ -64,7 +77,7 @@ function isAdmin(req, res, next) {
 }
 
 app.post('/posts/add', isAdmin, (req, res) => {
-
+    res.send("Add post")
 })
 
 app.put('/posts/edit/:id', isAdmin, (req, res) => {
