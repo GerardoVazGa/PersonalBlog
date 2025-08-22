@@ -21,7 +21,7 @@ app.use(session(sessionConfig))
 app.use(express.static('public'))
 
 app.use((req, res, next) => {
-    res.locals.isAdmin = req.session.admin || false
+    res.locals.isAdmin = !!req.session.admin
     next()
 })
 
@@ -35,7 +35,7 @@ app.use(useCategories)
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
 
-app.get('/', async (req, res) => {
+app.get('/', (req, res) => {
     res.render('index.ejs', {current: 'home'})
 })
 
@@ -55,6 +55,7 @@ app.post('/login', (req, res) => {
         return res.json({success: true, message: "Admin access granted"})
     }
 
+    
     return res.json({success: false, message: "Invalid password"})
 })
 
@@ -77,7 +78,8 @@ function isAdmin(req, res, next) {
 }
 
 app.post('/posts/add', isAdmin, (req, res) => {
-    res.send("Add post")
+    
+    res.send(req.body)
 })
 
 app.put('/posts/edit/:id', isAdmin, (req, res) => {

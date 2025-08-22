@@ -13,55 +13,6 @@
     text-align: center;
 }
 
-.main-content .title button {
-    width: 2.5rem;
-    height: 2.5rem;
-    position: absolute;
-    top: 5%;
-    right: 25%;
-    background: none;
-    border: 1px solid var(--dim-gray);
-    border-radius: 0.3rem;
-    cursor: pointer;
-    color: var(--dim-gray);
-    font-size: 2rem;
-}
 
-.main-content .title button.active {
-    background-color: var(--dim-gray);
-    color: red;
-}
 
-.modal {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    padding: 2rem;
-    border-radius: 0.5rem;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
 
-.modal.open {
-    display: block;
-}
-
-.modal-content .form{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 0.65rem;
-    margin: 1rem 0;
-}
-
-.btnSend {
-    width: 150px;
-    height: fit-content;
-    padding: 0.3rem 0;
-    background-color: var(--celadon);
-    border: 1px solid var(--dim-gray);
-    color: var(--dim-gray);
-}

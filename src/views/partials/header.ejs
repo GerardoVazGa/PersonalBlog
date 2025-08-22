@@ -31,6 +31,18 @@
                     </div>
                     <a href="/about" class="<%= current === 'about' ? 'active' : '' %>">About</a>
                     <a href="/contact">Contact</a>
+
+                    <div class="auth-buttons">
+                        <% if(!isAdmin) { %>
+                            <button id="loginBtn">
+                                <i class="fa-solid fa-lock"></i>
+                            </button>
+                        <% } else { %>
+                            <button id="logoutBtn" class="active">
+                                <i class="fa-solid fa-unlock"></i>
+                            </button>
+                        <% } %>
+                    </div>
                 </div>
 
                 <div class="hambutton">
