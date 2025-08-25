@@ -1,5 +1,4 @@
 ﻿:root {
-    --background: #255bf0da;
     --text-size: 1.4rem;
     /* CSS HEX */
     --celadon: #a0eec0ff;
@@ -7,6 +6,7 @@
     --pistachio: #86cd82ff;
     --asparagus: #72a276ff;
     --dim-gray: #666b6aff;
+    --title-color: #333333ff;
     --shadow-color: rgba(0, 0, 0, 0.2);
 
 }
