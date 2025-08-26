@@ -14,7 +14,26 @@
             <button class="hero-btn">Conoce más sobre mi</button>
         </div>
     </section>
-    <div class="hello">Hola mundo</div>
+
+    <section id="highlights-articles">
+        <h2>Articulos Destacados</h2>
+
+        <div class="highlighted-articles">
+            <% posts.forEach(post => { %>
+                <article class="highlighted-article">    
+                    <figure class="highlighted-image">
+                        <img src="/uploads/<%= post.image_url %>" alt="<%= post.title %>">
+                    </figure>
+                    <div class="highlighted-content">
+                        <h3><%= post.title %></h3>
+                        <p><%= post.content.substring(0, 100) %></p>
+                        <a href="/posts/<%= post.slug %>" class="read-more">Leer más</a>
+                    </div>
+                </article>
+            <% }) %>
+        </div>
+
+    </section>
     <div class="hello">Hola mundo</div>
 </main>
 

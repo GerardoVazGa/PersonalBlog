@@ -35,8 +35,15 @@ app.use(useCategories)
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
 
-app.get('/', (req, res) => {
-    res.render('index.ejs', {current: 'home'})
+app.get('/', async (req, res) => {
+    try {
+        const query = 'SELECT title, slug, content, updated_at, image_url FROM posts'
+        const [rows] = await pool.query(query)
+        res.render('index.ejs', {current: 'home', posts: rows})
+    } catch (error) {
+        console.error('Error fetching posts:', error)
+        res.status(500).send('Error fetching posts')
+    }
 })
 
 app.get('/about', (req, res) => {
