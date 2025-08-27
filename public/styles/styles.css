@@ -143,49 +143,90 @@ body {
     color: red;
 }
 
-.modal-container {
+.generic-modal {
     display: none;
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    height: 100%;
-    width: 100%;
-    background-color: #000;
+    z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
 }
 
-.modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.generic-modal.show {
+    display: flex;
+}
+
+.modal-container {
+    width: 320px;
+    height: fit-content;
     background-color: white;
     padding: 2rem;
+    border: 1px solid var(--dim-gray);
     border-radius: 0.5rem;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
-.modal.open {
-    display: block;
+.modal-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.modal-content .form{
+.modal-header #close-modal-btn {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background-color: none;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 2rem;
+    color: red;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    padding: 0.5rem;
+}
+
+.modal-content .form-inputs{
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
     gap: 0.65rem;
-    margin: 1rem 0;
 }
 
-.btnSend {
-    width: 150px;
-    height: fit-content;
-    padding: 0.3rem 0;
-    background-color: var(--celadon);
+.form-inputs #passwordInput {
+    padding: 0.5rem;
     border: 1px solid var(--dim-gray);
-    color: var(--dim-gray);
+    border-radius: 0.3rem;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-footer .modal-btn-action{
+    background-color: var(--pistachio);
+    border-radius: 0.4rem;
+    padding: 0.5rem 0.75rem;
+    font-size: var(--text-size);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .navbar-container .hambutton {
