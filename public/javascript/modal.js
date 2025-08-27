@@ -8,7 +8,7 @@ class Modal {
         this.modalBtnAction = document.querySelector('.modal-btn-action')
 
         this.initialContainerClasses = this.modalContainer.className;
-
+        this.open = false
         this.closeListeners()
     }
 
@@ -16,6 +16,23 @@ class Modal {
         if(this.closeModalBtn) {
             this.closeModalBtn.addEventListener('click', () => this.close())
         }
+
+        if(this.modal) {
+            this.modal.addEventListener('click', (e) => {
+                e.preventDefault()
+                if(e.target === this.modal && this.open){
+                    this.close()
+                }
+            })
+        }
+
+        document.addEventListener('keydown', (e) => {
+            e.preventDefault()
+            if(e.key === "Escape" && this.open){
+                this.close()
+            }
+        })
+
     }
 
     show(config = {}){
@@ -62,6 +79,7 @@ class Modal {
 
         this.modal.classList.add("show")
         document.body.style.overflow = 'hidden';
+        this.open = true
 
         return this
     }
@@ -89,6 +107,7 @@ class Modal {
     close() {
         this.modal.classList.remove("show")
         document.body.style.overflow = '';
+        this.open = false
         return this
     }
 
