@@ -1,19 +1,70 @@
-const addPostButton = document.querySelector('.add-post-btn')
-const addPostModal = document.querySelector('.add-post-modal')
-const closeModalButton = document.querySelector('.close-modal-add-post')
-const submitAddPostButton = document.querySelector('.submit-add-post')
+import { genericModal } from './modal.js'
 
-if(addPostButton) {
+// Add Post Modal
+const addPostButton = document.querySelector('.add-post-btn')
+
+if(addPostButton){
     addPostButton.addEventListener('click', (e) => {
         e.preventDefault()
-        addPostModal.style.display = 'flex'
+        genericModal({
+            modalTitle: "Add New Post",
+            buildContent: (content) => {
+                // Create the form element
+                const form = document.createElement("form")
+                form.id = "form-add-post"
+                form.enctype = "multipart/form-data"
+                form.method = "POST"
+                form.action = "/posts/add"
+                form.classList.add("form-inputs")
+
+                // Title input
+                const titleDiv = document.createElement("div")
+                const titleLabel = document.createElement("label")
+                titleLabel.htmlFor = "post-title"
+                titleLabel.textContent = "Title"
+                const titleInput = document.createElement("input")
+                titleInput.type = "text"
+                titleInput.id = "post-title"
+                titleInput.name = "title"
+                titleInput.required = true
+                titleDiv.appendChild(titleLabel)
+                titleDiv.appendChild(titleInput)
+
+                const contentDiv = document.createElement("div")
+                const contentLabel = document.createElement("label")
+                contentLabel.htmlFor = "post-content"
+                contentLabel.textContent = "Content"
+                const contentTextarea = document.createElement("textarea")
+                contentTextarea.id = "post-content"
+                contentTextarea.name = "content"
+                contentTextarea.rows = 5
+                contentTextarea.required = true
+                contentDiv.appendChild(contentLabel)
+                contentDiv.appendChild(contentTextarea)
+
+                const imageDiv = document.createElement("div")
+                const imageLabel = document.createElement("label")
+                imageLabel.htmlFor = "post-image"
+                imageLabel.textContent = "Image"
+                const imageInput = document.createElement("input")
+                imageInput.type = "file"
+                imageInput.id = "post-image"
+                imageInput.name = "image"
+                imageInput.accept = "image/*"
+                imageInput.required = true
+                imageDiv.appendChild(imageLabel)
+                imageDiv.appendChild(imageInput)
+
+                form.appendChild(titleDiv)
+                form.appendChild(contentDiv)
+                form.appendChild(imageDiv)
+
+                content.appendChild(form)
+            },
+            actionBtn: () => {
+               document.getElementById('form-add-post').submit()
+            },
+            modalBtnText: "Add Post"
+        })
     })
 }
-
-if(closeModalButton) {
-    closeModalButton.addEventListener('click', (e) => {
-        e.preventDefault()
-        addPostModal.style.display = 'none'
-    })
-}
-

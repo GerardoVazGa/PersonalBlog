@@ -9,36 +9,3 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.add-post-modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 1000;
-    background-color: rgba(0, 0, 0, 0.5);
-    justify-content: center;
-    align-items: center;
-}
-
-.add-post-modal .modal-content {
-    background-color: white;
-    height: fit-content;
-    padding: 2rem;
-    border-radius: 0.4rem;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-}
-
-.submit-add-post {
-    background-color: var(--pistachio);
-    border: none;
-    border-radius: 0.4rem;
-    padding: 0.5rem 1rem;
-    font-size: var(--text-size);
-    cursor: pointer;
-}
-
-.submit-add-post:hover {
-    background-color: darken(var(--pistachio), 5%);
-}
