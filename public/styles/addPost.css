@@ -9,26 +9,7 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-/* tamaños combinados */
-.modal-small {
-  width: 300px;
-  height: 250px;
-}
 
-.modal-medium {
-  width: 600px;
-  height: 400px;
-}
-
-.modal-large {
-  width: 900px;
-  height: 600px;
-}
-
-.modal-tall {
-  width: 600px;
-  height: 80vh; /* alto casi completo */
-}
 
 .form-inputs {
   display: flex;
@@ -81,19 +62,6 @@
 }
 
 @media (max-width: 768px) {
-
-    .modal-small,
-    .modal-medium,
-    .modal-large,
-    .modal-tall {
-        width: 80% !important;
-        height: auto !important;
-        /* altura se ajusta al contenido */
-        max-width: none !important;
-        max-height: 80vh !important;
-        /* límite para que no se desborde */
-        margin: 1rem auto;
-    }
 
     .form-inputs textarea {
         resize: vertical;
