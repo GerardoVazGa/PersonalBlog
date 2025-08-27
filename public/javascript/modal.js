@@ -1,50 +1,149 @@
+class Modal {
+    constructor() {
+        this.modal = document.querySelector('.generic-modal')
+        this.title = document.querySelector('.modal-title')
+        this.closeModalBtn = document.querySelector('#close-modal-btn')
+        this.modalContent = document.querySelector('.modal-content')
+        this.modalContainer = document.querySelector('.modal-container')
+        this.modalBtnAction = document.querySelector('.modal-btn-action')
 
-const modal = document.querySelector('.generic-modal')
-const title = document.querySelector('.modal-title')
-const closeModalBtn = document.querySelector('#close-modal-btn')
-const modalContent = document.querySelector('.modal-content')
-let modalBtnAction = document.querySelector('.modal-btn-action')
+        this.initialContainerClasses = this.modalContainer.className;
 
-
-
-export function genericModal({modalTitle, buildContent, actionBtn, modalBtnText}){
-    modalContent.textContent = ""
-
-    if(modalTitle){
-        title.textContent = modalTitle
+        this.closeListeners()
     }
 
-    if(typeof buildContent === "function"){
-        buildContent(modalContent)
+    closeListeners() {
+        if(this.closeModalBtn) {
+            this.closeModalBtn.addEventListener('click', () => this.close())
+        }
     }
 
-    if(modalBtnText){
-        modalBtnAction.textContent = modalBtnText
+    show(config = {}){
+        this.modalContent.textContent = ""
+        this.resetStyles()
+
+        if(config.title){
+           this.title.textContent = config.title
+        }
+
+        if(config.content){
+            if(typeof config.content === "function"){
+                config.content(this.modalContent)
+            }else if(typeof config.content === "string"){
+                this.modalContent.innerHTML = config.content
+            }
+        }
+
+        if(config.buttonText) {
+            this.modalBtnAction.textContent = config.buttonText
+        }
+
+        const sizeClass = this.getSizeClass(config.size);
+
+        if(sizeClass) {
+            this.modalContainer.classList.add(sizeClass)
+        }
+
+        if(config.width) {
+            this.modalContainer.style.width = config.width
+        }
+
+        if(config.className) {
+            if(Array.isArray(config.className)) { // Verifica si es un array de clases
+                this.modalContainer.classList.add(...config.className)
+            }else {
+                this.modalContainer.classList.add(config.className)
+            }
+        }
+
+        if(config.onAction) {
+            this.setupActionButton(config.onAction)
+        }
+
+        this.modal.classList.add("show")
+        document.body.style.overflow = 'hidden';
+
+        return this
     }
 
-    const newButtonAction = modalBtnAction.cloneNode(true)
-    modalBtnAction.parentNode.replaceChild(newButtonAction, modalBtnAction)
-    modalBtnAction = newButtonAction
+    setupActionButton(onAction) {
+        const newButtonAction = this.modalBtnAction.cloneNode(true)
+        this.modalBtnAction.parentNode.replaceChild(newButtonAction, this.modalBtnAction)
+        this.modalBtnAction = newButtonAction
 
-    if(actionBtn){
-
-        newButtonAction.addEventListener("click", () =>{
-            actionBtn()
-            modal.classList.remove("show")
+        this.modalBtnAction.addEventListener("click", () => {
+            onAction()
+            this.close()
         })
-    }else {
-        
     }
 
-    modal.classList.add('show')
+    resetStyles() {
+        this.modalContainer.style.width = ""
+
+        const sizeClasses = ['modal-small', 'modal-medium', 'modal-large']
+        this.modalContainer.classList.remove(...sizeClasses)
+
+        this.modalContainer.className = this.initialContainerClasses
+    }
+
+    close() {
+        this.modal.classList.remove("show")
+        document.body.style.overflow = '';
+        return this
+    }
+
+    getSizeClass(size) {
+        const sizeClasses = {
+            small: 'modal-small',
+            medium: 'modal-medium',
+            large: 'modal-large',
+            xlarge: 'modal-xlarge',
+            tall: 'modal-tall'
+        }
+
+        return sizeClasses[size] || null
+    }
+
+    setWidth(width) {
+        this.modalContainer.style.width = width
+        return this
+    }
+
+    setTitle(title) {
+        this.title.textContent = title
+        return this
+    }
+
+    setContent(content) {
+        if (typeof content === "function") {
+            content(this.modalContent)
+        } else if (typeof content === "string") {
+            this.modalContent.innerHTML = content
+        }
+
+        return this
+    }
+
+    setButtonText(text) {
+        this.modalBtnAction.textContent = text
+        return this
+    }
 }
 
+let modalInstance = null
 
+function getModalInstance() {
+    if(!modalInstance) {
+        modalInstance = new Modal()
+    }
 
-if (closeModalBtn) {
-    closeModalBtn.addEventListener("click", () => {
-        modal.classList.remove("show")
-    });
+    return modalInstance
 }
 
+export function showModal(config){
+    return getModalInstance().show(config)
+}
 
+export function closeModal(){
+    return getModalInstance().close()
+}

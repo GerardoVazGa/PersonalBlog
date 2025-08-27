@@ -1,4 +1,4 @@
-import {genericModal} from "./modal.js"
+import {showModal} from "./modal.js"
 
 //Login modal
 const loginBtn = document.querySelector('#loginBtn')
@@ -7,9 +7,9 @@ const logoutBtn = document.querySelector('#logoutBtn')
 if (loginBtn) {
     loginBtn.addEventListener("click", (e) => {
         e.preventDefault();
-        genericModal({
-            modalTitle: "Admin Login",
-            buildContent: (content) => {
+        showModal({
+            title: "Admin Login",
+            content: (content) => {
                 const form = document.createElement("form")
                 form.id = "passwordForm"
                 form.classList.add("form-inputs")
@@ -22,7 +22,7 @@ if (loginBtn) {
                 form.appendChild(passwordInput)
                 content.appendChild(form)
             },
-            actionBtn: async () => {
+            onAction: async () => {
                 const password = document.getElementById("passwordInput").value
                 try {
                     const response = await fetch('/login', {
@@ -46,7 +46,7 @@ if (loginBtn) {
                     console.error('Error al iniciar sesión:', error.message)
                 }
             },
-            modalBtnText: "Login"
+            buttonText: "Login"
         })
     });
 }

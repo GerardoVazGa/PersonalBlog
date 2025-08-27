@@ -1,14 +1,15 @@
-import { genericModal } from './modal.js'
+import { showModal } from './modal.js'
 
 // Add Post Modal
 const addPostButton = document.querySelector('.add-post-btn')
 
-if(addPostButton){
+if (addPostButton) {
     addPostButton.addEventListener('click', (e) => {
         e.preventDefault()
-        genericModal({
-            modalTitle: "Add New Post",
-            buildContent: (content) => {
+        showModal({
+            title: "Add New Post",
+            size: "large", // 👈 tamaño de prueba
+            content: (content) => {
                 // Create the form element
                 const form = document.createElement("form")
                 form.id = "form-add-post"
@@ -30,6 +31,7 @@ if(addPostButton){
                 titleDiv.appendChild(titleLabel)
                 titleDiv.appendChild(titleInput)
 
+                // Content input
                 const contentDiv = document.createElement("div")
                 const contentLabel = document.createElement("label")
                 contentLabel.htmlFor = "post-content"
@@ -42,6 +44,7 @@ if(addPostButton){
                 contentDiv.appendChild(contentLabel)
                 contentDiv.appendChild(contentTextarea)
 
+                // Image input
                 const imageDiv = document.createElement("div")
                 const imageLabel = document.createElement("label")
                 imageLabel.htmlFor = "post-image"
@@ -61,10 +64,10 @@ if(addPostButton){
 
                 content.appendChild(form)
             },
-            actionBtn: () => {
-               document.getElementById('form-add-post').submit()
+            onAction: () => {
+                document.getElementById('form-add-post').submit()
             },
-            modalBtnText: "Add Post"
+            buttonText: "Add Post"
         })
     })
 }
