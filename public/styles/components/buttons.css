@@ -1,0 +1,57 @@
+
+
+/*Especific buttons styles*/
+.auth-buttons button {
+    width: 2.5rem;
+    height: 2.5rem;
+    background: none;
+    border: 1px solid var(--dim-gray);
+    border-radius: 0.3rem;
+    cursor: pointer;
+    color: var(--dim-gray);
+    font-size: 1.5rem;
+}
+
+.auth-buttons button.active {
+    background-color: var(--dim-gray);
+    color: red;
+}
+
+#hero .hero-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.hero-buttons .hero-btn {
+    background-color: var(--pistachio);
+    border: none;
+    border-radius: 0.4rem;
+    padding: 0.6rem 1rem;
+    font-size: 1.3rem;
+    transition: all 0.3s ease-in-out;
+}
+
+.hero-buttons .hero-btn:hover{
+    background-color: var(--asparagus);
+    color: white;
+}
+
+.add-post-btn {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background-color: var(--pistachio);
+    border-radius: 0.4rem;
+    padding: 0.5rem 1rem;
+    font-size: var(--text-size);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.modal-footer .modal-btn-action{
+    background-color: var(--pistachio);
+    border-radius: 0.4rem;
+    padding: 0.5rem 0.75rem;
+    font-size: var(--text-size);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}

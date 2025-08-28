@@ -71,14 +71,6 @@
     align-items: center;
 }
 
-.modal-footer .modal-btn-action{
-    background-color: var(--pistachio);
-    border-radius: 0.4rem;
-    padding: 0.5rem 0.75rem;
-    font-size: var(--text-size);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
 /* tamaños combinados */
 .modal-small {
   width: 300px;

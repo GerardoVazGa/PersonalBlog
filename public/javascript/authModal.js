@@ -9,6 +9,7 @@ if (loginBtn) {
         e.preventDefault();
         showModal({
             title: "Admin Login",
+            size: "small",
             content: (content) => {
                 const form = document.createElement("form")
                 form.id = "passwordForm"

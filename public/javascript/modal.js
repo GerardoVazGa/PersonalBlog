@@ -151,6 +151,7 @@ class Modal {
 
 let modalInstance = null
 
+// Singleton para que una sola instancia de modal exista
 function getModalInstance() {
     if(!modalInstance) {
         modalInstance = new Modal()

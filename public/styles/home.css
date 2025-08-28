@@ -43,26 +43,6 @@
     margin: 0 auto;
 }
 
-#hero .hero-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-}
-
-.hero-buttons .hero-btn {
-    background-color: var(--pistachio);
-    border: none;
-    border-radius: 0.4rem;
-    padding: 0.6rem 1rem;
-    font-size: 1.3rem;
-    transition: all 0.3s ease-in-out;
-}
-
-.hero-buttons .hero-btn:hover{
-    background-color: var(--asparagus);
-    color: white;
-}
-
 #highlights-articles {
     width: 100%;
     padding: 2rem 4rem;
