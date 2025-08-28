@@ -1,6 +1,7 @@
 @import url('/styles/base/variables.css');
 @import url('/styles/base/resets.css');
 
+@import url('/styles/components/header.css');
 @import url('/styles/components/modal.css');
 @import url('/styles/components/buttons.css');
 
