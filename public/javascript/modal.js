@@ -27,8 +27,8 @@ class Modal {
         }
 
         document.addEventListener('keydown', (e) => {
-            e.preventDefault()
             if(e.key === "Escape" && this.open){
+                e.preventDefault()
                 this.close()
             }
         })
