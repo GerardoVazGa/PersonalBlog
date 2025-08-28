@@ -1,45 +1,4 @@
-﻿.dropdown {
-    position: relative;
-    width: 100%;
-}
-
-.dropbtn {
-    cursor: pointer;
-}
-
-.dropdown-content {
-    position: absolute;
-    z-index: 1000;
-    top: 120%;
-    left: 50%;
-    transform: translateX(-50%) translateY(-10px);
-    padding: 0.5rem 0;
-    border: 1px solid var(--dim-gray);
-    border-radius: 8px;
-    background-color: var(--pistachio);
-    opacity: 0;
-    pointer-events: none;
-    visibility: hidden;
-    transition: all 0.3s ease-in-out;
-}
-
-.dropdown-content a {
-    padding: 0.5rem 1rem;
-    width: 100%;
-}
-
-.dropdown-content a:hover {
-    background-color: var(--shadow-color);
-}
-
-.dropdown-content.open {
-    opacity: 1;
-    pointer-events: auto;
-    visibility: visible;
-    transform: translateX(-50%) translateY(0);
-}
-
-.blog-footer {
+﻿.blog-footer {
     background-color: var(--pistachio);
     color: white;
     padding: 2rem 1rem;
