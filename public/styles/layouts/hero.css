@@ -1,0 +1,35 @@
+.main-content #hero {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    gap: 2rem;
+    text-align: center;
+}
+
+#hero .hero-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-color: var(--dim-gray);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    color: white;
+    font-size: 3rem;
+}
+
+#hero .hero-title{
+    font-size: 2rem;
+    color: var(--title-color)
+}
+
+#hero .hero-description {
+    width: 80%;
+    font-size: 1.5rem;
+    color: var(--dim-gray);
+    line-height: 1.5;
+    white-space: pre-wrap;
+    margin: 0 auto;
+}
