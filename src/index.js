@@ -1,4 +1,4 @@
-import express from "express"
+import express, { response } from "express"
 import bodyParser from "body-parser"
 import ejs from "ejs"
 import path from "path"
@@ -25,7 +25,9 @@ app.use((req, res, next) => {
     next()
 })
 
-const useCategories = (req, res, next) => {
+const useCategories = async (req, res, next) => {
+    const [rows] = await pool.query('SELECT name FROM categories')
+    const categories = rows.map(row => row.name)
     res.locals.categories = categories
     next()
 }
@@ -95,6 +97,16 @@ app.put('/posts/edit/:id', isAdmin, (req, res) => {
 
 app.delete('/posts/delete/:id', isAdmin, (req, res) => {
     
+})
+
+app.get('/api/categories', async (req, res) => {
+    try {
+        const [rows] = await pool.query('SELECT name FROM categories order by id')
+        res.json(rows)
+    }catch(error) {
+        console.error('Error fetching categories:', error)
+        res.status(500).json({error: "Error fetching categories"})
+    }
 })
 
 app.listen(PORT, () => {

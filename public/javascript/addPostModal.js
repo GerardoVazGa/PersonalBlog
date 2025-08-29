@@ -8,8 +8,8 @@ if (addPostButton) {
         e.preventDefault()
         showModal({
             title: "Add New Post",
-            size: "large", // 👈 tamaño de prueba
-            content: (content) => {
+            size: "tall", // 👈 tamaño de prueba
+            content: async (content) => {
                 // Create the form element
                 const form = document.createElement("form")
                 form.id = "form-add-post"
@@ -58,9 +58,50 @@ if (addPostButton) {
                 imageDiv.appendChild(imageLabel)
                 imageDiv.appendChild(imageInput)
 
+                const categoryDiv = document.createElement('div')
+                const categoryLabel = document.createElement('label')
+                categoryLabel.htmlFor = 'post-category'
+                categoryLabel.textContent = 'Category'
+                const categorySelect = document.createElement('select')
+                categorySelect.id = 'post-category'
+                categorySelect.name = 'category'
+                categorySelect.required = true
+
+                // Assuming categories are available globally or fetched from the server
+                try {
+                    const response = await fetch('/api/categories')
+                    const categories = await response.json()
+
+                    categories.forEach(category => {
+                        const option = document.createElement('option')
+                        option.value = category.name
+                        option.textContent = category.name
+                        categorySelect.appendChild(option)
+                    })
+                }catch(error) {
+                    console.error(error.message)
+                }
+
+                categoryDiv.appendChild(categoryLabel)
+                categoryDiv.appendChild(categorySelect)
+
+                const tagsDiv = document.createElement('div')
+                const tagsLabel = document.createElement('label')
+                tagsLabel.htmlFor = 'post-tags'
+                tagsLabel.textContent = 'Post Tags (use "|" for separation)'
+                const tagsInput = document.createElement('input')
+                tagsInput.type = 'text'
+                tagsInput.id = 'post-tags'
+                tagsInput.name = 'tags'
+                tagsInput.placeholder = 'e.g. tag1|tag2|tag3'
+                tagsDiv.appendChild(tagsLabel)
+                tagsDiv.appendChild(tagsInput)
+
                 form.appendChild(titleDiv)
                 form.appendChild(contentDiv)
                 form.appendChild(imageDiv)
+                form.appendChild(categoryDiv)
+                form.appendChild(tagsDiv)
 
                 content.appendChild(form)
             },

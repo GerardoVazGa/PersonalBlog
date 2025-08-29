@@ -16,8 +16,7 @@
 }
 
 .modal-container {
-    max-width: 600px;
-    max-height: 80vh;
+    max-height: 90vh;
     background-color: white;
     padding: 1.5rem;
     border: 1px solid var(--dim-gray);
@@ -87,9 +86,14 @@
   height: 600px;
 }
 
+.modal-xlarge {
+  width: 1200px;
+  height: 800px;
+}
+
 .modal-tall {
-  width: 600px;
-  height: 80vh; /* alto casi completo */
+  width: 900px;
+  height: 90vh; /* alto casi completo */
 }
 
 @media (max-width: 768px) {
