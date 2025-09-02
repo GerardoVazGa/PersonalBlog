@@ -7,12 +7,13 @@ import {PORT, ADMIN_PASS} from "../configs/env.js"
 import pool from "../db/db.js"
 import session from "express-session";
 import {sessionConfig} from "../configs/session_config.js"
+import {uploadTemp} from '../configs/uploads_config.js'
+import { error } from "console"
 
 const app = express()
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
-const categories = ['Technology', 'Animation', 'Programming', 'Cibersegurity']
 
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(express.json())
@@ -107,6 +108,14 @@ app.get('/api/categories', async (req, res) => {
         console.error('Error fetching categories:', error)
         res.status(500).json({error: "Error fetching categories"})
     }
+})
+
+app.post('/upload', uploadTemp.single('image'), (req, res) => {
+    if(!req.file) {
+        return res.status(400).json({error: "File not uploaded"})
+    }
+
+    return res.json({url: `/uploads/tempFiles/${req.file.filename}`})
 })
 
 app.listen(PORT, () => {
