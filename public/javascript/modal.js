@@ -19,7 +19,6 @@ class Modal {
 
         if(this.modal) {
             this.modal.addEventListener('click', (e) => {
-                e.preventDefault()
                 if(e.target === this.modal && this.open){
                     this.close()
                 }

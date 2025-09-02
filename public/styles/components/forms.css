@@ -57,14 +57,27 @@
 }
 
 /* Textarea */
-.form-inputs textarea {
-    resize: vertical;
-    min-height: 120px;
+.form-inputs #post-content-editor {
+    width: 100%;
+    border: 1px solid #ddd;
+    min-height: 300px;
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+}
+
+.ql-toolbar.ql-snow {
+    flex-direction: row;
 }
 
 /* File input */
 .form-inputs input[type="file"] {
     padding: 0.3rem;
+}
+
+.form-inputs .form-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
 }
 
 @media (max-width: 768px) {

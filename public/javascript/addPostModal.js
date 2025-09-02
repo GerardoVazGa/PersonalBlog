@@ -14,8 +14,6 @@ if (addPostButton) {
                 const form = document.createElement("form")
                 form.id = "form-add-post"
                 form.enctype = "multipart/form-data"
-                form.method = "POST"
-                form.action = "/posts/add"
                 form.classList.add("form-inputs")
 
                 // Title input
@@ -31,19 +29,6 @@ if (addPostButton) {
                 titleDiv.appendChild(titleLabel)
                 titleDiv.appendChild(titleInput)
 
-                // Content input
-                const contentDiv = document.createElement("div")
-                const contentLabel = document.createElement("label")
-                contentLabel.htmlFor = "post-content"
-                contentLabel.textContent = "Content"
-                const contentTextarea = document.createElement("textarea")
-                contentTextarea.id = "post-content"
-                contentTextarea.name = "content"
-                contentTextarea.rows = 5
-                contentTextarea.required = true
-                contentDiv.appendChild(contentLabel)
-                contentDiv.appendChild(contentTextarea)
-
                 // Image input
                 const imageDiv = document.createElement("div")
                 const imageLabel = document.createElement("label")
@@ -55,8 +40,12 @@ if (addPostButton) {
                 imageInput.name = "image"
                 imageInput.accept = "image/*"
                 imageInput.required = true
+
                 imageDiv.appendChild(imageLabel)
                 imageDiv.appendChild(imageInput)
+
+                const rowDiv = document.createElement('div')
+                rowDiv.classList.add('form-row')
 
                 const categoryDiv = document.createElement('div')
                 const categoryLabel = document.createElement('label')
@@ -85,6 +74,7 @@ if (addPostButton) {
                 categoryDiv.appendChild(categoryLabel)
                 categoryDiv.appendChild(categorySelect)
 
+                //Tags Input
                 const tagsDiv = document.createElement('div')
                 const tagsLabel = document.createElement('label')
                 tagsLabel.htmlFor = 'post-tags'
@@ -97,16 +87,104 @@ if (addPostButton) {
                 tagsDiv.appendChild(tagsLabel)
                 tagsDiv.appendChild(tagsInput)
 
+                rowDiv.appendChild(categoryDiv)
+                rowDiv.appendChild(tagsDiv)
+
+                // Content input
+                const contentDiv = document.createElement("div")
+                const contentLabel = document.createElement("label")
+                contentLabel.htmlFor = "post-content"
+                contentLabel.textContent = "Content"
+
+                // Quill editor container
+                const contentEditorDiv = document.createElement("div")
+                contentEditorDiv.id = "post-content-editor"
+
+                // Hidden Input for Quill
+                const hiddenInput = document.createElement("input")
+                hiddenInput.type = "hidden"
+                hiddenInput.name = "content"
+                hiddenInput.id = "post-content"
+                hiddenInput.required = true
+
+                contentDiv.appendChild(contentLabel)
+                contentDiv.appendChild(contentEditorDiv)
+                contentDiv.appendChild(hiddenInput)
+
                 form.appendChild(titleDiv)
-                form.appendChild(contentDiv)
                 form.appendChild(imageDiv)
-                form.appendChild(categoryDiv)
-                form.appendChild(tagsDiv)
+                form.appendChild(rowDiv)
+                form.appendChild(contentDiv)
 
                 content.appendChild(form)
+
+                const quill = new Quill("#post-content-editor", {
+                    modules: {
+                        toolbar: {
+                            container: [
+                                ["bold", "italic", "underline", "strike"], // toggled buttons
+                                ["blockquote", "code-block"],
+                                ["link", "image"],
+                                [
+                                    { list: "ordered" },
+                                    { list: "bullet" },
+                                ],
+                                [{ size: ["small", false, "large", "huge"] }], // custom dropdown
+                                [{ header: [1, 2, 3, 4, 5, 6, false] }],
+                                [{ align: [] }],
+
+                                ["clean"], // remove formatting button
+                            ],
+                            handlers: {
+                                image: function () {
+                                    const imageInput = document.createElement('input')
+                                    imageInput.setAttribute('type', 'file')
+                                    imageInput.setAttribute('accept', 'image/*')
+                                    imageInput.click()
+
+                                    imageInput.onchange = () => {
+                                        const imageFile = imageInput.files[0]
+                                        if (imageFile) {
+                                            const formData = new FormData()
+                                            formData.append('image', imageFile)
+
+                                            console.log(formData.get('image'))
+
+                                            const range = this.quill.getSelection()
+
+                                            console.log(range)
+                                            if (range) {
+                                                console.log("entre")
+                                                this.quill.insertEmbed(range.index, 'image', URL.createObjectURL(imageFile))
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    theme: "snow",
+                })
+
+                quill.on('text-change', () => {
+                    hiddenInput.value = quill.root.innerHTML;
+                })
             },
             onAction: () => {
-                document.getElementById('form-add-post').submit()
+                const title = document.querySelector('#post-title').value.trim()
+                const imageFile = document.querySelector('#post-image').files
+                const category = document.querySelector('#post-category').value
+                const tags = document.querySelector('#post-tags').value.trim()
+                const content = document.querySelector('#post-content').value
+
+                console.log({
+                    title,
+                    imageFile,
+                    category,
+                    tags,
+                    content
+                })
+
             },
             buttonText: "Add Post"
         })
