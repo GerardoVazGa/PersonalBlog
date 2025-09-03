@@ -3,12 +3,11 @@ import bodyParser from "body-parser"
 import ejs from "ejs"
 import path from "path"
 import { fileURLToPath } from "url"
-import {PORT, ADMIN_PASS} from "../configs/env.js"
-import pool from "../db/db.js"
+import {PORT, ADMIN_PASS} from "./configs/env.js"
+import pool from "./db/db.js"
 import session from "express-session";
-import {sessionConfig} from "../configs/session_config.js"
-import {uploadTemp} from '../configs/uploads_config.js'
-import { error } from "console"
+import {sessionConfig} from "./configs/session_config.js"
+import {uploadTemp} from './configs/uploads_config.js'
 
 const app = express()
 
