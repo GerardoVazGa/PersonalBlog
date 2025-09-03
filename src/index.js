@@ -4,7 +4,6 @@ import ejs from "ejs"
 import path from "path"
 import { fileURLToPath } from "url"
 import {PORT, ADMIN_PASS} from "./configs/env.js"
-import pool from "./db/db.js"
 import session from "express-session";
 import {sessionConfig} from "./configs/session_config.js"
 import {uploadTemp} from './configs/uploads_config.js'
@@ -12,6 +11,7 @@ import { loggedAdmin } from "./middlewares/loggedAdmin.middleware.js"
 import {isAdmin} from './middlewares/isAdmin.middleware.js'
 import {useCategories} from './middlewares/useCategories.middleware.js'
 import {getPosts} from "./controllers/posts.contoller.js"
+import {getCategories} from './controllers/category.controller.js'
 
 const app = express()
 
@@ -94,15 +94,7 @@ app.delete('/posts/delete/:id', isAdmin, (req, res) => {
     
 })
 
-app.get('/api/categories', async (req, res) => {
-    try {
-        const [rows] = await pool.query('SELECT name FROM categories order by id')
-        res.json(rows)
-    }catch(error) {
-        console.error('Error fetching categories:', error)
-        res.status(500).json({error: "Error fetching categories"})
-    }
-})
+app.get('/api/categories', getCategories)
 
 app.post('/upload', uploadTemp.single('image'), (req, res) => {
     if(!req.file) {
