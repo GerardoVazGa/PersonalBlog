@@ -12,6 +12,7 @@ import {isAdmin} from './middlewares/isAdmin.middleware.js'
 import {useCategories} from './middlewares/useCategories.middleware.js'
 import {getPosts} from "./controllers/posts.controller.js"
 import {getCategories} from './controllers/category.controller.js'
+import {loginAdmin, logoutAdmin} from "./controllers/auth.controller.js"
 
 const app = express()
 
@@ -42,26 +43,9 @@ app.get('/category/:category', (req, res) => {
     res.render('category', {current: category})
 })
 
-app.post('/login', (req, res) => {
-    const {password} = req.body
-    if(password === ADMIN_PASS){
-        req.session.admin = true
-        return res.json({success: true, message: "Admin access granted"})
-    }
+app.post('/login', loginAdmin)
 
-    
-    return res.json({success: false, message: "Invalid password"})
-})
-
-app.post('/logout', (req, res) => {
-    req.session.destroy((err) => {
-        if(err) {
-            return res.status(500).json({success: false, message: "Error al cerrar sesion"})
-        }
-
-        return res.json({success: true, message: "Se cerro la sesion correctamente"})
-    })
-})
+app.post('/logout', logoutAdmin)
 
 app.post('/posts/add', uploadTemp.single('image'), isAdmin, async (req, res) => {
     console.log(req.file)
