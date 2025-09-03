@@ -10,7 +10,7 @@ import {uploadTemp} from './configs/uploads_config.js'
 import { loggedAdmin } from "./middlewares/loggedAdmin.middleware.js"
 import {isAdmin} from './middlewares/isAdmin.middleware.js'
 import {useCategories} from './middlewares/useCategories.middleware.js'
-import {getPosts} from "./controllers/posts.contoller.js"
+import {getPosts} from "./controllers/posts.controller.js"
 import {getCategories} from './controllers/category.controller.js'
 
 const app = express()
