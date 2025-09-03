@@ -1,4 +1,4 @@
-import express, { response } from "express"
+import express from "express"
 import bodyParser from "body-parser"
 import ejs from "ejs"
 import path from "path"
@@ -8,6 +8,9 @@ import pool from "./db/db.js"
 import session from "express-session";
 import {sessionConfig} from "./configs/session_config.js"
 import {uploadTemp} from './configs/uploads_config.js'
+import { loggedAdmin } from "./middlewares/loggedAdmin.middleware.js"
+import {isAdmin} from './middlewares/isAdmin.middleware.js'
+import {useCategories} from './middlewares/useCategories.middleware.js'
 
 const app = express()
 
@@ -20,17 +23,7 @@ app.use(express.json())
 app.use(session(sessionConfig))
 app.use(express.static('public'))
 
-app.use((req, res, next) => {
-    res.locals.isAdmin = !!req.session.admin
-    next()
-})
-
-const useCategories = async (req, res, next) => {
-    const [rows] = await pool.query('SELECT name FROM categories')
-    const categories = rows.map(row => row.name)
-    res.locals.categories = categories
-    next()
-}
+app.use(loggedAdmin)
 
 app.use(useCategories)
 
@@ -77,14 +70,6 @@ app.post('/logout', (req, res) => {
         return res.json({success: true, message: "Se cerro la sesion correctamente"})
     })
 })
-
-function isAdmin(req, res, next) {
-    if(req.session.admin){
-        return next()
-    }
-
-    return res.status(403).json({error: "Unauthorized access"})
-}
 
 app.post('/posts/add', uploadTemp.single('image'), isAdmin, (req, res) => {
     console.log(req.file)
