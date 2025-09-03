@@ -11,6 +11,7 @@ import {uploadTemp} from './configs/uploads_config.js'
 import { loggedAdmin } from "./middlewares/loggedAdmin.middleware.js"
 import {isAdmin} from './middlewares/isAdmin.middleware.js'
 import {useCategories} from './middlewares/useCategories.middleware.js'
+import {getPosts} from "./controllers/posts.contoller.js"
 
 const app = express()
 
@@ -30,16 +31,7 @@ app.use(useCategories)
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
 
-app.get('/', async (req, res) => {
-    try {
-        const query = 'SELECT title, slug, content, updated_at, image_url FROM posts'
-        const [rows] = await pool.query(query)
-        res.render('index.ejs', {current: 'home', posts: rows})
-    } catch (error) {
-        console.error('Error fetching posts:', error)
-        res.status(500).send('Error fetching posts')
-    }
-})
+app.get('/', getPosts)
 
 app.get('/about', (req, res) => {
     res.render('about.ejs', {current: 'about'})
@@ -71,9 +63,25 @@ app.post('/logout', (req, res) => {
     })
 })
 
-app.post('/posts/add', uploadTemp.single('image'), isAdmin, (req, res) => {
+app.post('/posts/add', uploadTemp.single('image'), isAdmin, async (req, res) => {
     console.log(req.file)
     console.log(req.body)
+
+    // try {
+    //     const imgRegex = /<img[^>]+src="([^">]+)"/
+    //     let match
+    //     let updateContent = req.body.content
+
+    //     while(match = imgRegex.exec(updateContent) !== null){
+    //         const tempUrl = match[1]
+    //         if(tempUrl.includes("/uploads/tempFiles/")){
+                
+    //         }
+    //     }
+
+    // } catch (error) {
+        
+    // }
 
     res.json({success: true, message: "Post added successfully", file: req.file})
 })
