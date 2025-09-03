@@ -142,7 +142,7 @@ if (addPostButton) {
                                     imageInput.setAttribute('accept', 'image/*')
                                     imageInput.click()
 
-                                    imageInput.onchange = () => {
+                                    imageInput.onchange = async () => {
                                         const imageFile = imageInput.files[0]
                                         if (imageFile) {
                                             const formData = new FormData()
@@ -150,12 +150,19 @@ if (addPostButton) {
 
                                             console.log(formData.get('image'))
 
+                                            const response = await fetch('/upload', {
+                                                method: 'POST',
+                                                body: formData
+                                            })
+
+                                            const data = await response.json()
+
                                             const range = this.quill.getSelection()
 
                                             console.log(range)
                                             if (range) {
                                                 console.log("entre")
-                                                this.quill.insertEmbed(range.index, 'image', URL.createObjectURL(imageFile))
+                                                this.quill.insertEmbed(range.index, 'image', data.url)
                                             }
                                         }
                                     }
@@ -170,12 +177,19 @@ if (addPostButton) {
                     hiddenInput.value = quill.root.innerHTML;
                 })
             },
-            onAction: () => {
+            onAction: async () => {
                 const title = document.querySelector('#post-title').value.trim()
                 const imageFile = document.querySelector('#post-image').files
                 const category = document.querySelector('#post-category').value
                 const tags = document.querySelector('#post-tags').value.trim()
                 const content = document.querySelector('#post-content').value
+
+                const formData = new FormData()
+                formData.append('title', title)
+                formData.append('image', imageFile[0])
+                formData.append('category', category)
+                formData.append('tags', tags)
+                formData.append('content', content)
 
                 console.log({
                     title,
@@ -184,6 +198,18 @@ if (addPostButton) {
                     tags,
                     content
                 })
+
+                try {
+                    const response = await fetch('/posts/add', {
+                        method: 'POST',
+                        body: formData
+                    })
+
+                    const data = await response.json()
+                } catch (error) {
+                    console.error('Error adding post:', error)
+                }
+
 
             },
             buttonText: "Add Post"

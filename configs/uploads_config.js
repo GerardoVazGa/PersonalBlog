@@ -1,22 +1,24 @@
-import fs from "fs"
+import fs from "fs/promises"
 import path from "path"
 import multer from "multer"
 
-export const uploadsDir = path.join(path.cwd(), "uploads")
-export const TEMP_DIR = path.join(uploadsDir, "tempFiles")
-export const POSTS_DIR = path.join(uploadsDir, "postsFiles")
+const uploadsDir = path.join(process.cwd(), "public/uploads")
+const TEMP_DIR = path.join(uploadsDir, "tempFiles")
+const POSTS_DIR = path.join(uploadsDir, "postsFiles")
 
-if(!fs.existsSync(uploadsDir)) {
-    fs.mkdirSync(uploadsDir)
+console.log(uploadsDir)
+
+async function ensureDirsExist(pathDir){
+    try {
+        await fs.access(pathDir)
+    } catch (error) {
+        await fs.mkdir(pathDir, {recursive: true})
+    }
 }
 
-if(!fs.existsSync(TEMP_DIR)) {
-    fs.mkdirSync(TEMP_DIR)
-}
-
-if(!fs.existsSync(POSTS_DIR)){
-    fs.mkdirSync(POSTS_DIR)
-}
+await ensureDirsExist(uploadsDir)
+await ensureDirsExist(TEMP_DIR)
+await ensureDirsExist(POSTS_DIR)
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -29,22 +31,26 @@ const storage = multer.diskStorage({
 
 export const uploadTemp = multer({storage: storage})
 
-export const moveTempToPosts = (tmpUrl) => {
+export const moveTempToPosts = async (tmpUrl) => {
     const filename = path.basename(tmpUrl)
     const oldPath = path.join(TEMP_DIR, filename)
     const newPath = path.join(POSTS_DIR, filename)
-
-    if(fs.existsSync(oldPath)) {
-        fs.renameSync(oldPath, newPath)
+    
+    try {
+        await fs.rename(oldPath, newPath)
+        return `/uploads/postsFiles/${filename}`
+    } catch (error) {
+        console.error("Error moving file from temp to posts:", error)
+        return null
     }
-
-    return `/uploads/postsFiles/${filename}`
 }
 
-export const removeTemp = (tmpUrl) => {
+export const removeTemp = async (tmpUrl) => {
     const fullTempDir = path.join(TEMP_DIR, path.basename(tmpUrl))
 
-    if(fs.existsSync(fullTempDir)) {
-        fs.unlinkSync(fullTempDir)
+    try {
+        await fs.unlink(fullTempDir)
+    } catch (error) {
+        console.error('Error removing temporary file:', error)
     }
 }

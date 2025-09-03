@@ -87,9 +87,11 @@ function isAdmin(req, res, next) {
     return res.status(403).json({error: "Unauthorized access"})
 }
 
-app.post('/posts/add', isAdmin, (req, res) => {
-    
-    res.send(req.body)
+app.post('/posts/add', uploadTemp.single('image'), isAdmin, (req, res) => {
+    console.log(req.file)
+    console.log(req.body)
+
+    res.json({success: true, message: "Post added successfully", file: req.file})
 })
 
 app.put('/posts/edit/:id', isAdmin, (req, res) => {
