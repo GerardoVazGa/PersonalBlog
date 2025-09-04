@@ -57,7 +57,7 @@ export const createPost = async({title, content, image, category, tags}) =>{
 
         const postId = await PostModel.addPost(post, connection)
 
-        tags.forEach(async tag => {
+        tagsArray.forEach(async tag => {
             let tagId
             const existTag = await TagModel.findTag(tag, connection)
 
