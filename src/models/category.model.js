@@ -1,7 +1,7 @@
 import pool from "../db/db.js"
 
 export const getAllCategories = async () => {
-    const query = 'SELECT name FROM catergories'
+    const query = 'SELECT name FROM categories'
     const [rows] = await pool.query(query)
     return rows
 }
