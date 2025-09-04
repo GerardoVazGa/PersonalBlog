@@ -5,3 +5,30 @@ export const getAllPosts = async () => {
     const [rows] = await pool.query(query)
     return rows
 }
+
+export const addPost = async (post, connection = pool) => {
+    const query = `
+        INSERT INTO posts
+            (title, slug, content, image_url, status, created_at, updated_at, author_id, category_id)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `
+    const [result] = await connection.query(query, [
+        post.title,
+        post.slug,
+        post.content,
+        post.image_url,
+        post.status,
+        post.created_at,
+        post.updated_at,
+        post.author_id,
+        post.category_id
+    ])
+
+    return result.insertId
+}
+
+export const insertPostTag = async (postId, tagId, connection = pool) => {
+    const query = `INSERT INTO post_tags (post_id, tag_id) VALUES (?, ?)`
+
+    const [result] = await connection.query(query, [postId, tagId])
+}
