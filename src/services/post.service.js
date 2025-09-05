@@ -37,7 +37,7 @@ export const createPost = async({title, content, image, category, tags}) =>{
         .replace(/-+/g, "-")
     
     const categoryId = await CategoryModel.getCategoryId(category)
-    if(!categoryId) return `Categoty ${category} not found`
+    if(!categoryId) throw new Error(`Categoty ${category} not found`)
 
     const connection = await pool.getConnection()
     try {

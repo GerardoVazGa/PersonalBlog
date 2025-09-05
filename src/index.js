@@ -3,7 +3,7 @@ import bodyParser from "body-parser"
 import ejs from "ejs"
 import path from "path"
 import { fileURLToPath } from "url"
-import {PORT, ADMIN_PASS} from "./configs/env.js"
+import {PORT} from "./configs/env.js"
 import session from "express-session";
 import {sessionConfig} from "./configs/session_config.js"
 import {uploadTemp} from './configs/uploads_config.js'
@@ -13,6 +13,7 @@ import {useCategories} from './middlewares/useCategories.middleware.js'
 import {getPosts} from "./controllers/posts.controller.js"
 import {getCategories} from './controllers/category.controller.js'
 import {loginAdmin, logoutAdmin} from "./controllers/auth.controller.js"
+
 
 const app = express()
 
@@ -48,26 +49,10 @@ app.post('/login', loginAdmin)
 app.post('/logout', logoutAdmin)
 
 app.post('/posts/add', uploadTemp.single('image'), isAdmin, async (req, res) => {
-    console.log(req.file)
+    console.log(req.files)
     console.log(req.body)
 
-    // try {
-    //     const imgRegex = /<img[^>]+src="([^">]+)"/
-    //     let match
-    //     let updateContent = req.body.content
-
-    //     while(match = imgRegex.exec(updateContent) !== null){
-    //         const tempUrl = match[1]
-    //         if(tempUrl.includes("/uploads/tempFiles/")){
-                
-    //         }
-    //     }
-
-    // } catch (error) {
-        
-    // }
-
-    res.json({success: true, message: "Post added successfully", file: req.file})
+    res.json({success: true, message: "Post added successfully"})
 })
 
 app.put('/posts/edit/:id', isAdmin, (req, res) => {
