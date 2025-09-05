@@ -43,7 +43,7 @@ export const createPost = async({title, content, image, category, tags}) =>{
         const post = {
             title,
             slug,
-            content,
+            content: cleanContent,
             image_url: image,
             status: "published",
             created_at: new Date(),

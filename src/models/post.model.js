@@ -29,6 +29,12 @@ export const addPost = async (post, connection = pool) => {
 
 export const insertPostTag = async (postId, tagId, connection = pool) => {
     const query = `INSERT INTO post_tags (post_id, tag_id) VALUES (?, ?)`
-
     const [result] = await connection.query(query, [postId, tagId])
+}
+
+export const existSlug = async (slug) => {
+    const query = 'SELECT id FROM posts WHERE slug = ? LIMIT 1'
+    const [result] = await pool.query(query, [slug])
+
+    return result.length > 0
 }
