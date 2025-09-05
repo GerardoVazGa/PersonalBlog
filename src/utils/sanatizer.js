@@ -2,7 +2,7 @@
 import DOMPurify from "dompurify"
 import {JSDOM} from "jsdom"
 
-export const sanatizer = (dirtyContent) => {
+export const sanatizer = async (dirtyContent) => {
     const {window}  = new JSDOM("")
     const purify = DOMPurify(window)
 

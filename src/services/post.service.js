@@ -3,6 +3,7 @@ import * as CategoryModel from "../models/category.model.js"
 import * as TagModel from "../models/tags.model.js"
 import pool from "../db/db.js"
 import { slugify } from "../utils/slugify.js"
+import { sanatizer } from "../utils/sanatizer.js"
 
 export const allPosts = async() => {
     try {
@@ -31,6 +32,9 @@ export const createPost = async({title, content, image, category, tags}) =>{
     
     const categoryId = await CategoryModel.getCategoryId(category)
     if(!categoryId) throw new Error(`Categoty ${category} not found`)
+
+    const cleanContent = await sanatizer(content)
+    if(!cleanContent) throw new Error("Content is not valid")
 
     const connection = await pool.getConnection()
     try {
