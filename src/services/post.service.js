@@ -2,6 +2,7 @@ import * as PostModel from "../models/post.model.js"
 import * as CategoryModel from "../models/category.model.js"
 import * as TagModel from "../models/tags.model.js"
 import pool from "../db/db.js"
+import { slugify } from "../utils/slugify.js"
 
 export const allPosts = async() => {
     try {
@@ -26,15 +27,7 @@ export const createPost = async({title, content, image, category, tags}) =>{
 
     const tagsArray = tags ? tags.split("|").map(tag => tag.trim()).filter(Boolean) : []
 
-    const slug = title
-        .toString()
-        .toLowerCase()
-        .normalize("NFD")                 
-        .replace(/[\u0300-\u036f]/g, "")  
-        .replace(/[^\w\s-]/g, "")
-        .trim()
-        .replace(/\s+/g, "-")
-        .replace(/-+/g, "-")
+    const slug = await slugify(title)
     
     const categoryId = await CategoryModel.getCategoryId(category)
     if(!categoryId) throw new Error(`Categoty ${category} not found`)
