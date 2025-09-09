@@ -10,7 +10,7 @@ import {uploadTemp} from './configs/uploads_config.js'
 import { loggedAdmin } from "./middlewares/loggedAdmin.middleware.js"
 import {isAdmin} from './middlewares/isAdmin.middleware.js'
 import {useCategories} from './middlewares/useCategories.middleware.js'
-import {getPosts} from "./controllers/posts.controller.js"
+import {addPost, getPosts} from "./controllers/posts.controller.js"
 import {getCategories} from './controllers/category.controller.js'
 import {loginAdmin, logoutAdmin} from "./controllers/auth.controller.js"
 
@@ -48,12 +48,7 @@ app.post('/login', loginAdmin)
 
 app.post('/logout', logoutAdmin)
 
-app.post('/posts/add', uploadTemp.single('image'), isAdmin, async (req, res) => {
-    console.log(req.files)
-    console.log(req.body)
-
-    res.json({success: true, message: "Post added successfully"})
-})
+app.post('/posts/add', uploadTemp.single('image'), addPost)
 
 app.put('/posts/edit/:id', isAdmin, (req, res) => {
 

@@ -8,7 +8,7 @@ export const  findTag = async (tag, connection = pool) => {
 
 
 
-    return rows[0].id
+    return rows.length > 0 ? rows[0].id : null
 }
 
 export const insertTag = async(tag, connection) => {

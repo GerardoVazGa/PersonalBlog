@@ -9,5 +9,5 @@ export const getAllCategories = async () => {
 export const getCategoryId = async (name) => {
     const query = 'SELECT id FROM categories WHERE name = ?'
     const [rows] =await pool.query(query, [name])
-    return rows
+    return rows.length > 0 ? rows[0].id : null
 }

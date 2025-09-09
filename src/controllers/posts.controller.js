@@ -11,9 +11,10 @@ export const  getPosts = async (req, res) => {
 
 export const addPost = async (req, res) => {
     try {
-        const post = await PostService.createPost(req.body)
+        const post = await PostService.createPost({...req.body, image: req.file.filename})
         res.json({success: true, message: "Post added successfully"})
     } catch (error) {
+        console.log(error.message)
         res.status(400).json({success: false, message: error.message})
     }
 }

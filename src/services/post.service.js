@@ -4,6 +4,7 @@ import * as TagModel from "../models/tags.model.js"
 import pool from "../db/db.js"
 import { slugify } from "../utils/slugify.js"
 import { sanatizer } from "../utils/sanatizer.js"
+import {moveTempToPosts, removeTemp} from "../utils/fileUtils.js"
 
 export const allPosts = async() => {
     try {
@@ -13,7 +14,9 @@ export const allPosts = async() => {
     }
 }
 
-export const createPost = async({title, content, image, category, tags}) =>{
+export const createPost = async(post) =>{
+    console.log(post)
+    const {title, content, image, category, tags} = post
     if(!title) {
         throw new Error("Titlte is required")
     }
@@ -26,15 +29,38 @@ export const createPost = async({title, content, image, category, tags}) =>{
         throw new Error("Image is required")
     }
 
+    const imageUrl = await moveTempToPosts(image)
+
+    if(!imageUrl) {
+        throw new Error("Image is not valid")
+    }
+
     const tagsArray = tags ? tags.split("|").map(tag => tag.trim()).filter(Boolean) : []
 
     const slug = await slugify(title)
     
     const categoryId = await CategoryModel.getCategoryId(category)
-    if(!categoryId) throw new Error(`Categoty ${category} not found`)
+    console.log(categoryId)
+    if(!categoryId) throw new Error(`Category ${category} not found`)
 
     const cleanContent = await sanatizer(content)
     if(!cleanContent) throw new Error("Content is not valid")
+
+    const imageRegex = /<img[^>]+src=["']([^"']+)["']/g
+    let match
+    let updatedContent = cleanContent
+
+    while((match = imageRegex.exec(updatedContent)) !== null) {
+        const src = match[1]
+        if(src.includes('uploads/tempFiles/')) {
+            const newUrl = await moveTempToPosts(src)
+            if(newUrl) {
+                updatedContent = updatedContent.replaceAll(src, newUrl)
+            }else {
+                await removeTemp(src)
+            }
+        }
+    }
 
     const connection = await pool.getConnection()
     try {
@@ -43,13 +69,13 @@ export const createPost = async({title, content, image, category, tags}) =>{
         const post = {
             title,
             slug,
-            content: cleanContent,
+            content: updatedContent,
             image_url: image,
             status: "published",
             created_at: new Date(),
             updated_at: new Date(),
             author_id: 1,
-            categoryId,
+            category_id: categoryId,
         }
 
         const postId = await PostModel.addPost(post, connection)

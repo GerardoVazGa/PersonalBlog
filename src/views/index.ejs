@@ -22,11 +22,11 @@
             <% posts.forEach(post => { %>
                 <article class="highlighted-article">    
                     <figure class="highlighted-image">
-                        <img src="/uploads/<%= post.image_url %>" alt="<%= post.title %>">
+                        <img src="/uploads/postsFiles/<%= post.image_url %>" alt="<%= post.title %>">
                     </figure>
                     <div class="highlighted-content">
                         <h3><%= post.title %></h3>
-                        <p><%= post.content.substring(0, 100) %></p>
+                        <p><%- post.content %></p>
                         <a href="/posts/<%= post.slug %>" class="read-more">Leer más</a>
                     </div>
                 </article>
