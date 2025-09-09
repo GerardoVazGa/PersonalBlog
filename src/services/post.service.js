@@ -109,3 +109,7 @@ export const createPost = async(post) =>{
     }
 
 } 
+
+export const getPost = async(slug) => {
+    return await PostModel.getPostBySlug(slug)
+}

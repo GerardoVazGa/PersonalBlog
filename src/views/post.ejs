@@ -1,0 +1,13 @@
+<%- include('partials/header.ejs') %>
+
+
+<main class="main-content">
+    <img src="/uploads/postsFiles/<%= post.image_url %>" alt="<%= post.title %>">
+
+    <h1><%= post.title %></h1>
+
+    <div style="padding: 2rem;"><%- post.content %></div>
+</main>
+
+
+<%- include('partials/footer.ejs') %>

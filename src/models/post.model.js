@@ -39,3 +39,10 @@ export const existSlug = async (slug) => {
 
     return result.length > 0
 }
+
+export const getPostBySlug = async (slug) => {
+    const query = 'SELECT * FROM posts WHERE slug = ? LIMIT 1'
+    const [rows] = await pool.query(query, [slug])
+
+    return rows.length > 0 ? rows[0] : null
+} 

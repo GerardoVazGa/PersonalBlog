@@ -18,3 +18,12 @@ export const addPost = async (req, res) => {
         res.status(400).json({success: false, message: error.message})
     }
 }
+
+export const getPost = async (req, res) => {
+    try {
+        const post = await PostService.getPost(req.params.slug)
+        res.render('post.ejs', {current: 'home', post: post})
+    } catch (error) {
+        res.status(500).json({error: "Error fetching post"})
+    }
+}
