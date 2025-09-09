@@ -16,18 +16,26 @@
     </section>
 
     <section id="highlights-articles">
-        <h2>Articulos Destacados</h2>
+        <h2 class="highlighted-articles-title">Articulos Destacados</h2>
 
         <div class="highlighted-articles">
             <% posts.forEach(post => { %>
                 <article class="highlighted-article">    
                     <figure class="highlighted-image">
-                        <img src="/uploads/postsFiles/<%= post.image_url %>" alt="<%= post.title %>">
+                        <img src="/uploads/postsFiles/<%= post.image_url %>" alt="<%= post.title %>" class="highlighted-img">
                     </figure>
                     <div class="highlighted-content">
                         <h3><%= post.title %></h3>
-                        <p><%- post.content %></p>
-                        <a href="/posts/<%= post.slug %>" class="read-more">Leer más</a>
+                        <div class="highlighted-article-text"> <%- post.content %> </div>
+                        <div class="highlighted-info">
+                            <a href="/posts/<%= post.slug %>" class="read-more">Leer más</a>
+                            <% if(!isAdmin) { %>
+                                <div class="buttons">
+                                    <button class="btn-edit">Editar</button>
+                                    <button class="btn-delete">Eliminar</button>
+                                </div>
+                            <% } %>
+                        </div>
                     </div>
                 </article>
             <% }) %>
