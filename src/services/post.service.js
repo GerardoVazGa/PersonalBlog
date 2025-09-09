@@ -5,6 +5,7 @@ import pool from "../db/db.js"
 import { slugify } from "../utils/slugify.js"
 import { sanatizer } from "../utils/sanatizer.js"
 import {moveTempToPosts, removeTemp} from "../utils/fileUtils.js"
+import { generatePreview } from "../utils/generatePreview.js"
 
 export const allPosts = async() => {
     try {
@@ -62,6 +63,8 @@ export const createPost = async(post) =>{
         }
     }
 
+    const preview = await generatePreview(updatedContent, 100)
+
     const connection = await pool.getConnection()
     try {
         await connection.beginTransaction()
@@ -76,6 +79,7 @@ export const createPost = async(post) =>{
             updated_at: new Date(),
             author_id: 1,
             category_id: categoryId,
+            preview
         }
 
         const postId = await PostModel.addPost(post, connection)

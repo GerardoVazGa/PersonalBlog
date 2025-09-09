@@ -26,7 +26,7 @@
                     </figure>
                     <div class="highlighted-content">
                         <h3><%= post.title %></h3>
-                        <div class="highlighted-article-text"> <%- post.content %> </div>
+                        <div class="highlighted-article-text"> <%= post.preview %> </div>
                         <div class="highlighted-info">
                             <a href="/posts/<%= post.slug %>" class="read-more">Leer más</a>
                             <% if(!isAdmin) { %>
