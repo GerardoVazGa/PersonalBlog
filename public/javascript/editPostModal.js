@@ -208,6 +208,23 @@ if (editPostButtons) {
                     formData.append("category", category)
                     formData.append("tags", tags)
                     formData.append("content", newContent)
+
+                    try {
+                        const response = await fetch(`/posts/edit/${postId}`, {
+                            method: "PUT",
+                            body: formData
+                        })
+
+                        const data = await response.json()
+
+                        if (data.success) {
+                            window.location.reload()
+                        }else {
+                            alert(data.message)
+                        }
+                    } catch (error) {
+                        console.error("Error updating post:", error)
+                    }
                 },
                 buttonText: "Update Post",
             })

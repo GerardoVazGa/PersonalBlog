@@ -35,3 +35,13 @@ export const getPostJson = async (req, res) => {
         res.status(500).json({error: "Error fetching post"})
     }
 }
+
+export const editPost = async (req, res) => {
+    try {
+        console.log(req.body)
+        console.log(req.file)
+        console.log(req.params.id)
+    } catch (error) {
+        
+    }
+}
