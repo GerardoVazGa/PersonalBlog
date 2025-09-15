@@ -113,3 +113,13 @@ export const createPost = async(post) =>{
 export const getPost = async(slug) => {
     return await PostModel.getPostBySlug(slug)
 }
+export const getPostJson = async(id) => {
+    const post = await PostModel.getPostById(id)
+    const tags = await PostModel.getPostTags(id)
+
+    const tagsArray = tags.map(tag => tag.name)
+
+    const tagsString = tagsArray.join("|")
+    
+    return {...post, tags: tagsString}
+}

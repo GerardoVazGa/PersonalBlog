@@ -27,3 +27,11 @@ export const getPost = async (req, res) => {
         res.status(500).json({error: "Error fetching post"})
     }
 }
+export const getPostJson = async (req, res) => {
+    try {
+        const post = await PostService.getPostJson(req.params.id)
+        res.json(post) 
+    } catch (error) {
+        res.status(500).json({error: "Error fetching post"})
+    }
+}

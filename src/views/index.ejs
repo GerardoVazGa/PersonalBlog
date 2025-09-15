@@ -31,7 +31,7 @@
                             <a href="/posts/<%= post.slug %>" class="read-more">Leer más</a>
                             <% if(!isAdmin) { %>
                                 <div class="buttons">
-                                    <button class="btn-edit">Editar</button>
+                                    <button class="btn-edit" data-post-id="<%= post.id  %>">Editar</button>
                                     <button class="btn-delete">Eliminar</button>
                                 </div>
                             <% } %>

@@ -10,7 +10,7 @@ import {uploadTemp} from './configs/uploads_config.js'
 import { loggedAdmin } from "./middlewares/loggedAdmin.middleware.js"
 import {isAdmin} from './middlewares/isAdmin.middleware.js'
 import {useCategories} from './middlewares/useCategories.middleware.js'
-import {addPost, getPost, getPosts} from "./controllers/posts.controller.js"
+import {addPost, getPost, getPostJson, getPosts} from "./controllers/posts.controller.js"
 import {getCategories} from './controllers/category.controller.js'
 import {loginAdmin, logoutAdmin} from "./controllers/auth.controller.js"
 
@@ -49,6 +49,8 @@ app.post('/login', loginAdmin)
 app.post('/logout', logoutAdmin)
 
 app.get('/posts/:slug', getPost)
+
+app.get('/posts/edit/:id/json', getPostJson)
 
 app.post('/posts/add', uploadTemp.single('image'), addPost)
 
