@@ -41,7 +41,6 @@ export const createPost = async(post) =>{
     const slug = await slugify(title)
     
     const categoryId = await CategoryModel.getCategoryId(category)
-    console.log(categoryId)
     if(!categoryId) throw new Error(`Category ${category} not found`)
 
     const cleanContent = await sanatizer(content)
@@ -122,4 +121,75 @@ export const getPostJson = async(id) => {
     const tagsString = tagsArray.join("|")
     
     return {...post, tags: tagsString}
+}
+
+export const editPost = async(post, id) => {
+    const {title, content, image, category, tags} = post
+
+    if(!id) {
+        throw new Error("Post ID is required")
+    }
+
+    if(!title) {
+        throw new Error("Title is required")
+    }
+
+    if(!image) {
+        throw new Error("Image is required")
+    }
+
+    if(!category) {
+        throw new Error("Category is required")
+    }
+
+    if(!tags) {
+        throw new Error("Tags is required")
+    }
+
+    if(!content) {
+        throw new Error("Content is required")
+    }
+
+    const newImageUrl = image.includes('uploads/tempFiles/') ? await moveTempToPosts(image) : image
+
+    if(!newImageUrl) {
+        throw new Error("Image is not valid")
+    }
+
+    const tagsArray = tags ? tags.split("|").map(tag => tag.trim()).filter(Boolean) : []
+
+    const slug = await slugify(title)
+
+    const categoryId = await CategoryModel.getCategoryId(category)
+    if(!categoryId) throw new Error(`Category ${category} not found`)
+
+    const cleanContent = await sanatizer(content)
+    if(!cleanContent) throw new Error("Content is not valid")
+    
+    const updateContent = await replaceTempToPosts(cleanContent)
+    if(!updateContent) throw new Error("Content is not replaced correctly")
+
+    const preview = await generatePreview(updateContent, 100)
+
+    const connection = await pool.getConnection()
+
+    try {
+        await connection.beginTransaction()
+        const newPostData = {
+            title,
+            slug,
+            content: updateContent,
+            image_url: newImageUrl,
+            updated_at: new Date(),
+            category_id: categoryId,
+            preview
+        }
+
+        console.log(newPostData)
+
+        
+    } catch (error) {
+        
+    }
+
 }
