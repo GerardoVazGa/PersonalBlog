@@ -24,3 +24,13 @@ export const removeTemp = async (tmpUrl) => {
         console.error('Error removing temporary file:', error)
     }
 }
+
+export const removePostImage = async (postUrl) => {
+    const fullPostDir = path.join(POSTS_DIR, path.basename(postUrl))
+
+    try {
+        await fs.unlink(fullPostDir)
+    } catch (error) {
+        console.error('Error removing post image:', error)
+    }
+}

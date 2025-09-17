@@ -78,3 +78,14 @@ export const getPostTags = async (id) => {
     const [rows] = await pool.query(query, [id])
     return rows
 }
+
+export const getOldContent = async (id, connection = pool) =>  {
+    const query = `
+        SELECT content FROM posts
+        WHERE id = ?
+        LIMIT 1;
+    `
+    const [result] = await connection.query(query, [id])
+
+    return result.length > 0 ? result[0].content : null
+}

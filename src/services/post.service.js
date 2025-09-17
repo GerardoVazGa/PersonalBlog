@@ -4,8 +4,9 @@ import * as TagModel from "../models/tags.model.js"
 import pool from "../db/db.js"
 import { slugify } from "../utils/slugify.js"
 import { sanatizer } from "../utils/sanatizer.js"
-import {moveTempToPosts, removeTemp} from "../utils/fileUtils.js"
+import {moveTempToPosts, removeTemp, removePostImage} from "../utils/fileUtils.js"
 import { generatePreview } from "../utils/generatePreview.js"
+import { toDeleteOldImageCont } from "../utils/toDeleteOldImageCont.js"
 
 export const allPosts = async() => {
     try {
@@ -150,7 +151,7 @@ export const editPost = async(post, id) => {
         throw new Error("Content is required")
     }
 
-    const newImageUrl = image.includes('uploads/tempFiles/') ? await moveTempToPosts(image) : image
+    const newImageUrl = await moveTempToPosts(image)
 
     if(!newImageUrl) {
         throw new Error("Image is not valid")
@@ -166,28 +167,39 @@ export const editPost = async(post, id) => {
     const cleanContent = await sanatizer(content)
     if(!cleanContent) throw new Error("Content is not valid")
     
-    const updateContent = await replaceTempToPosts(cleanContent)
-    if(!updateContent) throw new Error("Content is not replaced correctly")
+    const updatedContent = await replaceTempToPosts(cleanContent)
+    if(!updatedContent) throw new Error("Content is not replaced correctly")
 
-    const preview = await generatePreview(updateContent, 100)
+    const preview = await generatePreview(updatedContent, 100)
 
     const connection = await pool.getConnection()
 
     try {
         await connection.beginTransaction()
+
+        const oldContentPost = await PostModel.getOldContent(id, connection)
+        
+        const oldImagesToDelete = toDeleteOldImageCont(oldContentPost, updatedContent)
+
+
+
         const newPostData = {
             title,
             slug,
-            content: updateContent,
+            content: updatedContent,
             image_url: newImageUrl,
             updated_at: new Date(),
             category_id: categoryId,
             preview
         }
 
+        for(const image of oldImagesToDelete) {
+            await removePostImage(image)
+        }
+
         console.log(newPostData)
 
-        
+
     } catch (error) {
         
     }

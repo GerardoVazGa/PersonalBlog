@@ -1,3 +1,4 @@
+import { moveTempToPosts, removeTemp } from './fileUtils.js'
 export const replaceTempToPosts = async (cleanContent) => {
     const imageRegex = /<img[^>]+src=["']([^"']+)["']/g
     let match
