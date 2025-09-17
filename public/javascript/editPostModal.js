@@ -51,8 +51,19 @@ if (editPostButtons) {
                     imageInput.accept = "image/*"
 
                     const currentImage = document.createElement("img")
-                    currentImage.src = `/uploads/postsFiles/${data.image_url}`
+                    const currentImageSrc = `/uploads/postsFiles/${data.image_url}`
+                    currentImage.src = currentImageSrc
                     currentImage.style.maxWidth = "150px"
+
+                    imageInput.addEventListener('change', (e) => {
+                        const imageFile = e.target.files[0]
+                        if(imageFile) {
+                            const objectUrl = URL.createObjectURL(imageFile)
+                            currentImage.src = objectUrl
+                        }else {
+                            currentImage.src = currentImageSrc
+                        }
+                    })
 
                     imageDiv.appendChild(imageLabel)
                     imageDiv.appendChild(imageInput)

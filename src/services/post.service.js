@@ -7,6 +7,7 @@ import { sanatizer } from "../utils/sanatizer.js"
 import {moveTempToPosts, removeTemp, removePostImage} from "../utils/fileUtils.js"
 import { generatePreview } from "../utils/generatePreview.js"
 import { toDeleteOldImageCont } from "../utils/toDeleteOldImageCont.js"
+import { replaceTempToPosts } from "../utils/replaceTempToPosts.js"
 
 export const allPosts = async() => {
     try {
@@ -124,8 +125,8 @@ export const getPostJson = async(id) => {
     return {...post, tags: tagsString}
 }
 
-export const editPost = async(post, id) => {
-    const {title, content, image, category, tags} = post
+export const editPost = async(post, image, id) => {
+    const {title, content, category, tags} = post
 
     if(!id) {
         throw new Error("Post ID is required")
@@ -133,10 +134,6 @@ export const editPost = async(post, id) => {
 
     if(!title) {
         throw new Error("Title is required")
-    }
-
-    if(!image) {
-        throw new Error("Image is required")
     }
 
     if(!category) {
@@ -149,12 +146,6 @@ export const editPost = async(post, id) => {
 
     if(!content) {
         throw new Error("Content is required")
-    }
-
-    const newImageUrl = await moveTempToPosts(image)
-
-    if(!newImageUrl) {
-        throw new Error("Image is not valid")
     }
 
     const tagsArray = tags ? tags.split("|").map(tag => tag.trim()).filter(Boolean) : []
@@ -178,8 +169,26 @@ export const editPost = async(post, id) => {
         await connection.beginTransaction()
 
         const oldContentPost = await PostModel.getOldContent(id, connection)
+
+        let newImageUrl = oldContentPost.image_url
+
+        console.log(newImageUrl)
+
+        if(image) {
+            const movedImage = await moveTempToPosts(image.filename)
+
+            if(!movedImage) {
+                throw new Error("Image is not valid")
+            }
+
+            newImageUrl = movedImage
+
+            if(oldContentPost.image_url) {
+                await removePostImage(oldContentPost.image_url)
+            }
+        }
         
-        const oldImagesToDelete = toDeleteOldImageCont(oldContentPost, updatedContent)
+        const oldImagesToDelete = await toDeleteOldImageCont(oldContentPost.content, updatedContent)
 
 
 
@@ -199,9 +208,10 @@ export const editPost = async(post, id) => {
 
         console.log(newPostData)
 
-
+        return true
     } catch (error) {
-        
+        connection.rollback()
+        throw error
     }
 
 }

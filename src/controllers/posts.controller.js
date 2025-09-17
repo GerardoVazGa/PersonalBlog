@@ -38,10 +38,14 @@ export const getPostJson = async (req, res) => {
 
 export const editPost = async (req, res) => {
     try {
-        console.log(req.body)
-        console.log(req.file)
-        console.log(req.params.id)
+        const postEdited = await PostService.editPost({...req.body}, req.file, req.params.id)
+        if(postEdited) {
+            return res.status(200).json({success: true, message: "Post edited successfully"})
+        }
+
+        return res.status(400).json({success: false, message: "Post not edited"})
     } catch (error) {
-        
+        console.log(error.message)
+        res.status(400).json({success: false, message: error.message})
     }
 }
