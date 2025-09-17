@@ -150,8 +150,6 @@ export const editPost = async(post, image, id) => {
 
     const tagsArray = tags ? tags.split("|").map(tag => tag.trim()).filter(Boolean) : []
 
-    const slug = await slugify(title)
-
     const categoryId = await CategoryModel.getCategoryId(category)
     if(!categoryId) throw new Error(`Category ${category} not found`)
 
@@ -169,6 +167,12 @@ export const editPost = async(post, image, id) => {
         await connection.beginTransaction()
 
         const oldContentPost = await PostModel.getOldContent(id, connection)
+
+        let newSlug = oldContentPost.slug
+
+        if(title !== oldContentPost.title) {
+            newSlug = await slugify(title)
+        }
 
         let newImageUrl = oldContentPost.image_url
 
@@ -190,11 +194,9 @@ export const editPost = async(post, image, id) => {
         
         const oldImagesToDelete = await toDeleteOldImageCont(oldContentPost.content, updatedContent)
 
-
-
         const newPostData = {
             title,
-            slug,
+            slug: newSlug,
             content: updatedContent,
             image_url: newImageUrl,
             updated_at: new Date(),

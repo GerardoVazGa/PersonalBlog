@@ -81,7 +81,7 @@ export const getPostTags = async (id) => {
 
 export const getOldContent = async (id, connection = pool) =>  {
     const query = `
-        SELECT content, image_url FROM posts
+        SELECT title, slug, content, image_url FROM posts
         WHERE id = ?
         LIMIT 1;
     `
