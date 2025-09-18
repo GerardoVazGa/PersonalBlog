@@ -20,3 +20,12 @@ export const insertTag = async(tag, connection) => {
         
     return result.insertId 
 }
+
+export const deletePostTags = async(postId, connection) => {
+    const query = `
+        DELETE FROM post_tags
+        WHERE post_id = ?
+    `
+
+    const [result] = await connection.query(query, postId)
+}

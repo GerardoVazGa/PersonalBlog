@@ -203,6 +203,21 @@ export const editPost = async(post, image, id) => {
             category_id: categoryId,
             preview
         }
+        
+        await TagModel.deletePostTags(id, connection)
+
+        for(const tag of tagsArray) {
+            let tagId
+            const existTag = await TagModel.findTag(tag, connection)
+
+            if(!existTag) {
+                tagId = await TagModel.insertTag(tag, connection)
+            }else {
+                tagId = existTag
+            }
+
+            await PostModel.insertPostTag(id, tagId, connection)
+        }
 
         for(const image of oldImagesToDelete) {
             await removePostImage(image)
