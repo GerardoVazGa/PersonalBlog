@@ -89,3 +89,24 @@ export const getOldContent = async (id, connection = pool) =>  {
 
     return result.length > 0 ? result[0] : null
 }
+
+export const updatePost = async (id, newPostData, connection = pool) =>  {
+    const query = `
+        update posts
+        set title = ?, slug = ?, content = ?, image_url = ?, updated_at = ?, category_id = ?, preview = ?
+        WHERE id = ?
+    `
+
+    const [result] = await connection.query(query, [
+        newPostData.title,
+        newPostData.slug,
+        newPostData.content,
+        newPostData.image_url,
+        newPostData.updated_at,
+        newPostData.category_id,
+        newPostData.preview,
+        id
+    ])
+
+    return result.affectedRows > 0
+}

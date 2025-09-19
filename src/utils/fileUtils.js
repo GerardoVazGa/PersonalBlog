@@ -26,6 +26,8 @@ export const removeTemp = async (tmpUrl) => {
 }
 
 export const removePostImage = async (postUrl) => {
+    if(!postUrl) return
+    
     const fullPostDir = path.join(POSTS_DIR, path.basename(postUrl))
 
     try {

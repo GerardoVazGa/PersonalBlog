@@ -174,18 +174,19 @@ export const editPost = async(post, image, id) => {
             newSlug = await slugify(title)
         }
 
+        // Principal image handling
         let newImageUrl = oldContentPost.image_url
 
-        console.log(newImageUrl)
-
-        if(image) {
+        if(image && image.filename !== oldContentPost.image_url) {
             const movedImage = await moveTempToPosts(image.filename)
 
             if(!movedImage) {
                 throw new Error("Image is not valid")
             }
 
-            newImageUrl = movedImage
+            newImageUrl = image.filename
+
+            console.log(newImageUrl)
 
             if(oldContentPost.image_url) {
                 await removePostImage(oldContentPost.image_url)
@@ -203,32 +204,31 @@ export const editPost = async(post, image, id) => {
             category_id: categoryId,
             preview
         }
+
+        const updatedPost = await PostModel.updatePost(id, newPostData, connection)
         
         await TagModel.deletePostTags(id, connection)
 
-        for(const tag of tagsArray) {
+        await Promise.all(tagsArray.map(async tag => {
             let tagId
             const existTag = await TagModel.findTag(tag, connection)
-
-            if(!existTag) {
-                tagId = await TagModel.insertTag(tag, connection)
-            }else {
-                tagId = existTag
-            }
-
+            tagId = existTag ? existTag : await TagModel.insertTag(tag, connection)
             await PostModel.insertPostTag(id, tagId, connection)
+        }))
+
+        await connection.commit()
+
+        for(const imageDelete of oldImagesToDelete) {
+            await removePostImage(imageDelete)
         }
 
-        for(const image of oldImagesToDelete) {
-            await removePostImage(image)
-        }
-
-        console.log(newPostData)
-
-        return true
+        return PostModel.getPostById(id)
     } catch (error) {
-        connection.rollback()
+        console.log(error.message)
+        await connection.rollback()
         throw error
+    } finally {
+        connection.release()
     }
 
 }
