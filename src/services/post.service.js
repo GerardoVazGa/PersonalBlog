@@ -232,3 +232,13 @@ export const editPost = async(post, image, id) => {
     }
 
 }
+
+export const deletePost = async (id) => {
+    const postId = parseInt(id)
+
+    if(!postId) {
+        throw new Error("Post ID is required")
+    }
+
+    const deletedPost = await PostModel.deletePostById(postId)
+}
