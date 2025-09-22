@@ -46,6 +46,16 @@ export const editPost = async (req, res) => {
         return res.status(400).json({success: false, message: "Post not edited"})
     } catch (error) {
         console.log(error.message)
-        res.status(400).json({success: false, message: error.message})
+        res.status(500).json({success: false, message: error.message})
+    }
+}
+
+export const deletePost = async (req, res) => {
+    const {id} = req.params
+    try {
+        const postDleted = await PostService.deletePost(id)
+        
+    } catch (error) {
+        
     }
 }
