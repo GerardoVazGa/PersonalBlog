@@ -69,3 +69,43 @@
     cursor: pointer;
 
 }
+
+.buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.buttons .btn-edit,
+.buttons .btn-delete {
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-edit {
+    background-color: var(--pistachio);
+    color: var(--dim-gray);
+    border: none;
+}
+
+.btn-delete{
+    color: var(--red-danger);
+    border: 1px solid var(--red-danger);
+}
+
+.buttons .btn-edit:hover {
+    background-color: white;
+    color: var(--pistachio);
+    border: 1px solid var(--pistachio);
+}
+
+.buttons .btn-delete:hover {
+    background-color: var(--red-danger);
+    color: white;
+}
