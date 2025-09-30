@@ -238,6 +238,7 @@ if (editPostButtons) {
                     }
                 },
                 buttonText: "Update Post",
+                showCancel: true
             })
         })
     })
