@@ -6,7 +6,7 @@ import { slugify } from "../utils/slugify.js"
 import { sanatizer } from "../utils/sanatizer.js"
 import {moveTempToPosts, removeTemp, removePostImage} from "../utils/fileUtils.js"
 import { generatePreview } from "../utils/generatePreview.js"
-import { toDeleteOldImageCont } from "../utils/toDeleteOldImageCont.js"
+import { extractImageUrls, toDeleteOldImageCont } from "../utils/toDeleteOldImageCont.js"
 import { replaceTempToPosts } from "../utils/replaceTempToPosts.js"
 
 export const allPosts = async() => {
@@ -240,5 +240,42 @@ export const deletePost = async (id) => {
         throw new Error("Post ID is required")
     }
 
-    const deletedPost = await PostModel.deletePostById(postId)
+    const connection = await pool.getConnection()
+    
+    try {
+        await connection.beginTransaction()
+        const post = await PostModel.getPostById(postId)
+
+        if(!post) {
+            throw new Error("Post not found")
+        }
+
+        await TagModel.deletePostTags(postId, connection)
+
+        const deleted = await PostModel.deletePostById(postId, connection)
+
+        if(!deleted) {
+            throw new Error("Post not deleted")
+        }
+
+        if(post.image_url) {
+            await removePostImage(post.image_url)
+        }
+
+        const contentImages = extractImageUrls(post.content)
+
+        for(const imageUrl of contentImages) {
+            await removePostImage(imageUrl)
+        }
+
+        await connection.commit()
+
+        return post.title
+    } catch (error) {
+        console.log(error.message)
+        await connection.rollback()
+        throw error
+    } finally {
+        connection.release()
+    }
 }

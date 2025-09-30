@@ -28,4 +28,6 @@ export const deletePostTags = async(postId, connection) => {
     `
 
     const [result] = await connection.query(query, postId)
+
+    return result.affectedRows > 0
 }

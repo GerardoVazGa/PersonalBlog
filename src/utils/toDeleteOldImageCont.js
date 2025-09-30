@@ -8,7 +8,7 @@ export const toDeleteOldImageCont = async (oldContent, newContent) => {
     return imagesToDelete
 }
 
-const extractImageUrls = (content) => {
+export const extractImageUrls = (content) => {
     const imageRegex = /<img[^>]+src=["']([^"']+)["']/g
     const urls = []
     let match

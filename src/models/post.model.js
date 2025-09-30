@@ -111,12 +111,12 @@ export const updatePost = async (id, newPostData, connection = pool) =>  {
     return result.affectedRows > 0
 }
 
-export const deletePostById = async(id) => {
+export const deletePostById = async(id, connection = pool) => {
     const query = `
         DELETE FROM posts
         WHERE id = ?
     `
-    const [result] = await pool.query(query, [id])
+    const [result] = await connection.query(query, [id])
 
     return result.affectedRows > 0
 }
