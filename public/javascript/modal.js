@@ -6,6 +6,7 @@ class Modal {
         this.modalContent = document.querySelector('.modal-content')
         this.modalContainer = document.querySelector('.modal-container')
         this.modalBtnAction = document.querySelector('.modal-btn-action')
+        this.modalBtnCancel = document.querySelector('.modal-btn-cancel')
 
         this.initialContainerClasses = this.modalContainer.className;
         this.open = false
@@ -76,6 +77,11 @@ class Modal {
             this.setupActionButton(config.onAction)
         }
 
+        if(config.showCancel) {
+            this.modalBtnCancel.style.display = 'inline-block'
+            this.modalBtnCancel.addEventListener('click', () => this.close())
+        }
+
         this.modal.classList.add("show")
         document.body.style.overflow = 'hidden';
         this.open = true
@@ -101,6 +107,8 @@ class Modal {
         this.modalContainer.classList.remove(...sizeClasses)
 
         this.modalContainer.className = this.initialContainerClasses
+
+        this.modalBtnCancel.style.display = 'none'
     }
 
     close() {

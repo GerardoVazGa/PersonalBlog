@@ -54,4 +54,18 @@
     padding: 0.5rem 0.75rem;
     font-size: 1rem;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+.modal-footer .modal-btn-cancel {
+    display: none;
+    background-color: white;
+    border: 1px solid var(--red-danger);
+    color: var(--red-danger);
+    border-radius: 0.4rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+
 }

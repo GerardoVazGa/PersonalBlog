@@ -12,10 +12,12 @@ if(deletePostButtons) {
                 size: "small",
                 content: (content) => {
                     const message = document.createElement('p')
+                    message.classList.add('delete-message')
                     message.textContent = "¿Estás seguro de que deseas eliminar esta publicación?"
                     content.appendChild(message)
                 },
                 buttonText: "Eliminar",
+                showCancel: true,
                 onAction: async () => {
                     try {
                         const response = await fetch(`/posts/delete/${postId}`, {

@@ -212,7 +212,8 @@ if (addPostButton) {
 
 
             },
-            buttonText: "Add Post"
+            buttonText: "Add Post",
+            showCancel: true
         })
     })
 }
