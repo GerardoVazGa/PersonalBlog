@@ -52,11 +52,11 @@ app.get('/posts/:slug', getPost)
 
 app.get('/posts/edit/:id/json', getPostJson)
 
-app.post('/posts/add', uploadTemp.single('image'), addPost)
+app.post('/posts/add', uploadTemp.single('image'), isAdmin, addPost)
 
-app.put('/posts/edit/:id', uploadTemp.single('image'), editPost)
+app.put('/posts/edit/:id', uploadTemp.single('image'), isAdmin, editPost)
 
-app.delete('/posts/delete/:id', deletePost)
+app.delete('/posts/delete/:id', isAdmin, deletePost)
 
 app.get('/api/categories', getCategories)
 
