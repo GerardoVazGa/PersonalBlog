@@ -53,9 +53,16 @@ export const editPost = async (req, res) => {
 export const deletePost = async (req, res) => {
     const {id} = req.params
     try {
-        const postDleted = await PostService.deletePost(id)
+        const postDeleted = await PostService.deletePost(id)
+
+        if(postDeleted) {
+            return res.status(200).json({success: true, message: `Post ${postDeleted} was deleted successfully`})
+        }
+
+        return res.status(400).json({success: false, message: `Post ${postDeleted} was not deleted`})
         
     } catch (error) {
-        
+        console.log(error.message)
+        res.status(500).json({success: false, message: error.message})
     }
 }
