@@ -66,3 +66,20 @@ export const deletePost = async (req, res) => {
         res.status(500).json({success: false, message: error.message})
     }
 }
+
+export const getPostsByCategory = async (req, res) => {
+    const {category} = req.params
+
+    try {
+        const posts = await PostService.getPostsByCategory(category)
+
+        if(posts) {
+            return res.status(200).json({success: true, posts})
+        }
+
+        return res.status(400).json({success: false, message: "No post found for this category"})
+    } catch (error) {
+        console.error(error.message)
+        res.status(500).json({success: false, message: error.message})
+    }
+}
