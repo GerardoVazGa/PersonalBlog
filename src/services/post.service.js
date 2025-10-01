@@ -279,3 +279,7 @@ export const deletePost = async (id) => {
         connection.release()
     }
 }
+
+export const getPostsByCategory = async (categoryName) => {
+    return await CategoryModel.getPostsByCategory(categoryName)
+}
