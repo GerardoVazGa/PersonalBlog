@@ -1,21 +1,20 @@
 <%- include('partials/header') %>
 
 <main class="main-content">
-    <div class="highlighted-articles">
+    <div class="posts-container-category">
         <% posts.forEach(post=> { %>
-            <article class="highlighted-article">
-                <figure class="highlighted-image">
-                    <img src="/uploads/postsFiles/<%= post.image_url %>" alt="<%= post.title %>"
-                        class="highlighted-img">
+            <article class="card">
+                <figure class="card-image">
+                    <img src="/uploads/postsFiles/<%= post.image_url %>" alt="<%= post.title %>">
                 </figure>
-                <div class="highlighted-content">
+                <div class="card-content">
                     <h3>
                         <%= post.title %>
                     </h3>
-                    <div class="highlighted-article-text">
+                    <div class="card-preview">
                         <%= post.preview %>
                     </div>
-                    <div class="highlighted-info">
+                    <div class="card-footer">
                         <a href="/posts/<%= post.slug %>" class="read-more">Leer más</a>
                         <% if(isAdmin) { %>
                             <div class="buttons">

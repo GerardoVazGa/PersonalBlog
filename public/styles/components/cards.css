@@ -1,0 +1,44 @@
+.card {
+    background-color: var(--card-background);
+    border: 1px solid var(--light-gray);
+    border-radius: 0.4rem;
+    overflow: hidden;
+    max-width: 320px;
+    height: 100%;
+    transition: all 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-image > img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+}
+
+.card-content {
+    padding: 1rem;
+    border-top: 1px solid var(--light-gray);
+}
+
+.card-preview {
+    height: 100px;
+    overflow: hidden;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    text-overflow: ellipsis;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0.5rem 0;
+}
