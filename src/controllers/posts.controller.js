@@ -74,7 +74,7 @@ export const getPostsByCategory = async (req, res) => {
         const posts = await PostService.getPostsByCategory(category)
 
         if(posts) {
-            return res.status(200).json({success: true, posts})
+            return res.status(200).render('category.ejs', {current: category, posts})
         }
 
         return res.status(400).json({success: false, message: "No post found for this category"})

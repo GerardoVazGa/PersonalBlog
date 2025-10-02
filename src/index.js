@@ -10,7 +10,7 @@ import {uploadTemp} from './configs/uploads_config.js'
 import { loggedAdmin } from "./middlewares/loggedAdmin.middleware.js"
 import {isAdmin} from './middlewares/isAdmin.middleware.js'
 import {useCategories} from './middlewares/useCategories.middleware.js'
-import {addPost, deletePost, editPost, getPost, getPostJson, getPosts} from "./controllers/posts.controller.js"
+import {addPost, deletePost, editPost, getPost, getPostJson, getPosts, getPostsByCategory} from "./controllers/posts.controller.js"
 import {getCategories} from './controllers/category.controller.js'
 import {loginAdmin, logoutAdmin} from "./controllers/auth.controller.js"
 
@@ -39,10 +39,7 @@ app.get('/about', (req, res) => {
     res.render('about.ejs', {current: 'about'})
 })
 
-app.get('/category/:category', (req, res) => {
-    const category = req.params.category.toLowerCase()
-    res.render('category', {current: category})
-})
+app.get('/category/:category', getPostsByCategory)
 
 app.post('/login', loginAdmin)
 
