@@ -2,6 +2,7 @@ import express from "express"
 import bodyParser from "body-parser"
 import ejs from "ejs"
 import path from "path"
+import cookieParser from "cookie-parser"
 import { fileURLToPath } from "url"
 import {PORT} from "./configs/env.js"
 import {uploadTemp} from './configs/uploads_config.js'
@@ -20,6 +21,7 @@ const __dirname = path.dirname(__filename)
 
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(express.json())
+app.use(cookieParser())
 
 app.use(express.static('public'))
 
