@@ -6,12 +6,12 @@ export const loginAdmin = async (req, res) => {
         const { password } = req.body
         const verified = await authService.loginAuthAdmin(password)
 
-        if (verified) {
-            req.session.admin = true
-            return res.json({ success: true, message: "Admin access granted" })
+        if (!verified) {
+            return res.status(403).json({ success: false, message: "Admin access denied" })
         }
 
-        return res.json({ success: false, message: "Invalid password" })
+        
+        return res.status(200).json({success: true, message: "Admin access granted"})
     } catch (err) {
         return res.status(500).json({ success: false, message: "Server error" })
     }

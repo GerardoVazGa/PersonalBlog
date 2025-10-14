@@ -1,7 +1,2 @@
-import {SESSION_SECRET} from "./env.js"
+import {SECRET_JWT_KEY} from "./env.js"
 
-export const sessionConfig = {
-    secret: SESSION_SECRET,
-    resave: false,
-    saveUninitialized: true
-}
