@@ -12,3 +12,4 @@ export const DB_PORT = process.env.DB_PORT || 3306
 
 export const ADMIN_PASS = process.env.ADMIN_PASS
 export const SECRET_JWT_KEY = process.env.SECRET_JWT_KEY || "DEFAULT_SECRET"
+export const EXPIRES_JWT_IN = process.env.EXPIRES_JWT_IN || "1h"
