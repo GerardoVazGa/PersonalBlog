@@ -28,11 +28,5 @@ export const loginAdmin = async (req, res) => {
 }
 
 export const logoutAdmin = (req, res) => {
-    req.session.destroy((err) => {
-        if(err) {
-            return res.status(500).json({success: false, message: "Error al cerrar sesion"})
-        }
-
-        return res.json({success: true, message: "Se cerro la sesion correctamente"})
-    })
+    return res.clearCookie("access_token").json({success: true, message: "Logged out successfully"})
 }

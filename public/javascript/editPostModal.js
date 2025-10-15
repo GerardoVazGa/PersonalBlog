@@ -6,7 +6,7 @@ const editPostButtons = document.querySelectorAll('.btn-edit')
 if (editPostButtons) {
     editPostButtons.forEach(editPostButton => {
         editPostButton.addEventListener('click', async (e) => {
-            const postId = e.target.dataset.postId
+            const postId = e.currentTarget.dataset.postId
 
             const response = await fetch(`/posts/edit/${postId}/json`, {
                 method: 'GET',
@@ -16,8 +16,6 @@ if (editPostButtons) {
             })
 
             const data = await response.json()
-
-            console.log(data)
 
             showModal({
                 title: "Edit Post",
