@@ -33,3 +33,15 @@
     white-space: pre-wrap;
     margin: 0 auto;
 }
+
+@media (max-width: 430px) {
+    #hero .hero-title {
+        font-size: 1.5rem;
+        padding: 0.3rem;
+    }
+
+    #hero .hero-description {
+        font-size: 1.2rem;
+
+    }
+}
