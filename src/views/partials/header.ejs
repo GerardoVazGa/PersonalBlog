@@ -52,5 +52,28 @@
                     <span></span>
                     <span></span>
                 </div>
+
+
         </nav>
+        <div class="mobile-nav">
+            <div class="nav-item"><a href="/">Home</a></div>
+
+            <div class="category-menu">
+                <div class="nav-item category-btn-container">
+                    <a class="category-btn">Categorías</a>
+                    <i class="fa-solid fa-caret-down"></i>
+                </div>
+                <div class="category-dropdown">
+                    <% categories.forEach((category)=> { %>
+                        <div class="dropdown-item">
+                            <a href="/category/<%= category %>"><%= category %></a>
+                        </div>
+                    <% }) %>
+                </div>
+            </div>
+
+            <div class="nav-item"><a href="/about">About</a></div>
+            <div class="nav-item"><a href="/contact">Contact</a></div>
+        </div>
+
     </header>
