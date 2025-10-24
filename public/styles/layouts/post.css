@@ -1,0 +1,113 @@
+.main-content.post-page {
+    background-color: #fffdfa;
+}
+
+.post {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 40px 20px;
+}
+
+.post-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.post-category {
+    display: inline-block;
+    color: var(--asparagus);
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+}
+
+.post-meta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+    font-size: 15px;
+    color: var(--dim-gray);
+    padding: 20px 0;
+    border-top: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.author {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.author-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--pistachio) 0%, var(--asparagus) 100%);
+}
+
+.post-featured-image {
+    width: 100%;
+    margin: 40px 0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+
+}
+
+.post-featured-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.post-title {
+    font-size: 48px;
+    font-weight: 700;
+    color: #1a1a1a;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Contenido del post */
+.post .post-content {
+    line-height: 1.6;
+    font-size: 1.1rem;
+    overflow: hidden;
+    text-align: justify;
+    padding: 20px;
+}
+
+.post .post-content img {
+    max-width: 50%;
+    height: auto;
+    display: block;
+    margin: 1rem auto;
+}
+
+.post-tags {
+    max-width: 720px;
+    min-height: 40px;
+    padding-top: 30px;
+    text-align: justify;
+    border-top: 1px solid #e0e0e0;
+}
+
+.tags-label {
+    font-size: 14px;
+    color: var(--dim-gray);
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.tag-list {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}

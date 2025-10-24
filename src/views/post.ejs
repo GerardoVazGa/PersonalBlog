@@ -1,12 +1,45 @@
 <%- include('partials/header.ejs') %>
 
 
-<main class="main-content">
-    <img src="/uploads/postsFiles/<%= post.image_url %>" alt="<%= post.title %>">
+<main class="main-content post-page">
+    <article class="post">
+        <header class="post-header">
+            <div class="post-category"><%= post.category_name %></div>
+            <h1 class="post-title"><%= post.title %></h1>
 
-    <h1><%= post.title %></h1>
+            <div class="post-meta">
+                <div class="author">
+                    <div class="author-avatar"></div>
+                    <span>Por <strong><%= post.author_name %></strong></span>
+                </div>
+                <time><%= post.created_at %></time>
+            </div>
+        </header>
 
-    <div style="padding: 2rem;"><%- post.content %></div>
+        <% if(post.image_url) { %>
+            <figure class="post-featured-image">
+                <img src="/uploads/postsFiles/<%= post.image_url %>" alt="<%= post.title %>">
+            </figure>
+        <% } %>
+
+        <div class="post-content">
+            <%- post.content %>
+        </div>
+
+        <div class="post-tags">
+            <div class="tags-label">Etiquetas:</div>
+            <div class="tag-list">
+                <% if(post.tags) { %>
+                    <% post.tags.forEach(tag => { %>
+                        <% if(tag.name) { %>
+                            <a href="/posts/tag/<%= tag.name %>"><%= tag.name %></a>
+                        <% } %>
+                    <% }) %>
+                <% } %>
+            </div>
+        </div>
+
+    </article>
 </main>
 
 
