@@ -6,6 +6,19 @@ export const getAllPosts = async () => {
     return rows
 }
 
+export const getRecentPosts = async () => {
+    const query = `
+        SELECT id, title, slug, content, updated_at, image_url, preview
+        FROM posts
+        ORDER BY updaqted_at DESC, created_at DESC
+        LIMIT 5;
+    `
+
+    const [rows] = await pool.query(query)
+
+    return rows
+}
+
 export const addPost = async (post, connection = pool) => {
     const query = `
         INSERT INTO posts

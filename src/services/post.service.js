@@ -17,6 +17,15 @@ export const allPosts = async() => {
     }
 }
 
+export const getRecentPosts = async() => {
+    try {
+        return await PostModel.getRecentPosts()
+    } catch (error) {
+        throw error
+        console.error(error.message)
+    }
+}
+
 export const createPost = async(post) =>{
     console.log(post)
     const {title, content, image, category, tags} = post
