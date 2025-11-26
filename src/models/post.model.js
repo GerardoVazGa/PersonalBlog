@@ -10,7 +10,7 @@ export const getRecentPosts = async () => {
     const query = `
         SELECT id, title, slug, content, updated_at, image_url, preview
         FROM posts
-        ORDER BY updaqted_at DESC, created_at DESC
+        ORDER BY updated_at DESC, created_at DESC
         LIMIT 5;
     `
 
