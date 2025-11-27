@@ -1,0 +1,65 @@
+#aboutme {
+    width: 100%;
+    background-color: var(--celadon);
+    padding: 3rem 4rem;
+    display: flex;
+    justify-content: center;
+}
+
+#aboutme .aboutme-container {
+    background-color: var(--celadon);
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    border-radius: 0.6rem;
+    padding: 1.5rem;
+    box-shadow: 0 6px 48px rgba(0, 0, 0, 0.25);
+}
+
+#aboutme p {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: var(--dim-gray);
+}
+
+#aboutme p span {
+    font-weight: 700;
+    color: black;
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+#aboutme h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+.skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.skill {
+    display: inline-block;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+    border: 2px solid #e2e8f0;
+    border-radius: 50px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: black;
+    transition: all 0.3s ease;
+    cursor: default;
+}
+
+.skill:hover {
+    background: linear-gradient(135deg, var(--celadon) 0%, var(--aquamarine) 100%);
+    border-color: var(--dim-gray);
+    color: black;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(255, 255, 255, 0.3);
+}

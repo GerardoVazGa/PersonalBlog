@@ -7,10 +7,12 @@
 @import url('/styles/components/buttons.css');
 @import url('/styles/components/cards.css');
 @import url('/styles/components/forms.css');
+@import url('/styles/components/titles.css');
 @import url('/styles/components/footer.css');
 
 
 @import url('/styles/layouts/hero.css');
 @import url('/styles/layouts/articles.css');
+@import url('/styles/layouts/aboutme.css');
 @import url('/styles/layouts/postsbycategory.css');
 @import url('/styles/layouts/post.css')

@@ -1,0 +1,27 @@
+.articles-title {
+    position: relative;
+    font-size: 2rem;
+    color: var(--title-color);
+}
+
+.articles-title::after{
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -0.5rem;
+    width: 50px;
+    height: 0.3rem;
+    background-color: var(--pistachio);
+    border-radius: 2px;
+}
+
+.articles-title.second::after{
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -0.5rem;
+    width: 50px;
+    height: 0.3rem;
+    background-color: var(--dim-gray);
+    border-radius: 2px;
+}
