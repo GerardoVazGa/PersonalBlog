@@ -36,11 +36,11 @@
 
                     <div class="auth-buttons">
                         <% if(!isAdmin) { %>
-                            <button id="loginBtn">
+                            <button class="loginBtn">
                                 <i class="fa-solid fa-lock"></i>
                             </button>
                         <% } else { %>
-                            <button id="logoutBtn" class="active">
+                            <button class="logoutBtn active">
                                 <i class="fa-solid fa-unlock"></i>
                             </button>
                         <% } %>
@@ -74,6 +74,18 @@
 
             <div class="nav-item"><a href="/about">About</a></div>
             <div class="nav-item"><a href="/contact">Contact</a></div>
-        </div>
+            <div class="nav-item auth-buttons mobile-log-buttons">
+                <% if(!isAdmin) { %>
+                    <a class="loginBtn">Login</a>
+                    <button class="loginBtn">
+                        <i class="fa-solid fa-lock"></i>
+                    </button>
+                <% } else { %>
+                    <a class="logoutBtn">Logout</a>
+                    <button class="logoutBtn active">
+                        <i class="fa-solid fa-unlock"></i>
+                    </button>
+                <% } %>
+            </div>
 
     </header>
