@@ -1,40 +1,59 @@
 #aboutme {
     width: 100%;
-    background-color: var(--celadon);
-    padding: 3rem 4rem;
+    background: linear-gradient(135deg, var(--celadon) 0%, var(--aquamarine) 100%);
+    padding: 4rem;
     display: flex;
+    align-items: center;
     justify-content: center;
+    min-height: auto;
 }
 
 #aboutme .aboutme-container {
-    background-color: var(--celadon);
+    background-color: white;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
-    border-radius: 0.6rem;
-    padding: 1.5rem;
-    box-shadow: 0 6px 48px rgba(0, 0, 0, 0.25);
+    gap: 1.8rem;
+    border-radius: 1rem;
+    padding: 3rem;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    max-width: 950px;
+}
+
+#aboutme .aboutme-text {
+    border-left: 4px solid var(--celadon);
+    padding-left: 1.5rem;
+    margin: 1rem 0;
 }
 
 #aboutme p {
-    font-size: 1.125rem;
-    line-height: 1.8;
-    color: var(--dim-gray);
+    font-size: 1.1rem;
+    line-height: 1.9;
+    color: #444;
+    margin: 0;
 }
 
 #aboutme p span {
     font-weight: 700;
-    color: black;
-    -webkit-background-clip: text;
-    background-clip: text;
+    color: var(--celadon);
+    background-color: #f0faf7;
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.3rem;
+}
+
+#aboutme p strong {
+    font-weight: 700;
+    color: var(--celadon);
 }
 
 #aboutme h3 {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #1e293b;
-    margin-top: 40px;
-    margin-bottom: 20px;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--title-color);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    border-bottom: 3px solid var(--celadon);
+    padding-bottom: 0.5rem;
+    display: inline-block;
 }
 
 .skills {
@@ -45,21 +64,48 @@
 
 .skill {
     display: inline-block;
-    padding: 12px 24px;
-    background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
-    border: 2px solid #e2e8f0;
+    padding: 10px 22px;
+    background-color: #dadada;
+    border: 2px solid black;
     border-radius: 50px;
     font-size: 0.95rem;
-    font-weight: 500;
+    font-weight: 600;
     color: black;
     transition: all 0.3s ease;
     cursor: default;
+    box-shadow: 0 4px 12px rgba(160, 238, 192, 0.3);
 }
 
 .skill:hover {
+    background: linear-gradient(135deg, var(--aquamarine) 0%, var(--pistachio) 100%);
+    border-color: var(--pistachio);
+    color: white;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(160, 238, 192, 0.4);
+}
+
+.aboutme-cta {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.btn-learn-more {
+    display: inline-block;
+    padding: 12px 32px;
     background: linear-gradient(135deg, var(--celadon) 0%, var(--aquamarine) 100%);
-    border-color: var(--dim-gray);
-    color: black;
-    transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(255, 255, 255, 0.3);
+    color: white;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    border: 2px solid var(--celadon);
+    box-shadow: 0 6px 20px rgba(160, 238, 192, 0.35);
+}
+
+.btn-learn-more:hover {
+    background: linear-gradient(135deg, var(--aquamarine) 0%, var(--pistachio) 100%);
+    border-color: var(--pistachio);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(160, 238, 192, 0.5);
 }

@@ -16,12 +16,16 @@
 }
 
 .articles-title.second::after{
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -0.5rem;
-    width: 50px;
-    height: 0.3rem;
-    background-color: var(--dim-gray);
-    border-radius: 2px;
+
+    background-color: var(--pistachio);
+    
+}
+
+#aboutme h1 {
+    position: relative;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--title-color);
+    text-align: center;
+    margin: 0 0 0.5rem 0;
 }
