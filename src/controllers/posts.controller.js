@@ -1,4 +1,5 @@
 import * as PostService from "../services/post.service.js"
+import { formatDate } from "../utils/formatDate.js"
 
 export const  getRecentPosts = async (req, res) => {
     try {
@@ -22,7 +23,7 @@ export const addPost = async (req, res) => {
 export const getPost = async (req, res) => {
     try {
         const post = await PostService.getPost(req.params.slug)
-        res.render('post.ejs', {current: 'home', post: post})
+        res.render('post.ejs', {current: 'home', post: {...post, created_at: formatDate(post.created_at)}})
     } catch (error) {
         res.status(500).json({error: "Error fetching post"})
     }
