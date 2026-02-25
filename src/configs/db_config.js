@@ -1,4 +1,4 @@
-import {DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT} from "./env.js"
+import {DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT, DB_MAX, DB_IDLE_TIMEOUT, DB_CONNECTION_TIMEOUT} from "./env.js"
 
 export const dbConfig = {
     host: DB_HOST,
@@ -6,7 +6,7 @@ export const dbConfig = {
     password: DB_PASSWORD,
     database: DB_NAME,
     port: DB_PORT,
-    max: 20,
-    idleTimeoutMillis: 30000,
-    connectionTimeoutMillis: 2000
+    max: DB_MAX,
+    idleTimeoutMillis: DB_IDLE_TIMEOUT,
+    connectionTimeoutMillis: DB_CONNECTION_TIMEOUT
 }
