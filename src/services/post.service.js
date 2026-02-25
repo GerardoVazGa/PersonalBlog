@@ -75,9 +75,9 @@ export const createPost = async(post) =>{
 
     const preview = await generatePreview(updatedContent, 100)
 
-    const connection = await pool.getConnection()
+    const connection = await pool.connect()
     try {
-        await connection.beginTransaction()
+        await connection.query('BEGIN')
 
         const post = {
             title,
@@ -108,11 +108,11 @@ export const createPost = async(post) =>{
 
         })
 
-        await connection.commit()
+        await connection.query('COMMIT')
 
         return postId
     } catch (error) {
-        await connection.rollback()
+        await connection.query('ROLLBACK')
         throw error
     } finally {
         connection.release()
@@ -170,10 +170,10 @@ export const editPost = async(post, image, id) => {
 
     const preview = await generatePreview(updatedContent, 100)
 
-    const connection = await pool.getConnection()
+    const connection = await pool.connect()
 
     try {
-        await connection.beginTransaction()
+        await connection.query('BEGIN')
 
         const oldContentPost = await PostModel.getOldContent(id, connection)
 
@@ -225,7 +225,7 @@ export const editPost = async(post, image, id) => {
             await PostModel.insertPostTag(id, tagId, connection)
         }))
 
-        await connection.commit()
+        await connection.query('COMMIT')
 
         for(const imageDelete of oldImagesToDelete) {
             await removePostImage(imageDelete)
@@ -234,7 +234,7 @@ export const editPost = async(post, image, id) => {
         return PostModel.getPostById(id)
     } catch (error) {
         console.log(error.message)
-        await connection.rollback()
+        await connection.query('ROLLBACK')
         throw error
     } finally {
         connection.release()
@@ -249,10 +249,10 @@ export const deletePost = async (id) => {
         throw new Error("Post ID is required")
     }
 
-    const connection = await pool.getConnection()
+    const connection = await pool.connect()
     
     try {
-        await connection.beginTransaction()
+        await connection.query('BEGIN')
         const post = await PostModel.getPostById(postId)
 
         if(!post) {
@@ -277,12 +277,12 @@ export const deletePost = async (id) => {
             await removePostImage(imageUrl)
         }
 
-        await connection.commit()
+        await connection.query('COMMIT')
 
         return post.title
     } catch (error) {
         console.log(error.message)
-        await connection.rollback()
+        await connection.query('ROLLBACK')
         throw error
     } finally {
         connection.release()
