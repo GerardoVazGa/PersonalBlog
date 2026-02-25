@@ -5,5 +5,8 @@ export const dbConfig = {
     user: DB_USER,
     password: DB_PASSWORD,
     database: DB_NAME,
-    port: DB_PORT
+    port: DB_PORT,
+    max: 20,
+    idleTimeoutMillis: 30000,
+    connectionTimeoutMillis: 2000
 }
