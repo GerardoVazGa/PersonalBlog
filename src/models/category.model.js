@@ -2,14 +2,14 @@ import pool from "../db/db.js"
 
 export const getAllCategories = async () => {
     const query = 'SELECT name FROM categories'
-    const [rows] = await pool.query(query)
-    return rows
+    const result = await pool.query(query)
+    return result.rows
 }
 
 export const getCategoryId = async (name) => {
-    const query = 'SELECT id FROM categories WHERE name = ?'
-    const [rows] =await pool.query(query, [name])
-    return rows.length > 0 ? rows[0].id : null
+    const query = 'SELECT id FROM categories WHERE name = $1'
+    const result = await pool.query(query, [name])
+    return result.rows.length > 0 ? result.rows[0].id : null
 }
 
 export const getPostsByCategory = async (categoryName) => {
@@ -17,9 +17,9 @@ export const getPostsByCategory = async (categoryName) => {
         SELECT p.*, c.name as category_name
         FROM posts p
         INNER JOIN categories c ON p.category_id = c.id
-        WHERE c.name = ?    
+        WHERE c.name = $1    
     `
-    const [result] = await pool.query(query, [categoryName])
+    const result = await pool.query(query, [categoryName])
 
-    return result
+    return result.rows
 }
