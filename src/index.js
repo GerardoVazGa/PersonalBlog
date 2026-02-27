@@ -9,9 +9,11 @@ import {uploadTemp} from './configs/uploads_config.js'
 import { loggedAdmin } from "./middlewares/loggedAdmin.middleware.js"
 import {isAdmin} from './middlewares/isAdmin.middleware.js'
 import {useCategories} from './middlewares/useCategories.middleware.js'
-import {addPost, deletePost, editPost, getPost, getPostJson, getPostsByCategory, getRecentPosts} from "./controllers/posts.controller.js"
+import {addPost, deletePost, editPost, getPost, getPostJson} from "./controllers/posts.controller.js"
 import {getCategories} from './controllers/category.controller.js'
 import {loginAdmin, logoutAdmin} from "./controllers/auth.controller.js"
+
+import viewsRoutes from "./routes/views.routes.js"
 
 
 const app = express()
@@ -32,19 +34,11 @@ app.use(useCategories)
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
 
-app.get('/', getRecentPosts)
-
-app.get('/about', (req, res) => {
-    res.render('about.ejs', {current: 'about'})
-})
-
-app.get('/category/:category', getPostsByCategory)
+app.use('/', viewsRoutes)
 
 app.post('/login', loginAdmin)
 
 app.post('/logout', logoutAdmin)
-
-app.get('/posts/:slug', getPost)
 
 app.get('/posts/edit/:id/json', getPostJson)
 
