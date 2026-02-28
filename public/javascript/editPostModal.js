@@ -175,7 +175,7 @@ if (editPostButtons) {
 
                                                 console.log(formData.get('image'))
 
-                                                const response = await fetch('/upload', {
+                                                const response = await fetch('/api/uploads', {
                                                     method: 'POST',
                                                     body: formData
                                                 })
