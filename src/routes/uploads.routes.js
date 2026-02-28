@@ -1,15 +1,9 @@
 import { Router } from "express"
 import { uploadTemp } from "../configs/uploads_config.js"
-
+import { uploadTempFile } from "../controllers/upload.controller.js"
 
 const router = Router()
 
-router.post('/', uploadTemp.single('image'), (req, res) => {
-    if(!req.file) {
-        return res.status(400).json({error: "File not uploaded"})
-    }
-
-    return res.json({url: `/uploads/tempFiles/${req.file.filename}`})
-})
+router.post('/', uploadTemp.single('image'), uploadTempFile)
 
 export default router
