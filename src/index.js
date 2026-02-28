@@ -7,13 +7,12 @@ import { fileURLToPath } from "url"
 import {PORT} from "./configs/env.js"
 import {uploadTemp} from './configs/uploads_config.js'
 import { loggedAdmin } from "./middlewares/loggedAdmin.middleware.js"
-import {isAdmin} from './middlewares/isAdmin.middleware.js'
 import {useCategories} from './middlewares/useCategories.middleware.js'
-import {addPost, deletePost, editPost, getPost, getPostJson} from "./controllers/posts.controller.js"
 import {getCategories} from './controllers/category.controller.js'
 import {loginAdmin, logoutAdmin} from "./controllers/auth.controller.js"
 
 import viewsRoutes from "./routes/views.routes.js"
+import postsRoutes from "./routes/posts.routes.js"
 
 
 const app = express()
@@ -35,18 +34,11 @@ app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
 
 app.use('/', viewsRoutes)
+app.use('/api/posts', postsRoutes)
 
 app.post('/login', loginAdmin)
 
 app.post('/logout', logoutAdmin)
-
-app.get('/posts/edit/:id/json', getPostJson)
-
-app.post('/posts/add', uploadTemp.single('image'), isAdmin, addPost)
-
-app.put('/posts/edit/:id', uploadTemp.single('image'), isAdmin, editPost)
-
-app.delete('/posts/delete/:id', isAdmin, deletePost)
 
 app.get('/api/categories', getCategories)
 
