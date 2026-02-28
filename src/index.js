@@ -9,10 +9,11 @@ import {uploadTemp} from './configs/uploads_config.js'
 import { loggedAdmin } from "./middlewares/loggedAdmin.middleware.js"
 import {useCategories} from './middlewares/useCategories.middleware.js'
 import {getCategories} from './controllers/category.controller.js'
-import {loginAdmin, logoutAdmin} from "./controllers/auth.controller.js"
 
 import viewsRoutes from "./routes/views.routes.js"
 import postsRoutes from "./routes/posts.routes.js"
+import authRoutes from "./routes/auth.routes.js"
+import categoriesRoutes from "./routes/categories.routes.js"
 
 
 const app = express()
@@ -35,12 +36,8 @@ app.set('views', path.join(__dirname, 'views'))
 
 app.use('/', viewsRoutes)
 app.use('/api/posts', postsRoutes)
-
-app.post('/login', loginAdmin)
-
-app.post('/logout', logoutAdmin)
-
-app.get('/api/categories', getCategories)
+app.use('/auth/', authRoutes)
+app.use('/api/categories', categoriesRoutes)
 
 app.post('/upload', uploadTemp.single('image'), (req, res) => {
     if(!req.file) {
