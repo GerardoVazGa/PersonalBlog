@@ -27,7 +27,7 @@ if (loginBtns.length > 0) {
                 onAction: async () => {
                     const password = document.getElementById("passwordInput").value;
                     try {
-                        const response = await fetch("/login", {
+                        const response = await fetch("/auth/login", {
                             method: "POST",
                             headers: {
                                 "content-type": "application/json",
@@ -65,7 +65,7 @@ if (logoutBtns.length > 0) {
 
 async function logout() {
     try {
-        const response = await fetch("/logout", {
+        const response = await fetch("/auth/logout", {
             method: "POST",
             headers: {
                 "content-type": "application/json",
