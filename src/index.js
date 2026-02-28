@@ -14,7 +14,7 @@ import viewsRoutes from "./routes/views.routes.js"
 import postsRoutes from "./routes/posts.routes.js"
 import authRoutes from "./routes/auth.routes.js"
 import categoriesRoutes from "./routes/categories.routes.js"
-
+import uploadsRoutes from "./routes/uploads.routes.js"
 
 const app = express()
 
@@ -38,14 +38,7 @@ app.use('/', viewsRoutes)
 app.use('/api/posts', postsRoutes)
 app.use('/auth/', authRoutes)
 app.use('/api/categories', categoriesRoutes)
-
-app.post('/upload', uploadTemp.single('image'), (req, res) => {
-    if(!req.file) {
-        return res.status(400).json({error: "File not uploaded"})
-    }
-
-    return res.json({url: `/uploads/tempFiles/${req.file.filename}`})
-})
+app.use('/api/uploads', uploadsRoutes)
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
