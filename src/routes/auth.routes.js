@@ -1,5 +1,5 @@
 import {Router} from "express"
-import {loginAdmin, logoutAdmin} from "./controllers/auth.controller.js"
+import {loginAdmin, logoutAdmin} from "../controllers/auth.controller.js"
 
 const router = Router()
 
