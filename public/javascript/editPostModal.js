@@ -8,7 +8,7 @@ if (editPostButtons) {
         editPostButton.addEventListener('click', async (e) => {
             const postId = e.currentTarget.dataset.postId
 
-            const response = await fetch(`/posts/edit/${postId}/json`, {
+            const response = await fetch(`/api/posts/${postId}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -219,7 +219,7 @@ if (editPostButtons) {
                     formData.append("content", newContent)
 
                     try {
-                        const response = await fetch(`/posts/edit/${postId}`, {
+                        const response = await fetch(`/api/posts/${postId}`, {
                             method: "PUT",
                             body: formData
                         })

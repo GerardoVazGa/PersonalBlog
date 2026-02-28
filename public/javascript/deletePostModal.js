@@ -20,7 +20,7 @@ if(deletePostButtons) {
                 showCancel: true,
                 onAction: async () => {
                     try {
-                        const response = await fetch(`/posts/delete/${postId}`, {
+                        const response = await fetch(`/api/posts/${postId}`, {
                             method: "Delete",
                             headers: {
                                 "Content-Type": "application/json"

@@ -200,7 +200,7 @@ if (addPostButton) {
                 })
 
                 try {
-                    const response = await fetch('/posts/add', {
+                    const response = await fetch('/api/posts', {
                         method: 'POST',
                         body: formData
                     })
