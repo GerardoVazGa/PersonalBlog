@@ -28,7 +28,7 @@
                         <h3><%= post.title %></h3>
                         <div class="card-preview"> <%= post.preview %> </div>
                         <div class="card-footer">
-                            <a href="/posts/<%= post.slug %>" class="read-more">Leer más</a>
+                            <a href="/post/<%= post.slug %>" class="read-more">Leer más</a>
                             <% if(isAdmin) { %>
                                 <div class="buttons">
                                     <button class="btn-edit" data-post-id="<%= post.id  %>">
