@@ -1,6 +1,6 @@
 import {Router} from 'express'
 import {getPostJson, addPost, editPost, deletePost} from "../controllers/posts.controller.js"
-import { isAdmin } from '../middlewares/isAdmin.middleware'
+import { isAdmin } from '../middlewares/isAdmin.middleware.js'
 import {uploadTemp} from '../configs/uploads_config.js'
 
 const router = Router()
