@@ -6,3 +6,17 @@ export const paginate = (query) => {
     return { page,limit, offset }
 
 }
+
+export const getPaginationMeta = (totalItems, currentPage, limit) => {
+    const totalPages = Math.ceil(totalItems / limit)
+    const hasNextPage = currentPage < totalPages
+    const hasPrevPage = currentPage > 1
+
+    return {
+        currentPage,
+        totalPages,
+        totalItems,
+        hasNextPage,
+        hasPrevPage
+    }
+}
