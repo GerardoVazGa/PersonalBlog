@@ -7,8 +7,19 @@ export const getAllPosts = async (limit = 5, offset = 0) => {
         LIMIT $1 OFFSET $2;
     `
 
-    const result = await pool.query(query, [limit, offset])
-    return result.rows
+    const countQuery = 'SELECT COUNT(*) FROM posts;'
+
+    const [postsResult, countResult] = await Promise.all([
+        pool.query(query, [limit, offset]),
+        pool.query(countQuery)
+    ])
+
+    const result = {
+        posts: postsResult.rows,
+        total: parseInt(countResult.rows[0].count)
+    }
+
+    return result
 }
 
 export const getRecentPosts = async (limit= 5) => {
