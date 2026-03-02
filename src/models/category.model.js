@@ -12,14 +12,16 @@ export const getCategoryId = async (name) => {
     return result.rows.length > 0 ? result.rows[0].id : null
 }
 
-export const getPostsByCategory = async (categoryName) => {
+export const getPostsByCategory = async (categoryName, limit = 5, offset = 0) => {
     const query = `
         SELECT p.*, c.name as category_name
         FROM posts p
         INNER JOIN categories c ON p.category_id = c.id
         WHERE c.name = $1    
+        LIMIT $2 OFFSET $3;
+
     `
-    const result = await pool.query(query, [categoryName])
+    const result = await pool.query(query, [categoryName, limit, offset])
 
     return result.rows
 }
