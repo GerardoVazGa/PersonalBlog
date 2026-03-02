@@ -14,7 +14,7 @@ export const getCategoryId = async (name) => {
 
 export const getPostsByCategory = async (categoryName, limit = 5, offset = 0) => {
     const query = `
-        SELECT p.*, c.name as category_name
+        SELECT p.*, c.name as category_name, COUNT(*) OVER() AS total_count
         FROM posts p
         INNER JOIN categories c ON p.category_id = c.id
         WHERE c.name = $1    
@@ -23,5 +23,7 @@ export const getPostsByCategory = async (categoryName, limit = 5, offset = 0) =>
     `
     const result = await pool.query(query, [categoryName, limit, offset])
 
-    return result.rows
+    const posts = result.rows
+    const total = posts.length > 0 ? parseInt(posts[0].total_count) : 0
+    return {posts, total}
 }
