@@ -13,8 +13,9 @@ import {paginate, getPaginationMeta} from "../utils/pagination.js"
 
 
 export const getRecentPosts = async() => {
+    const defaultLimit = 5
     try {
-        return await PostModel.getRecentPosts()
+        return await PostModel.getRecentPosts(defaultLimit)
     } catch (error) {
         throw error
         console.error(error.message)
