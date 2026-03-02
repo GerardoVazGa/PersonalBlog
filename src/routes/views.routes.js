@@ -5,6 +5,7 @@ const router = Router()
 
 router.get('/', getRecentPosts)
 router.get('/blog', getAllPosts)
+router.get('/blog/page/:page', getAllPosts)
 router.get('/about', (req, res) => {
     res.render('about.ejs', {current: 'about'})
 })
