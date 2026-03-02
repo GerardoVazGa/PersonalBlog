@@ -8,10 +8,14 @@ import {moveTempToPosts, removeTemp, removePostImage} from "../utils/fileUtils.j
 import { generatePreview } from "../utils/generatePreview.js"
 import { extractImageUrls, toDeleteOldImageCont } from "../utils/toDeleteOldImageCont.js"
 import { replaceTempToPosts } from "../utils/replaceTempToPosts.js"
+import {paginate, getPaginationMeta} from "../utils/pagination.js"
 
-export const allPosts = async() => {
+export const allPosts = async(query) => {
     try {
-        return await PostModel.getAllPosts() 
+        const {page, limit, offset} = paginate(query)
+        const {posts, total} = await PostModel.getAllPosts(limit, offset)
+        const meta = getPaginationMeta(total, page, limit)
+        return {posts, meta}
     }catch(error){
         
     }
