@@ -23,7 +23,7 @@
                         <div class="dropdown-content">
                             <% categories.forEach(category => { %>
                                     <a 
-                                        href="/category/<%= category %>" 
+                                        href="/blog/category/<%= category %>" 
                                         class="<%= current === category ? 'active' : '' %>"
                                     > 
                                         <%= category %>
@@ -66,7 +66,7 @@
                 <div class="category-dropdown">
                     <% categories.forEach((category)=> { %>
                         <div class="dropdown-item">
-                            <a href="/category/<%= category %>"><%= category %></a>
+                            <a href="/blog/category/<%= category %>"><%= category %></a>
                         </div>
                     <% }) %>
                 </div>
