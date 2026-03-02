@@ -10,16 +10,7 @@ import { extractImageUrls, toDeleteOldImageCont } from "../utils/toDeleteOldImag
 import { replaceTempToPosts } from "../utils/replaceTempToPosts.js"
 import {paginate, getPaginationMeta} from "../utils/pagination.js"
 
-export const allPosts = async(query) => {
-    try {
-        const {page, limit, offset} = paginate(query)
-        const {posts, total} = await PostModel.getAllPosts(limit, offset)
-        const meta = getPaginationMeta(total, page, limit)
-        return {posts, meta}
-    }catch(error){
-        
-    }
-}
+
 
 export const getRecentPosts = async() => {
     try {
@@ -293,6 +284,14 @@ export const deletePost = async (id) => {
     }
 }
 
-export const getPostsByCategory = async (categoryName) => {
-    return await CategoryModel.getPostsByCategory(categoryName)
+export const getPostsByCategory = async (categoryName, query) => {
+    try {
+        const {page, limit, offset} = paginate(query, {defaultLimit: 5})
+        const {posts, total} = await CategoryModel.getPostsByCategory(categoryName, limit, offset)
+        const meta = getPaginationMeta(total, page, limit)
+        return {posts, meta}
+    } catch (error) {
+        throw error
+        console.error(error.message)
+    }
 }
