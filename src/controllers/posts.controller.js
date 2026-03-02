@@ -2,9 +2,9 @@ import * as PostService from "../services/post.service.js"
 import { formatDate } from "../utils/formatDate.js"
 
 export const getAllPosts = async (req, res) => {
-    const page = req.params.page || 1
+    const query = req.params || 1
     try {
-        const {posts, meta} = await PostService.getAllPosts(page)
+        const {posts, meta} = await PostService.getAllPosts(query)
         res.json({success: true, posts, meta})
     } catch (error) {
         res.status(500).json({success: false, error: error.message})
@@ -79,9 +79,9 @@ export const deletePost = async (req, res) => {
 
 export const getPostsByCategory = async (req, res) => {
     const {category} = req.params
-    const page = req.params.page || 1
+    const query = req.params || 1
     try {
-        const {posts, meta} = await PostService.getPostsByCategory(category, page)
+        const {posts, meta} = await PostService.getPostsByCategory(category, query)
 
         if(posts) {
             return res.status(200).render('category.ejs', {current: category, posts, meta})
