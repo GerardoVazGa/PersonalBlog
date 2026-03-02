@@ -11,16 +11,16 @@ export const getAllPosts = async (limit = 5, offset = 0) => {
     return result.rows
 }
 
-export const getRecentPosts = async (limit= 5, offset = 0) => {
+export const getRecentPosts = async (limit= 5) => {
     const query = `
         SELECT id, title, slug, content, updated_at, image_url, preview
         FROM posts
         ORDER BY updated_at DESC, created_at DESC
-        LIMIT $1 OFFSET $2;
+        LIMIT $1;
 
     `
 
-    const result = await pool.query(query, [limit, offset])
+    const result = await pool.query(query, [limit])
 
     return result.rows
 }
