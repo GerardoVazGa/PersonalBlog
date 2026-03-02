@@ -1,7 +1,7 @@
 import * as PostService from "../services/post.service.js"
 import { formatDate } from "../utils/formatDate.js"
 
-export const getAllPost = async (req, res) => {
+export const getAllPosts = async (req, res) => {
     try {
         const {posts, meta} = await PostService.getAllPosts(req.query)
         res.json({success: true, posts, meta})
