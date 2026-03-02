@@ -9,7 +9,7 @@ router.get('/blog/page/:page', getAllPosts)
 router.get('/about', (req, res) => {
     res.render('about.ejs', {current: 'about'})
 })
-router.get('/category/:category', getPostsByCategory)
+router.get('/blog/category/:category', getPostsByCategory)
 router.get('/post/:slug',  getPost)
 
 export default router
