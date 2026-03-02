@@ -6,7 +6,7 @@ export const paginate = (query, options = {}) => {
     }
 
     const page = Math.max(1, parseInt(query.page) || 1)
-    const limit = Math.min(maxLimit, parseInt(query.limit) || defaultLimit)
+    const limit = defaultLimit
     const offset = (page - 1) * limit
 
     return { page,limit, offset }
