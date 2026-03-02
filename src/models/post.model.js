@@ -1,20 +1,26 @@
 import pool from "../db/db.js"
 
-export const getAllPosts = async () => {
-    const query = 'SELECT id, title, slug, content, updated_at, image_url, preview FROM posts'
-    const result = await pool.query(query)
+export const getAllPosts = async (limit = 5, offset = 0) => {
+    const query =  `
+        SELECT id, title, slug, content, updated_at, image_url, preview 
+        FROM posts
+        LIMIT $1 OFFSET $2;
+    `
+
+    const result = await pool.query(query, [limit, offset])
     return result.rows
 }
 
-export const getRecentPosts = async () => {
+export const getRecentPosts = async (limit= 5, offset = 0) => {
     const query = `
         SELECT id, title, slug, content, updated_at, image_url, preview
         FROM posts
         ORDER BY updated_at DESC, created_at DESC
-        LIMIT 5;
+        LIMIT $1 OFFSET $2;
+
     `
 
-    const result = await pool.query(query)
+    const result = await pool.query(query, [limit, offset])
 
     return result.rows
 }
