@@ -1,6 +1,14 @@
 import * as PostService from "../services/post.service.js"
 import { formatDate } from "../utils/formatDate.js"
 
+export const getAllPost = async (req, res) => {
+    try {
+        const {posts, meta} = await PostService.getAllPosts(req.query)
+        res.json({success: true, posts, meta})
+    } catch (error) {
+        res.status(500).json({success: false, error: error.message})
+    }
+}
 export const  getRecentPosts = async (req, res) => {
     try {
         const posts = await PostService.getRecentPosts()
