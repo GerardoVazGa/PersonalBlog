@@ -102,7 +102,7 @@ export const getPostsByCategory = async (req, res) => {
 export const getPostById = async (req, res) => {
     const {id} = req.params
     try {
-        const post = await PostService.getPostById(id)
+        const post = await PostService.getPostJson(id)
         if(post) {
             return res.status(200).json(post)
         }
