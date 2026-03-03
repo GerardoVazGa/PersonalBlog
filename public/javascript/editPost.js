@@ -1,8 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const editorElement = document.getElementById("post-content-editor");
     const hiddenInput = document.getElementById("post-content");
-
-    console.log("editPost.js loaded")
+    
     if(!editorElement) return
 
     const quill = new Quill("#post-content-editor", {
@@ -54,8 +53,6 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         theme: "snow",
     });
-
-    console.log("quill init");
 
     const initialContent = editorElement.dataset.content;
     quill.root.innerHTML = initialContent;
