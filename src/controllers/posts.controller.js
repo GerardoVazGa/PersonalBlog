@@ -5,7 +5,12 @@ export const getAllPosts = async (req, res) => {
     const query = req.params || 1
     try {
         const {posts, meta} = await PostService.getAllPosts(query)
-        res.json({success: true, posts, meta})
+        
+        if(posts) {
+            return res.status(200).render('allposts.ejs', {current: 'blog', posts, meta})
+        }
+
+        return res.status(404).json({success: false, message: "No posts found"})
     } catch (error) {
         res.status(500).json({success: false, error: error.message})
     }
