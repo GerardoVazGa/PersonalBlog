@@ -1,0 +1,32 @@
+<%- include('partials/header.ejs') %>
+<main class="main-content">
+    <section id="edit-post">
+        <div class="edit-post-container">
+            <h1 class="edit-post-title">Editar Publicación</h1>
+            <form id="edit-post-form" class="edit-post-form" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="title">Título</label>
+                    <input type="text" id="title" name="title" value="<%= post.title %>" required>
+                </div>
+                <div class="form-group">
+                    <label for="content">Contenido</label>
+                    <textarea id="content" name="content" required><%= post.content %></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="category">Categoría</label>
+                    <select id="category" name="category" required>
+                        <option value="">Seleccionar categoría</option>
+                        <% categories.forEach(category => { %>
+                            <option value="<%= category.name %>" <%= post.category === category.name ? 'selected' : '' %>><%= category.name %></option>
+                        <% }); %>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="image">Imagen</label>
+                    <input type="file" id="image" name="image">
+                </div>
+                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+            </form>
+        </div>
+    </section>
+</main>
