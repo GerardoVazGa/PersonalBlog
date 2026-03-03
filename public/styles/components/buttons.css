@@ -125,6 +125,44 @@
     text-decoration: underline;
 }
 
+.btn {
+    padding: 12px 28px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn-submit {
+    background-color: var(--pistachio);
+    color: white;
+    font-size: large;
+    border: 1px solid var(--pistachio);
+}
+
+.btn-submit:hover {
+    background-color: white;
+    color: var(--pistachio);
+    border: 1px solid var(--pistachio);
+}
+
+.btn-cancel {
+    background-color: white;
+    color: var(--red-danger);
+    border: 1px solid var(--red-danger);
+}
+
+.btn-cancel:hover {
+    background-color: var(--red-danger);
+    color: white;
+    border: 1px solid var(--red-danger);
+}
+
 @media (max-width: 430px) {
     .hero-buttons .hero-btn {
         font-size: 1rem;
