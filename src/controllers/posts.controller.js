@@ -1,4 +1,5 @@
 import * as PostService from "../services/post.service.js"
+import * as CategoryService from "../services/category.service.js"
 import { formatDate } from "../utils/formatDate.js"
 
 export const getAllPosts = async (req, res) => {
@@ -103,8 +104,9 @@ export const getPostById = async (req, res) => {
     const {id} = req.params
     try {
         const post = await PostService.getPostJson(id)
+        const categories = await CategoryService.listCategories()
         if(post) {
-            return res.status(200).json(post)
+            return res.status(200).render('editpost.ejs', {current: '', post, categories})
         }
 
         return res.status(404).json({success: false, message: "Post not found"})
