@@ -105,7 +105,7 @@ export const getPostById = async (req, res) => {
     try {
         const post = await PostService.getPostJson(id)
         const categories = await CategoryService.listCategories()
-        if(post) {
+        if(post && categories) {
             return res.status(200).render('editpost.ejs', {current: '', post, categories})
         }
 
