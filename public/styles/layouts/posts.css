@@ -1,4 +1,4 @@
-.posts-container-category {
+.posts-container {
     padding: 2rem;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
