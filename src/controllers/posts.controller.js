@@ -98,3 +98,17 @@ export const getPostsByCategory = async (req, res) => {
         res.status(500).json({success: false, message: error.message})
     }
 }
+
+export const getPostById = async (req, res) => {
+    const {id} = req.params
+    try {
+        const post = await PostService.getPostById(id)
+        if(post) {
+            return res.status(200).json(post)
+        }
+
+        return res.status(404).json({success: false, message: "Post not found"})
+    } catch (error) {
+        res.status(500).json({success: false, message: error.message})
+    }
+} 
