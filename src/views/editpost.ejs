@@ -2,28 +2,51 @@
 <main class="main-content">
     <section id="edit-post">
         <div class="edit-post-container">
+            <div class="breadcrumb">
+                <a href="/">← Volver al inicio</a>
+            </div>
             <h1 class="edit-post-title">Editar Publicación</h1>
-            <form id="edit-post-form" class="edit-post-form" enctype="multipart/form-data">
+            <form id="edit-post-form" class="form-inputs" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="title">Título</label>
                     <input type="text" id="title" name="title" value="<%= post.title %>" required>
                 </div>
                 <div class="form-group">
-                    <label for="content">Contenido</label>
-                    <textarea id="content" name="content" required><%= post.content %></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="category">Categoría</label>
-                    <select id="category" name="category" required>
-                        <option value="">Seleccionar categoría</option>
-                        <% categories.forEach(category => { %>
-                            <option value="<%= category.name %>" <%= post.category_name === category.name ? 'selected' : '' %>><%= category.name %></option>
-                        <% }); %>
-                    </select>
-                </div>
-                <div class="form-group">
                     <label for="image">Imagen</label>
-                    <input type="file" id="image" name="image">
+                    <label for="post-image" class="file-input-label">
+                        📁 Seleccionar imagen
+                    </label>
+                    <input type="file" id="post-image" name="image" accept="image/*">
+                    <img id="current-image" class="current-image"
+                        src="/uploads/postsFiles/<%= post.image_url %>"
+                        alt="Imagen de portada">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="category">Categoría</label>
+                        <select id="category" name="category" required>
+                            <option value="">Seleccionar categoría</option>
+                            <% categories.forEach(category=> { %>
+                                <option value="<%= category.name %>" <%=post.category_name===category.name ? 'selected' : '' %>><%=
+                                        category.name %>
+                                </option>
+                                <% }); %>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="post-tags">Etiquetas (separadas por |)</label>
+                        <input type="text" id="post-tags" name="tags" value="<%= post.tags %>" placeholder="ej: tag1|tag2|tag3" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="content">Contenido</label>
+                    <textarea id="post-content-editor" name="content" required><%= post.content %></textarea>
+                    <input 
+                        type="hidden" 
+                        id="post-content" 
+                        name="content"
+                        required
+                    >
                 </div>
                 <button type="submit" class="btn btn-primary">Guardar Cambios</button>
             </form>

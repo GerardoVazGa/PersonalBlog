@@ -15,4 +15,6 @@
 @import url('/styles/layouts/articles.css');
 @import url('/styles/layouts/aboutme.css');
 @import url('/styles/layouts/posts.css');
-@import url('/styles/layouts/post.css')
+@import url('/styles/layouts/post.css');
+
+@import url('/styles/editview.css');

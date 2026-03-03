@@ -110,6 +110,21 @@
     color: white;
 }
 
+.breadcrumb {
+    margin-bottom: 30px;
+    color: #666;
+    font-size: 14px;
+}
+
+.breadcrumb a {
+    color: var(--dim-gray);
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
 @media (max-width: 430px) {
     .hero-buttons .hero-btn {
         font-size: 1rem;
