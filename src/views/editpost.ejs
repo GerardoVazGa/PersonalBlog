@@ -17,7 +17,7 @@
                     <select id="category" name="category" required>
                         <option value="">Seleccionar categoría</option>
                         <% categories.forEach(category => { %>
-                            <option value="<%= category.name %>" <%= post.category === category.name ? 'selected' : '' %>><%= category.name %></option>
+                            <option value="<%= category.name %>" <%= post.category_name === category.name ? 'selected' : '' %>><%= category.name %></option>
                         <% }); %>
                     </select>
                 </div>
