@@ -88,7 +88,7 @@ input[type="file"] {
 }
 
 /* Textarea */
-.form-inputs #post-content-editor {
+.form-inputs #post-content-editor, .form-inputs #new-post-content-editor {
     background: white;
     border: 2px solid #e0e0e0;
     border-radius: 6px;
@@ -97,7 +97,7 @@ input[type="file"] {
     transition: all 0.3s ease;
 }
 
-#post-content-editor:focus-within {
+#post-content-editor:focus-within, #new-post-content-editor:focus-within {
     border-color: var(--spring-green);
     box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.1);
 }
