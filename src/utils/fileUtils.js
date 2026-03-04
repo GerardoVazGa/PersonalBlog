@@ -31,8 +31,11 @@ export const removePostImage = async (postUrl) => {
     const fullPostDir = path.join(POSTS_DIR, path.basename(postUrl))
 
     try {
+        await fs.access(fullPostDir)
         await fs.unlink(fullPostDir)
     } catch (error) {
-        console.error('Error removing post image:', error)
+        if(error.code === 'ENOENT') {
+            console.warn(`File ${fullPostDir} does not exist, cannot delete.`)
+        }
     }
 }
