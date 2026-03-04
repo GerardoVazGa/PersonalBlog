@@ -114,3 +114,17 @@ export const getPostById = async (req, res) => {
         res.status(500).json({success: false, message: error.message})
     }
 } 
+
+export const getViewCreatePost = async (req, res) => {
+    try {
+        const categories = await CategoryService.listCategories()
+
+        if(categories) {
+            return res.status(200).render('createpost.ejs', {current:'', formCategories: categories})
+        }
+
+        return res.status(404).json({success: false, message: "Categories not found"})
+    } catch (error) {
+        res.status(500).json({success: false, message: error.message})
+    }
+}
