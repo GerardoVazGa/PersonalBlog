@@ -1,0 +1,14 @@
+<div class="pagination">
+    <% if(meta.hasPrevPage) { %>
+        <a href="/blog/page/<%= meta.currentPage - 1 %>"> <- Anterior</a>
+    <% } %>
+
+    <% for(let page = 1; page <= meta.totalPages; page++) { %>
+        <a href="/blog/page/<%= page %>" class="btn <%= page === meta.currentPage ? 'active' : '' %>"> <%= page %> </a>
+    <% } %>
+
+    <% if(meta.hasNextPage) { %>
+        <a href="/blog/page/<%= meta.currentPage + 1 %>">Siguiente -></a>
+    <% } %>
+    
+</div>
