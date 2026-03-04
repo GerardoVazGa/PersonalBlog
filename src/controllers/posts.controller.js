@@ -106,7 +106,7 @@ export const getPostById = async (req, res) => {
         const post = await PostService.getPostJson(id)
         const categories = await CategoryService.listCategories()
         if(post && categories) {
-            return res.status(200).render('editpost.ejs', {current: '', post, categories})
+            return res.status(200).render('editpost.ejs', {current: '', post, formCategories: categories})
         }
 
         return res.status(404).json({success: false, message: "Post not found"})

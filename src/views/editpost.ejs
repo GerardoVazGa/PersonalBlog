@@ -26,7 +26,7 @@
                         <label for="category">Categoría</label>
                         <select id="category" name="category" required>
                             <option value="">Seleccionar categoría</option>
-                            <% categories.forEach(category=> { %>
+                            <% formCategories.forEach(category=> { %>
                                 <option value="<%= category.name %>" <%=post.category_name===category.name ? 'selected' : '' %>><%=
                                         category.name %>
                                 </option>
