@@ -224,12 +224,11 @@ export const editPost = async(post, image, id) => {
         
         await TagModel.deletePostTags(id, connection)
 
-        await Promise.all(tagsArray.map(async tag => {
-            let tagId
+        for(const tag of tagsArray) {
             const existTag = await TagModel.findTag(tag, connection)
-            tagId = existTag ? existTag : await TagModel.insertTag(tag, connection)
+            const tagId = existTag ? existTag : await TagModel.insertTag(tag, connection)
             await PostModel.insertPostTag(id, tagId, connection)
-        }))
+        }
 
         await connection.query('COMMIT')
 
