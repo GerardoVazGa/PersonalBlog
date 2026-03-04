@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (addPostButton) {
         addPostButton.addEventListener('click', (e) => {
             e.preventDefault()
-            window.location.href = '/create-post'
+            window.location.href = '/admin/posts/new'
         })
     }
 })
