@@ -30,7 +30,7 @@
     margin: 0 0 0.5rem 0;
 }
 
-.edit-post-title {
+.edit-post-title, .create-post-title {
     margin-bottom: 40px;
     color: #333;
     font-size: 28px;
