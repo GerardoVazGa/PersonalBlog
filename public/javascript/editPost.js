@@ -1,8 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const editorElement = document.getElementById("post-content-editor");
-    const hiddenInput = document.getElementById("post-content");
-    
+    const editorElement = document.getElementById("post-content-editor")
+    const hiddenInput = document.getElementById("post-content")
+    const formElement = document.getElementById("edit-post-form")
+    const editButton = document.getElementById("btn-save-edit")
+    const deleteButton = document.getElementById("btn-cancel-edit")
+
     if(!editorElement) return
+
+    if(!hiddenInput) return
+
+    if(!editButton) return
+
+    if(!deleteButton) return
 
     const quill = new Quill("#post-content-editor", {
         modules: {
@@ -62,5 +71,41 @@ document.addEventListener('DOMContentLoaded', () => {
     quill.on("text-change", () => {
         hiddenInput.value = quill.root.innerHTML;
     });
+
+    const postId = formElement.dataset.id;
+
+    editButton.addEventListener("click", async(e) => {
+        e.preventDefault()
+
+        
+        const title = document.getElementById("title").value.trim()
+        const imageUrl = document.getElementById("post-image").files[0]
+        const category = document.getElementById("category").value
+        const tags = document.getElementById("post-tags").value.trim()
+        const content = document.getElementById("post-content").value
+
+        const formData = new FormData();
+        formData.append("title", title);
+        formData.append("image", imageUrl);
+        formData.append("category", category);
+        formData.append("tags", tags);
+        formData.append("content", content);
+
+        try {
+            const response = await fetch(`/api/posts/${postId}`, {
+                method: "PUT",
+                body: formData
+            })
+
+            if(response.ok) {
+                setTimeout(() => {
+                    window.location.href = `/blog`
+                }, 2000) 
+            }
+
+        } catch (error) {
+            console.error("Error updating post:", error)
+        }
+    })
 
 })
