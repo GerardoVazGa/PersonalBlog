@@ -1,7 +1,5 @@
 <div class="pagination">
-    <% if(meta.hasPrevPage) { %>
-        <a href="/blog/page/<%= meta.currentPage - 1 %>"> <- Anterior</a>
-    <% } %>    
+    <a class="<%= !meta.hasPrevPage ? 'disabled' : '' %>" href="/blog/page/<%= meta.currentPage - 1 %>"> <- Anterior</a>
 
     <% const start = Math.max(2, meta.currentPage - 2) %>
     <% const end = Math.min(meta.totalPages - 1, meta.currentPage + 2) %>
@@ -24,8 +22,6 @@
         <a href="/blog/page/<%= meta.totalPages %>" class="btn <%= meta.currentPage === meta.totalPages ? 'active' : '' %>"><%= meta.totalPages %></a>
     <% } %>
 
-    <% if(meta.hasNextPage) { %>
-        <a href="/blog/page/<%= meta.currentPage + 1 %>">Siguiente -></a>
-    <% } %>
+    <a class="<%= !meta.hasNextPage ? 'disabled' : '' %>" href="/blog/page/<%= meta.currentPage + 1 %>">Siguiente -></a>
     
 </div>
