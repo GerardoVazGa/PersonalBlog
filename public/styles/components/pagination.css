@@ -22,3 +22,8 @@
     background: var(--asparagus);
     color: #fff;
 }
+
+.pagination a.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
