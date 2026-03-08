@@ -1,10 +1,27 @@
 <div class="pagination">
     <% if(meta.hasPrevPage) { %>
         <a href="/blog/page/<%= meta.currentPage - 1 %>"> <- Anterior</a>
+    <% } %>    
+
+    <% const start = Math.max(2, meta.currentPage - 2) %>
+    <% const end = Math.min(meta.totalPages - 1, meta.currentPage + 2) %>
+
+    <% if(start > 1) { %>
+        <a href="/blog/page/1" class="btn <%= meta.currentPage === 1 ? 'active' : '' %>">1</a>
+        <% if(start > 2) { %>
+            <span>...</span>
+        <% } %>
     <% } %>
 
-    <% for(let page = 1; page <= meta.totalPages; page++) { %>
-        <a href="/blog/page/<%= page %>" class="btn <%= page === meta.currentPage ? 'active' : '' %>"> <%= page %> </a>
+    <% for(let page = start; page <= end; page++) { %>
+        <a href="/blog/page/<%= page %>" class="btn <%= meta.currentPage === page ? 'active' : '' %>"><%= page %></a>
+    <% } %>
+
+    <% if(end < meta.totalPages) { %>
+        <% if(end < meta.totalPages - 1) { %>
+            <span>...</span>
+        <% } %>
+        <a href="/blog/page/<%= meta.totalPages %>" class="btn <%= meta.currentPage === meta.totalPages ? 'active' : '' %>"><%= meta.totalPages %></a>
     <% } %>
 
     <% if(meta.hasNextPage) { %>
