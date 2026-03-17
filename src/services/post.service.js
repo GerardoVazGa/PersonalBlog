@@ -127,7 +127,8 @@ export const createPost = async(post) =>{
 } 
 
 export const getPost = async(slug) => {
-    return await PostModel.getPostBySlug(slug)
+    const post  = await PostModel.getPostBySlug(slug)
+    return post
 }
 export const getPostJson = async(id) => {
     const post = await PostModel.getPostById(id)
