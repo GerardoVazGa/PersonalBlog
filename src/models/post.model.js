@@ -79,9 +79,10 @@ export const getPostBySlug = async (slug) => {
             FROM tags t 
             LEFT JOIN post_tags pt ON t.id = pt.tag_id
             WHERE pt.post_id = p.id
-        ) AS tags
+        ) AS tags, a.name as author_name
         FROM posts p
         INNER JOIN categories c ON p.category_id = c.id
+        INNER JOIN authors a ON p.author_id = a.id
         WHERE p.slug = $1
         LIMIT 1;
     `
