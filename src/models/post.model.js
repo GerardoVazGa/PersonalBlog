@@ -72,17 +72,27 @@ export const existSlug = async (slug) => {
 }
 
 export const getPostBySlug = async (slug) => {
-    const query = `
-        SELECT p.*, c.name as category_name
+    try {
+        const query = `
+        SELECT p.*, c.name as category_name, (
+            SELECT ARRAY_REMOVE(ARRAY_AGG(t.name), NULL)
+            FROM tags t 
+            LEFT JOIN post_tags pt ON t.id = pt.tag_id
+            WHERE pt.post_id = p.id
+        ) AS tags
         FROM posts p
         INNER JOIN categories c ON p.category_id = c.id
         WHERE p.slug = $1
         LIMIT 1;
     `
 
-    const result = await pool.query(query, [slug])
+        const result = await pool.query(query, [slug])
 
-    return result.rows.length > 0 ? result.rows[0] : null
+        return result.rows.length > 0 ? result.rows[0] : null
+    } catch (error) {
+        console.error(error.message)
+        throw error
+    }
 }
 
 export const getPostById = async (id) => {
