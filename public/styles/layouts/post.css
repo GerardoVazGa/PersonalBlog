@@ -111,3 +111,18 @@
     gap: 10px;
     flex-wrap: wrap;
 }
+
+.tag {
+    display: inline-block;
+    background-color: var(--asparagus);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.tag:hover {
+    background-color: var(--pistachio);
+}
