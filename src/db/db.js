@@ -5,7 +5,8 @@ import { DATABASE_URL } from "../configs/env.js"
 const connection = DATABASE_URL 
     ? { 
         connectionString: DATABASE_URL, 
-        ssl: { rejectUnauthorized: false } 
+        ssl: { rejectUnauthorized: false },
+        family: 4
     } 
     : dbConfig
 
