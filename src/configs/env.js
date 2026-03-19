@@ -13,6 +13,8 @@ export const DB_MAX = parseInt(process.env.DB_MAX) || 20
 export const DB_IDLE_TIMEOUT = parseInt(process.env.DB_IDLE_TIMEOUT) || 30000
 export const DB_CONNECTION_TIMEOUT = parseInt(process.env.DB_CONNECTION_TIMEOUT) || 2000
 
+export const DATABASE_URL = process.env.DATABASE_URL
+
 export const ADMIN_PASS = process.env.ADMIN_PASS
 export const SECRET_JWT_KEY = process.env.SECRET_JWT_KEY || "DEFAULT_SECRET"
 export const EXPIRES_JWT_IN = process.env.EXPIRES_JWT_IN || "1h"
