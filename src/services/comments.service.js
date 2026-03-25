@@ -27,3 +27,9 @@ export const addComment = async (postId, content, authorName, parentCommnetId = 
     return comment
 
 }
+
+export const likeComment = async (commentId) => {
+    const comment = await CommentsModel.likeComment(commentId)
+
+    return comment
+}
