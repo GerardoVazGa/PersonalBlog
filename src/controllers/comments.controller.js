@@ -35,3 +35,15 @@ export const likeComment = async (req, res) => {
         res.status(500).json({ error: "Failed to like comment" });
     }
 }
+
+export const deleteComment = async (req, res) => {
+    const { commentId } = req.params
+
+    try {
+        const comment = await CommentsService.deleteComment(commentId)
+        res.status(200).json(comment)
+    } catch (error) {
+        console.error("Error deleting comment:", error);
+        res.status(500).json({ error: "Failed to delete comment" });
+    }
+}
