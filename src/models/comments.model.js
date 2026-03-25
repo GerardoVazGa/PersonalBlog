@@ -47,3 +47,16 @@ export const likeComment = async (commentId) =>{
 
     return result.rows[0]
 }
+
+export const deleteComment = async (commentId) => {
+    const query = `
+        UPDATE comments
+        SET deleted_at = NOW()
+        WHERE id = $1
+        RETURNING *;
+    `
+
+    const result = await pool.query(query, [commentId])
+
+    return result.rows[0]
+}
