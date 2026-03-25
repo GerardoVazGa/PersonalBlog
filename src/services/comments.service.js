@@ -33,3 +33,9 @@ export const likeComment = async (commentId) => {
 
     return comment
 }
+
+export const deleteComment = async (commentId) => {
+    const comment = await CommentsModel.deleteComment(commentId)
+
+    return comment
+}
