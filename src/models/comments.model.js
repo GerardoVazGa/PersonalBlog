@@ -60,3 +60,16 @@ export const deleteComment = async (commentId) => {
 
     return result.rows[0]
 }
+
+export const approveComment = async (commentId) => {
+    const query = `
+        UPDATE comments
+        SET status = 'approved'
+        WHERE id = $1
+        RETURNING *;
+    `
+
+    const result = await pool.query(query, [commentId])
+
+    return result.rows[0]
+}
