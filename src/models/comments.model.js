@@ -73,3 +73,15 @@ export const approveComment = async (commentId) => {
 
     return result.rows[0]
 }
+
+export const rejectComment = async (commentId) => {
+    const query = `
+        UPDATE comments 
+        SET status = 'rejected'
+        WHERE id = $1
+        RETURNING *;
+    `
+    const result = await pool.query(query, [commentId])
+
+    return result.rows[0]
+}
