@@ -1,13 +1,13 @@
 import pool from "../db/db.js";
 
-export async function getCommentsByPostId(postId) {
+export const getCommentsByPostId = async (postId) => {
     try {
         const query = `
-        SELECT * 
-        FROM comments 
-        WHERE post_id = $1 AND status = 'approved' 
-        ORDER BY created_at ASC
-    `;
+            SELECT * 
+            FROM comments 
+            WHERE post_id = $1 AND status = 'approved' 
+            ORDER BY created_at ASC
+        `
 
         const result = pool.query(query, [postId]);
 
@@ -18,7 +18,7 @@ export async function getCommentsByPostId(postId) {
     }
 }
 
-export async function addComment(postId, content, authorName, parentCommentId = null) {
+export const addComment = async (postId, content, authorName, parentCommentId = null) => {
     try {
         const query = `
             INSERT INTO comments (content, author_name, post_id, parent_comment_id)
