@@ -23,7 +23,7 @@ export const addComment = async (postId, content, authorName, parentCommentId = 
         const query = `
             INSERT INTO comments (content, author_name, post_id, parent_comment_id)
             VALUES ($1, $2, $3, $4)
-            RETURNING *
+            RETURNING *;
         `
         const result = await pool.query(query, [content, authorName, postId, parentCommentId])
 
@@ -33,4 +33,17 @@ export const addComment = async (postId, content, authorName, parentCommentId = 
         console.error("Error adding comment:", error);
         throw error;
     }
+}
+
+export const likeComment = async (commentId) =>{
+    const query = `
+        UPDATE comments
+        SET likes = likes + 1
+        WHERE id = $1
+        RETURNING *;
+    `
+
+    const result = await pool.query(query, [commentId])
+
+    return result.rows[0]
 }
