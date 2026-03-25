@@ -23,3 +23,15 @@ export const addComment = async (req, res) => {
         res.status(400).json({ error: "Failed to add comment" });
     }
 }
+
+export const likeComment = async (req, res) => {
+    const { commentId } = req.params
+
+    try {
+        const comment = await CommentsService.likeComment(commentId)
+        res.status(200).json(comment)
+    } catch (error) {
+        console.error("Error liking comment:", error);
+        res.status(500).json({ error: "Failed to like comment" });
+    }
+}
