@@ -9,9 +9,9 @@ export const getCommentsByPostId = async (postId) => {
             ORDER BY created_at ASC
         `
 
-        const result = pool.query(query, [postId]);
+        const result = await pool.query(query, [postId]);
 
-        return result.length > 0 ? result.rows : [];
+        return result.rows.length > 0 ? result.rows : [];
     } catch (error) {
         console.error("Error fetching comments:", error);
         throw error;
