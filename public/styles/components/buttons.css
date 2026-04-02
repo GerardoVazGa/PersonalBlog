@@ -139,16 +139,36 @@
 }
 
 .btn-submit {
-    background-color: var(--pistachio);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.9rem 1.8rem;
+    background: var(--pistachio);
     color: white;
-    font-size: large;
-    border: 1px solid var(--pistachio);
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(160, 238, 192, 0.25);
 }
 
 .btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(160, 238, 192, 0.35);
     background-color: white;
     color: var(--pistachio);
     border: 1px solid var(--pistachio);
+}
+
+.btn-submit:active {
+    transform: translateY(0);
+}
+
+.btn-submit svg {
+    width: 18px;
+    height: 18px;
 }
 
 .btn-cancel {
