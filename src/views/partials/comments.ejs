@@ -1,0 +1,78 @@
+<div id="comments" class="comments-container">
+    <!-- Header de Comentarios -->
+    <div class="comments-section-header">
+        <div class="header-content">
+            <h2 class="comments-title">Comentarios</h2>
+            <p class="comments-subtitle">Comparte tu opinión sobre este artículo</p>
+        </div>
+        <span class="comment-badge" id="comment-count">0</span>
+    </div>
+
+    <!-- Formulario de Comentarios -->
+    <form id="comments-form" class="comment-form-wrapper">
+        <input type="hidden" name="postId" value="<%= post.id %>">
+        
+        <div class="form-header">
+            <h3>Añade un comentario</h3>
+            <span class="required">*</span>
+        </div>
+
+        <div class="form-group">
+            <input 
+                type="text" 
+                id="author_name" 
+                name="author_name" 
+                placeholder="Tu nombre" 
+                autocomplete="off"
+                class="form-input"
+                maxlength="100"
+                required
+            />
+        </div>
+
+        <div class="form-group">
+            <textarea 
+                id="content" 
+                name="content" 
+                placeholder="Tu comentario aquí..." 
+                class="form-textarea"
+                rows="5"
+                maxlength="5000"
+                required
+            ></textarea>
+            <div class="textarea-info">
+                <span class="char-count"><span id="char-count">0</span>/5000</span>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn-submit">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="8.5" cy="7" r="4"></circle>
+                    <path d="M20 8v6"></path>
+                    <path d="M23 11h-6"></path>
+                </svg>
+                <span>Publicar comentario</span>
+            </button>
+            <div class="form-loading" style="display: none;">
+                <span class="spinner"></span>
+                <span>Enviando...</span>
+            </div>
+        </div>
+    </form>
+
+    <!-- Lista de Comentarios -->
+    <div class="comments-list-wrapper">
+        <div id="comments-box" class="comments-list" aria-live="polite" aria-label="Lista de comentarios">
+            <!-- Estado Vacío -->
+            <div class="empty-comments-state" id="empty-state">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                </svg>
+                <h4>Sé el primero en comentar</h4>
+                <p>Tu opinión es valiosa. Comparte tus pensamientos sobre este artículo.</p>
+            </div>
+        </div>
+    </div>
+</div>
