@@ -1,4 +1,4 @@
-<div id="comments" class="comments-container">
+<div id="comments" class="comments-container" data-post-id="<%= post.id %>">
     <!-- Header de Comentarios -->
     <div class="comments-section-header">
         <div class="header-content">
@@ -10,8 +10,6 @@
 
     <!-- Formulario de Comentarios -->
     <form id="comments-form" class="comment-form-wrapper">
-        <input type="hidden" name="postId" value="<%= post.id %>">
-        
         <div class="form-header">
             <h3>Añade un comentario</h3>
             <span class="required">*</span>
