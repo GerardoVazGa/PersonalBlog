@@ -75,6 +75,7 @@ class CommentsSection {
     createCommentElement(comment){
         const commentItem = document.createElement('div')
         commentItem.classList.add('comment-item')
+        commentItem.dataset.commentId = comment.id
 
         // Avatar
         const avatar = document.createElement('div')
@@ -143,16 +144,18 @@ class CommentsSection {
         return names.map(name => name[0]).join('').toUpperCase().slice(0, 2)
     }
 
-    createButton(icon, text) {
+    createButton(icon, text, action = null) {
         const btn = document.createElement('button')
         btn.classList.add('comment-action-btn')
         btn.textContent = `${icon} ${text}`
+        btn.dataset.action = action
         return btn
     }
 
     createReplyItem(reply) {
         const replyItem = document.createElement('div')
         replyItem.classList.add('reply-item')
+        replyItem.dataset.commentId = reply.id
 
         const avatar = document.createElement('div')
         avatar.classList.add('reply-avatar')
@@ -184,9 +187,9 @@ class CommentsSection {
         const actions = document.createElement('div')
         actions.classList.add('comment-actions')
 
-        const likeBtn = this.createButton('👍', reply.likes)
-        const replyBtn = this.createButton('💬', 'Responder')
-        const reportBtn = this.createButton('🚩', 'Reportar')
+        const likeBtn = this.createButton('👍', reply.likes, 'like')
+        const replyBtn = this.createButton('💬', 'Responder', 'reply')
+        const reportBtn = this.createButton('🚩', 'Reportar', 'report')
 
         actions.append(likeBtn, replyBtn, reportBtn)
 
@@ -196,7 +199,7 @@ class CommentsSection {
 
         return replyItem
     }
-
+    
     countComments(comments) {
         let count = 0
         comments.forEach(comment => {
