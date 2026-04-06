@@ -19,7 +19,7 @@ class CommentsSection {
         const formData = new FormData(this.commentsForm)
 
         const commentData = {
-            postId: this.commentsContainer.getAttribute('postId'),
+            postId: this.commentsContainer.dataset.postId,
             authorName: formData.get('author_name').trim(),
             content: formData.get('content').trim()
         }
