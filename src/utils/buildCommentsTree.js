@@ -1,12 +1,12 @@
+import { formatDate } from "./formatDate.js"
+
 export const buildCommentsTree = (comments) => {
     const commentMap = {}
     const rootComments = []
 
     comments.forEach(comment => {
-        commentMap[comment.id] = {...comment, replies: []}
+        commentMap[comment.id] = {...comment, created_at: formatDate(comment.created_at), replies: []}
     })
-
-    console.log("Comment Map:", commentMap)
 
     comments.forEach(comment => {
         const currentComment = commentMap[comment.id]
