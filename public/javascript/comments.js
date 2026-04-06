@@ -3,6 +3,7 @@ class CommentsSection {
         this.commentsContainer = document.getElementById('comments')
         this.commentsForm = document.getElementById('comments-form')
         this.commentsBox = document.getElementById('comments-box')
+        this.commentsCounter = document.getElementById('comment-count') 
     }
 
     init() {
@@ -67,6 +68,7 @@ class CommentsSection {
             fragment.appendChild(commentElement)
         })
 
+        this.commentsCounter.textContent = this.countComments(comments)
         this.commentsBox.appendChild(fragment)
     }
 
@@ -193,6 +195,18 @@ class CommentsSection {
         replyItem.append(avatar, content)
 
         return replyItem
+    }
+
+    countComments(comments) {
+        let count = 0
+        comments.forEach(comment => {
+            count++
+            if(comment.replies && comment.replies.length > 0) {
+                count += this.countComments(comment.replies)
+            }
+        })
+
+        return count
     }
 
 }
