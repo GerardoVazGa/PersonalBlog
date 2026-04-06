@@ -4,6 +4,7 @@ class CommentsSection {
         this.commentsForm = document.getElementById('comments-form')
         this.commentsBox = document.getElementById('comments-box')
         this.commentsCounter = document.getElementById('comment-count') 
+        this.replyFormContanier = null
     }
 
     init() {
@@ -199,7 +200,67 @@ class CommentsSection {
 
         return replyItem
     }
-    
+
+    showReplyForm(commentId, commentItem) {
+        this.closeReplyForm()
+
+        this.replyFormContanier = document.createElement('div')
+        this.replyFormContanier.classList.add('reply-form-wrapper active')
+
+        const replyTitle = document.createElement('h4')
+        replyTitle.textContent = "Responder a este comentario"
+
+        const replyForm = document.createElement('form')
+        replyForm.classList.add('reply-form')
+
+        const replyFormGroup = document.createElement('div')
+        replyFormGroup.classList.add('reply-form-group')
+
+        const replyAuthorLabel = document.createElement('label')
+        replyAuthorLabel.textContent = 'Tu Nombre'
+
+        const replyAuthorInput = document.createElement('input')
+        replyAuthorInput.type = 'text'
+        replyAuthorInput.name = 'author_name'
+        replyAuthorInput.required = true
+
+        replyFormGroup.append(replyAuthorLabel, replyAuthorInput)
+
+        const replyFormGroupTextarea = document.createElement('div')
+        replyFormGroupTextarea.classList.add('reply-form-group')
+
+        const replyTextLabel = document.createElement('label')
+        replyTextLabel.textContent = 'Tu Comentario'
+
+        const replyTextInput = document.createElement('textarea')
+        replyTextInput.name = 'content'
+        replyTextInput.required = true
+
+        replyFormGroupTextarea.append(replyTextLabel, replyTextInput)
+
+        const replyFormActions = document.createElement('div')
+        replyFormActions.classList.add('reply-form-actions')
+
+        const replySubmit = document.createElement('button')
+        replySubmit.type = 'submit'
+        replySubmit.textContent = 'Responder'
+        replySubmit.classList.add('reply-form-submit')
+
+        const replyCancel = document.createElement('button')
+        replyCancel.type = 'button'
+        replyCancel.textContent = 'Cancelar'
+        replyCancel.classList.add('reply-form-cancel')
+
+        replyFormActions.append(replySubmit, replyCancel)
+
+        replyForm.append(replyFormGroup, replyFormGroupTextarea, replyFormActions)
+
+        this.replyFormContanier.append(replyTitle, replyForm)
+
+        commentItem.appendChild(this.replyFormContanier)
+
+    }
+
     countComments(comments) {
         let count = 0
         comments.forEach(comment => {
@@ -210,6 +271,13 @@ class CommentsSection {
         })
 
         return count
+    }
+
+    closeReplyForm(){
+        if(this.replyFormContanier){
+            this.replyFormContanier.remove()
+            this.replyFormContanier = null
+        }
     }
 
 }
