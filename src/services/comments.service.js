@@ -24,7 +24,9 @@ export const addComment = async (postId, content, authorName, parentCommnetId = 
         throw new Error("Author name must be between 1 and 20 characters")
     }
 
-    const comment = await CommentsModel.addComment(postId, cleanContent, cleanAuthorName, parentCommnetId)
+    const status = 'approved'
+
+    const comment = await CommentsModel.addComment(postId, cleanContent, cleanAuthorName, parentCommnetId, status)
 
     return comment
 

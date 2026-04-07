@@ -18,14 +18,14 @@ export const getCommentsByPostId = async (postId) => {
     }
 }
 
-export const addComment = async (postId, content, authorName, parentCommentId = null) => {
+export const addComment = async (postId, content, authorName, parentCommentId = null, status) => {
     try {
         const query = `
-            INSERT INTO comments (content, author_name, post_id, parent_comment_id)
-            VALUES ($1, $2, $3, $4)
+            INSERT INTO comments (content, author_name, post_id, parent_comment_id, status)
+            VALUES ($1, $2, $3, $4, $5)
             RETURNING *;
         `
-        const result = await pool.query(query, [content, authorName, postId, parentCommentId])
+        const result = await pool.query(query, [content, authorName, postId, parentCommentId, status])
 
         return result.rows[0]
         
