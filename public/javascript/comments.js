@@ -225,6 +225,16 @@ class CommentsSection {
 
         commentContent.appendChild(this.replyFormContanier)
 
+        const rect = this.replyFormContanier.getBoundingClientRect()
+        const isVisible = rect.top >= 0 && rect.bottom <= window.innerHeight
+
+        if(!isVisible) {
+            this.replyFormContanier.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            })
+        }
+
         replyForm.addEventListener('submit', (e) => this.handleReplySubmit(e))
 
     }
