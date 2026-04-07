@@ -69,7 +69,7 @@ class CommentsSection {
         this.commentsBox.innerHTML = ""
         const fragment = document.createDocumentFragment()
         comments.forEach(comment => {
-            const commentElement = this.createCommentElement(comment)
+            const commentElement = this.createCommentNode(comment)
             fragment.appendChild(commentElement)
         })
 
@@ -77,14 +77,29 @@ class CommentsSection {
         this.commentsBox.appendChild(fragment)
     }
 
-    createCommentElement(comment){
+    getInitials(name) {
+        const names = name.split(' ')
+        if(names.length === 0) return "?"
+
+        return names.map(name => name[0]).join('').toUpperCase().slice(0, 2)
+    }
+
+    createButton(icon, text, action = null) {
+        const btn = document.createElement('button')
+        btn.classList.add('comment-action-btn')
+        btn.textContent = `${icon} ${text}`
+        btn.dataset.action = action
+        return btn
+    }
+
+    createCommentNode(comment, isReply = false) {
         const commentItem = document.createElement('div')
-        commentItem.classList.add('comment-item')
+        commentItem.classList.add(isReply ? 'reply-item': 'comment-item')
         commentItem.dataset.commentId = comment.id
 
         // Avatar
         const avatar = document.createElement('div')
-        avatar.classList.add('comment-avatar')
+        avatar.classList.add(isReply ? 'reply-avatar': 'comment-avatar')
         avatar.textContent = this.getInitials(comment.author_name)
 
         // Content
@@ -128,8 +143,8 @@ class CommentsSection {
             const repliesContainer = document.createElement('div')
             repliesContainer.classList.add('comments-replies')
             comment.replies.forEach(reply => {
-                const replyItem = this.createReplyItem(reply)
-                repliesContainer.appendChild(replyItem)
+                const replyNode = this.createCommentNode(reply, true)
+                repliesContainer.appendChild(replyNode)
             })
 
             content.appendChild(repliesContainer)
@@ -139,70 +154,6 @@ class CommentsSection {
         commentItem.append(avatar, content)
 
         return commentItem
-
-    }
-
-    getInitials(name) {
-        const names = name.split(' ')
-        if(names.length === 0) return "?"
-
-        return names.map(name => name[0]).join('').toUpperCase().slice(0, 2)
-    }
-
-    createButton(icon, text, action = null) {
-        const btn = document.createElement('button')
-        btn.classList.add('comment-action-btn')
-        btn.textContent = `${icon} ${text}`
-        btn.dataset.action = action
-        return btn
-    }
-
-    createReplyItem(reply) {
-        const replyItem = document.createElement('div')
-        replyItem.classList.add('reply-item')
-        replyItem.dataset.commentId = reply.id
-
-        const avatar = document.createElement('div')
-        avatar.classList.add('reply-avatar')
-        avatar.textContent = this.getInitials(reply.author_name)
-
-        const content = document.createElement('div')
-        content.classList.add('comment-content')
-
-        // Header
-        const header = document.createElement('div')
-        header.classList.add('comment-header')
-
-        const author = document.createElement('span')
-        author.classList.add('comment-author')
-        author.textContent = reply.author_name
-
-        const date = document.createElement('span')
-        date.classList.add('comment-date')
-        date.textContent = reply.created_at
-
-        header.append(author, date)
-
-        // Text
-        const text = document.createElement('p')
-        text.classList.add('comment-text')
-        text.textContent = reply.content
-
-        // Actions
-        const actions = document.createElement('div')
-        actions.classList.add('comment-actions')
-
-        const likeBtn = this.createButton('👍', reply.likes, 'like')
-        const replyBtn = this.createButton('💬', 'Responder', 'reply')
-        const reportBtn = this.createButton('🚩', 'Reportar', 'report')
-
-        actions.append(likeBtn, replyBtn, reportBtn)
-
-        content.append(header, text, actions)
-
-        replyItem.append(avatar, content)
-
-        return replyItem
     }
 
     showReplyForm(commentId, commentItem) {
