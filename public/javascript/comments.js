@@ -257,7 +257,7 @@ class CommentsSection {
 
     updateStateWithNewComment(newComment){
         if(!newComment.parent_comment_id){
-            this.state.comments.push(newComment)
+            this.state.comments.unshift(newComment)
         }
 
         const parentComment = this.findCommentById(this.state.comments, newComment.parent_comment_id)
