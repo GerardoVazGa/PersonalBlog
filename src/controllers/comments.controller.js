@@ -1,4 +1,5 @@
 import * as CommentsService from "../services/comments.service.js"
+import { formatDate } from "../utils/formatDate.js"
 
 export const getComments = async (req, res) => {
     const { postId} = req.params
@@ -17,7 +18,7 @@ export const addComment = async (req, res) => {
 
     try {
         const comment = await CommentsService.addComment(postId, content, authorName, parentCommentId)
-        res.status(201).json(comment)
+        res.status(201).json({...comment, created_at: formatDate(comment.created_at)})
     } catch (error) {
         console.error("Error adding comment:", error);
         res.status(400).json({ error: "Failed to add comment" });
