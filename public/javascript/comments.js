@@ -43,6 +43,8 @@ class CommentsSection {
 
             if(response.ok){
                 this.commentsForm.reset()
+                this.closeReplyForm()
+                this.getComments()
             }
         } catch (error) {
             console.error('Error submitting comment:', error)
@@ -214,6 +216,7 @@ class CommentsSection {
 
         const replyForm = document.createElement('form')
         replyForm.classList.add('reply-form')
+        replyForm.dataset.parentCommentId = commentId
 
         const replyFormGroup = document.createElement('div')
         replyFormGroup.classList.add('reply-form-group')
@@ -263,6 +266,24 @@ class CommentsSection {
 
         commentContent.appendChild(this.replyFormContanier)
 
+        replyForm.addEventListener('submit', (e) => this.handleReplySubmit(e))
+
+    }
+
+    handleReplySubmit(e){
+        e.preventDefault()
+
+        const formReply = e.target.closest('.reply-form')
+        const formData = new FormData(formReply)
+
+        const replyData = {
+            postId: this.commentsContainer.dataset.postId,
+            authorName: formData.get('author_name').trim(),
+            content: formData.get('content').trim(),
+            parentCommentId: formReply.dataset.parentCommentId
+        }
+
+        this.submitComment(replyData)
     }
 
     countComments(comments) {
