@@ -5,6 +5,9 @@ class CommentsSection {
         this.commentsBox = document.getElementById('comments-box')
         this.commentsCounter = document.getElementById('comment-count') 
         this.replyFormContanier = null
+        this.state ={
+            comments: []
+        }
     }
 
     init() {
@@ -42,9 +45,13 @@ class CommentsSection {
             })
 
             if(response.ok){
+
+                const newComment = await response.json()
+                this.updateStateWithNewComment(newComment)
+                this.renderComments(this.state.comments)
                 this.commentsForm.reset()
                 this.closeReplyForm()
-                this.getComments()
+                
             }
         } catch (error) {
             console.error('Error submitting comment:', error)
@@ -58,7 +65,8 @@ class CommentsSection {
             const response = await fetch(`/api/post/${postId}/comments`)
             if(response.ok){
                 const comments = await response.json()
-                this.renderComments(comments)
+                this.state.comments = comments
+                this.renderComments(this.state.comments)
             }
         } catch(error) {
             console.error('Error fetching comments: ', error)
@@ -235,6 +243,32 @@ class CommentsSection {
         }
 
         this.submitComment(replyData)
+    }
+
+    updateStateWithNewComment(newComment){
+        if(!newComment.parent_comment_id){
+            this.state.comments.push(newComment)
+        }
+
+        const parentComment = this.findCommentById(this.state.comments, newComment.parent_comment_id)
+
+        if(parentComment){
+            parentComment.replies = parentComment.replies || []
+            parentComment.replies.push(newComment)
+        }
+        
+    }
+
+    findCommentById(comments, commentParentId){
+        for(let comment of comments){
+            if(comment.id === commentParentId) return comment
+
+            if(comment.replies && comment.replies.length > 0){
+                const found = this.findCommentById(comment.replies, commentParentId)
+                if(found) return found
+            }
+
+        }
     }
 
     countComments(comments) {
