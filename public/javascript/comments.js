@@ -13,6 +13,8 @@ class CommentsSection {
         this.commentsForm.addEventListener("submit", (e) => this.handleSubmit(e))
 
         this.getComments()
+
+        this.commentsBox.addEventListener('click', (e) => this.handleActionButtons(e))
     }
 
     handleSubmit(e) {
@@ -110,9 +112,9 @@ class CommentsSection {
         const actions = document.createElement('div')
         actions.classList.add('comment-actions')
 
-        const likeBtn = this.createButton('👍', comment.likes)
-        const replyBtn = this.createButton('💬', 'Responder')
-        const reportBtn = this.createButton('🚩', 'Reportar')
+        const likeBtn = this.createButton('👍', comment.likes, 'like')
+        const replyBtn = this.createButton('💬', 'Responder', 'reply')
+        const reportBtn = this.createButton('🚩', 'Reportar', 'report')
 
         actions.append(likeBtn, replyBtn, reportBtn)
 
@@ -205,7 +207,7 @@ class CommentsSection {
         this.closeReplyForm()
 
         this.replyFormContanier = document.createElement('div')
-        this.replyFormContanier.classList.add('reply-form-wrapper active')
+        this.replyFormContanier.classList.add('reply-form-wrapper', 'active')
 
         const replyTitle = document.createElement('h4')
         replyTitle.textContent = "Responder a este comentario"
@@ -257,7 +259,9 @@ class CommentsSection {
 
         this.replyFormContanier.append(replyTitle, replyForm)
 
-        commentItem.appendChild(this.replyFormContanier)
+        const commentContent = commentItem.querySelector('.comment-content')
+
+        commentContent.appendChild(this.replyFormContanier)
 
     }
 
@@ -278,6 +282,24 @@ class CommentsSection {
             this.replyFormContanier.remove()
             this.replyFormContanier = null
         }
+    }
+
+    handleActionButtons(e){
+        const btn = e.target.closest('.comment-action-btn')
+
+        if(!btn) return
+
+        const action = btn.dataset.action
+
+        const commentItem = btn.closest('.comment-item, .reply-item')
+        const commentId = commentItem.dataset.commentId
+
+        switch(action){
+            case 'reply':
+                this.showReplyForm(commentId, commentItem)
+                break
+        }
+
     }
 
 }
