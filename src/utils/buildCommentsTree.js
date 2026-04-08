@@ -20,7 +20,5 @@ export const buildCommentsTree = (comments) => {
             rootComments.push(currentComment)
         }
     })
-
-    console.log("Root Comments:", rootComments)
     return rootComments
 }
