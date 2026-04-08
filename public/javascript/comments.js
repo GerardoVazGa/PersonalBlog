@@ -131,24 +131,35 @@ class CommentsSection {
 
         const date = document.createElement('span')
         date.classList.add('comment-date')
-        date.textContent = comment.created_at
+        if(comment.deleted_at){
+            date.textContent = `${comment.created_at} - Eliminado`
+        }else {
+            date.textContent = comment.created_at
+        }
 
         header.append(author, date)
 
         // Text
         const text = document.createElement('p')
         text.classList.add('comment-text')
-        text.textContent = comment.content
+        if(comment.deleted_at){
+            text.textContent= "[Comentario Eliminado]"
+            text.classList.add('deleted-comment')
+        }else{
+            text.textContent = comment.content
+        }
 
         // Actions
         const actions = document.createElement('div')
         actions.classList.add('comment-actions')
 
-        const likeBtn = this.createButton('👍', comment.likes, 'like')
-        const replyBtn = this.createButton('💬', 'Responder', 'reply')
-        const reportBtn = this.createButton('🚩', 'Reportar', 'report')
+        if(!comment.deleted_at){
+            const likeBtn = this.createButton('👍', comment.likes, 'like')
+            const replyBtn = this.createButton('💬', 'Responder', 'reply')
+            const reportBtn = this.createButton('🚩', 'Reportar', 'report')
 
-        actions.append(likeBtn, replyBtn, reportBtn)
+            actions.append(likeBtn, replyBtn, reportBtn)
+        }
 
         // Append main content
         content.append(header, text, actions)
@@ -344,6 +355,9 @@ class CommentsSection {
             case 'reply':
                 this.showReplyForm(commentId, commentItem)
                 break
+            case 'delete': 
+                this.softDeleteComment(commentId, commentItem)
+                break
         }
 
     }
@@ -361,6 +375,47 @@ class CommentsSection {
         `
 
         this.commentsBox.appendChild(emptyState)
+    }
+
+    async softDeleteComment(commentId, commentItem){
+        try {
+            const response = await fetch(`/api/comments/${commentId}`, {
+                method: 'DELETE'
+            })
+
+            if(!response.ok){
+                throw new Error('Error deleting comment')
+                return
+            }
+
+            this.updateStateSoftDelete(commentId)
+            this.softDeleteToDOM(commentItem)
+        } catch (error) {
+            console.error('Error deleting comment:', error)
+        }
+
+    }
+
+    updateStateSoftDelete(commentParentId){
+        const comment = this.findCommentById(this.state.comments, commentParentId)
+
+        if(comment){
+            comment.deleted_at = new Date().toISOString()
+        }
+    }
+
+    softDeleteToDOM(commentItem){
+        commentItem.classList.add('comment-deleted')
+        const commentDate = commentItem.querySelector('.comment-date')
+        commentDate.textContent = 'Hace poco - Comentario Eliminado'
+        const commentText = commentItem.querySelector('.comment-text')
+        commentText.textContent = 'El comentario ha sido eliminado'
+
+        const commentActions = commentItem.querySelector('.comment-actions')
+        commentActions.remove()
+
+        commentText.classList.add('deleted-comment')
+
     }
 
 }

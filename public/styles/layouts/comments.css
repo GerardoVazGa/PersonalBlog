@@ -237,6 +237,16 @@
     height: 14px;
 }
 
+.comment-deleted {
+    background-color: #f5f5f5;
+}
+
+.deleted-comment {
+    color: var(--muted);
+    font-style: italic;
+    font-size: 0.9rem;
+}
+
 /* Nested Comments / Replies */
 .comments-replies {
     margin-top: 1.5rem;
