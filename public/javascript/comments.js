@@ -255,6 +255,11 @@ class CommentsSection {
 
         replyForm.addEventListener('submit', (e) => this.handleReplySubmit(e))
 
+        replyCancel.addEventListener('click', (e) => {
+            e.preventDefault()
+            this.closeReplyForm()
+        })
+
     }
 
     handleReplySubmit(e){
