@@ -48,7 +48,7 @@ class CommentsSection {
 
                 const newComment = await response.json()
                 this.updateStateWithNewComment(newComment)
-                this.renderComments(this.state.comments)
+                this.addCommentToDOM(newComment)
                 this.commentsForm.reset()
                 this.closeReplyForm()
                 
@@ -260,6 +260,29 @@ class CommentsSection {
         }
 
         this.submitComment(replyData)
+    }
+
+    addCommentToDOM(newComment) {
+        if(!newComment.parent_comment_id){
+            this.commentsBox.prepend(this.createCommentNode(newComment, false))
+        } else {
+            const parentComment = this.commentsBox.querySelector(`[data-comment-id="${newComment.parent_comment_id}"]`)
+
+            if(parentComment) {
+                let repliesContainer = parentComment.querySelector('.comments-replies')
+
+                if(!repliesContainer){
+                    repliesContainer = document.createElement('div')
+                    repliesContainer.classList.add('comments-replies')
+                    parentComment.querySelector('.comment-content').appendChild(repliesContainer)
+                }
+
+                repliesContainer.appendChild(this.createCommentNode(newComment, true))
+            }
+            
+        }
+        this.commentsCounter.textContent = this.countComments(this.state.comments)
+
     }
 
     updateStateWithNewComment(newComment){
