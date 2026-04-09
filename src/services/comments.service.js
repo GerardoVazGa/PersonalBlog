@@ -1,8 +1,8 @@
 import * as CommentsModel from "../models/comments.model.js"
 import { buildCommentsTree } from "../utils/buildCommentsTree.js"
 
-export const getComments = async (postId) => {
-    const comments = await CommentsModel.getCommentsByPostId(postId)
+export const getComments = async (postId, userId) => {
+    const comments = await CommentsModel.getCommentsByPostId(postId, userId)
     const commentsTree = buildCommentsTree(comments)
     return commentsTree
 }
