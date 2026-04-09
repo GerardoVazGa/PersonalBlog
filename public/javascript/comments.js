@@ -155,6 +155,12 @@ class CommentsSection {
 
         if(!comment.deleted_at){
             const likeBtn = this.createButton('👍', comment.likes, 'like')
+            likeBtn.dataset.countLikes = comment.likes
+
+            if(comment.is_liked){
+                likeBtn.classList.add('liked')
+            }
+
             const replyBtn = this.createButton('💬', 'Responder', 'reply')
             const reportBtn = this.createButton('🚩', 'Reportar', 'report')
 
@@ -360,6 +366,9 @@ class CommentsSection {
             case 'reply':
                 this.showReplyForm(commentId, commentItem)
                 break
+            case 'like': 
+                this.toggleCommentLike(commentId, btn)
+                break
             case 'delete': 
                 this.softDeleteComment(commentId, commentItem)
                 break
@@ -421,6 +430,62 @@ class CommentsSection {
 
         commentText.classList.add('deleted-comment')
 
+    }
+
+    async toggleCommentLike(commentId, btn){
+        if(btn.disabled) return
+
+        btn.disabled = true
+
+        const prevLiked = btn.classList.contains('liked')
+        const prevLikes = parseInt(btn.textContent.replace('👍 ', ''))  || 0
+        
+        const newLiked = !prevLiked
+        const newLikes = newLiked ? prevLikes + 1 : prevLikes - 1 
+
+        this.updateNewLikeToDOM(btn, newLiked, newLikes)
+        
+        try {
+            const response = await fetch(`/api/comments/${commentId}/like`, {
+                method: 'POST'
+            })
+
+            if(!response.ok){
+                throw new Error('Error liking comment')
+                return
+            }
+
+            const comment = await response.json()
+            
+            this.updateStateNewLike(commentId, comment.is_liked, comment.likes)
+            this.updateNewLikeToDOM(btn, comment.is_liked, comment.likes)
+
+
+        } catch (error) {
+            this.updateNewLikeToDOM(btn, prevLiked, prevLikes)
+        } finally {
+            btn.disabled = false
+        }
+    }
+
+    updateStateNewLike(commentParentId, liked, likes){
+        const comment = this.findCommentById(this.state.comments, commentParentId)
+
+        if(!comment) return
+
+        comment.is_liked = liked
+        comment.likes = likes
+    }
+
+    updateNewLikeToDOM(btn, liked, likes){
+        const likeBtn = btn
+        likeBtn.textContent= `👍 ${likes}`
+
+        if(liked){
+            btn.classList.add('liked')
+        } else {
+            btn.classList.remove('liked')
+        }
     }
 
 }
