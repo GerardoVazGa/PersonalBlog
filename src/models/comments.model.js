@@ -45,7 +45,7 @@ export const addComment = async (postId, content, authorName, parentCommentId = 
 
 export const insertLikeComment = async (commentId, userId) =>{
     const query = `
-        INSERT INTO comment_likes(comment_id, user_id)
+        INSERT INTO comment_likes(comment_id, user_identifier)
         VALUES($1, $2)
 
     `
