@@ -35,15 +35,38 @@ export const addComment = async (postId, content, authorName, parentCommentId = 
     }
 }
 
-export const likeComment = async (commentId) =>{
+export const insertLikeComment = async (commentId, userId) =>{
     const query = `
-        UPDATE comments
-        SET likes = likes + 1
-        WHERE id = $1
-        RETURNING *;
+        INSERT INTO comment_likes(comment_id, user_id)
+        VALUES($1, $2)
+
     `
 
-    const result = await pool.query(query, [commentId])
+    const result = await pool.query(query, [commentId, userId])
+
+    return result.rows[0]
+}
+
+export const findLikeComment = async (commentId, userId) => {
+    const query = `
+        SELECT * FROM comment_likes
+        WHERE comment_id = $1
+        AND user_identifier = $2
+    `
+
+    const result = await pool.query(query, [commentId, userId])
+
+    return result.rows.length > 0
+}
+
+export const removeLikeComment = async (commentId, userId) => {
+    const query = `
+        DELETE from comment_likes
+        WHERE comment_id = $1
+        AND user_identifier = $2
+    `
+
+    const result = await pool.query(query, [commentId, userId])
 
     return result.rows[0]
 }
