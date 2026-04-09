@@ -3,8 +3,10 @@ import { formatDate } from "../utils/formatDate.js"
 
 export const getComments = async (req, res) => {
     const { postId} = req.params
+    const userId = req.anonId
+    
     try {
-        const comments = await CommentsService.getComments(postId)
+        const comments = await CommentsService.getComments(postId, userId)
         res.json(comments)
     } catch (error) {
         console.error("Error fetching comments:", error);
