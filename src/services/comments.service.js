@@ -32,10 +32,19 @@ export const addComment = async (postId, content, authorName, parentCommnetId = 
 
 }
 
-export const likeComment = async (commentId) => {
-    const comment = await CommentsModel.likeComment(commentId)
+export const toggleLikeComment = async (commentId, userId) => {
+    const alreadyLiked = await CommentsModel.findLikeComment(commentId, userId)
+    let comment = null
 
-    return comment
+    if(alreadyLiked){
+        comment = await CommentsModel.removeLikeComment(commentId, userId)
+        return {...comment, liked: false}
+    }
+    
+    comment = await CommentsModel.insertLikeComment(commentId, userId)
+
+    return {...comment, liked: true}
+    
 }
 
 export const deleteComment = async (commentId) => {
