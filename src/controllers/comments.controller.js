@@ -25,11 +25,12 @@ export const addComment = async (req, res) => {
     }
 }
 
-export const likeComment = async (req, res) => {
+export const toggleLikeComment = async (req, res) => {
     const { commentId } = req.params
+    const userId = req.anonId
 
     try {
-        const comment = await CommentsService.likeComment(commentId)
+        const comment = await CommentsService.toggleLikeComment(commentId, userId)
         res.status(200).json(comment)
     } catch (error) {
         console.error("Error liking comment:", error);
