@@ -1,15 +1,23 @@
 import pool from "../db/db.js";
 
-export const getCommentsByPostId = async (postId) => {
+export const getCommentsByPostId = async (postId, userId) => {
     try {
         const query = `
-            SELECT * 
-            FROM comments 
+            SELECT c.*, COUNT(cl.id) AS likes,
+            EXISTS (
+                SELECT 1
+                FROM comment_likes
+                WHERE comment_id = c.id
+                AND user_identifier = $2
+            ) is_liked
+            FROM comments c 
+            LEFT JOIN comment_likes cl ON cl.comment_id = c.id
             WHERE post_id = $1 AND status = 'approved' 
+            GROUP BY c.id
             ORDER BY created_at ASC
         `
 
-        const result = await pool.query(query, [postId]);
+        const result = await pool.query(query, [postId, userId]);
 
         return result.rows.length > 0 ? result.rows : [];
     } catch (error) {
