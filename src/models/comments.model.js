@@ -79,6 +79,17 @@ export const removeLikeComment = async (commentId, userId) => {
     return result.rows[0]
 }
 
+export const countLikesComment = async (commentId) => {
+    const query = `
+        SELECT COUNT(*) as likes FROM comment_likes
+        WHERE comment_id = $1
+    `
+
+    const result = await pool.query(query, [commentId])
+
+    return Number(result.rows[0].likes)
+}
+
 export const deleteComment = async (commentId) => {
     const query = `
         UPDATE comments
