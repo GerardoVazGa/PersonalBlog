@@ -38,12 +38,13 @@ export const toggleLikeComment = async (commentId, userId) => {
 
     if(alreadyLiked){
         comment = await CommentsModel.removeLikeComment(commentId, userId)
-        return {...comment, liked: false}
+    }else {
+        comment = await CommentsModel.insertLikeComment(commentId, userId)
     }
     
-    comment = await CommentsModel.insertLikeComment(commentId, userId)
+    const likes = await CommentsModel.countLikesComment(commentId)
 
-    return {...comment, liked: true}
+    return {...comment, liked: !alreadyLiked, likes}
     
 }
 
