@@ -9,6 +9,7 @@ import {uploadTemp} from './configs/uploads_config.js'
 import { loggedAdmin } from "./middlewares/loggedAdmin.middleware.js"
 import {useCategories} from './middlewares/useCategories.middleware.js'
 import {getCategories} from './controllers/category.controller.js'
+import assignAnonId from './middlewares/assignAnonId.middleware.js'
 
 import viewsRoutes from "./routes/views.routes.js"
 import postsRoutes from "./routes/posts.routes.js"
@@ -32,6 +33,7 @@ app.use(express.static('public'))
 app.use(loggedAdmin)
 
 app.use(useCategories)
+app.use(assignAnonId)
 
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
