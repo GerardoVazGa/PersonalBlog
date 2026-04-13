@@ -306,3 +306,27 @@ export const getPostsByCategory = async (categoryName, query) => {
         console.error(error.message)
     }
 }
+
+export const searchPosts = async (searchTerm) => {
+
+    if(!searchTerm ||typeof searchTerm !== 'string') {
+        return []
+    }
+
+    const searchSanitized = searchTerm.trim().replace(/\s+/g, ' ')
+
+    if(searchSanitized.length < 2){
+        return []
+    }
+
+    if(searchSanitized.length > 100){
+        throw new Error('search too long, maximum 100 characters')
+    }
+
+    try {
+        const posts = await PostModel.searchPosts(searchSanitized)
+        return posts
+    } catch (error) {
+        throw error
+    }
+}
