@@ -128,3 +128,19 @@ export const getViewCreatePost = async (req, res) => {
         res.status(500).json({success: false, message: error.message})
     }
 }
+
+export const searchPosts = async (req, res) => {
+    const q = typeof req.query.q === 'string' ? req.query.q.trim() : ''
+
+    if(q.length === 0) {
+        return res.status(400).json({success: false, message: "Search query is required"})
+    }
+
+    try {
+        const posts = await PostService.searchPosts(q)
+        res.status(200).json({success: true, posts: posts})
+    } catch (error) {
+        console.error('Search error:', error)
+        res.status(500).json({success: false, message: error.message})
+    }
+}
