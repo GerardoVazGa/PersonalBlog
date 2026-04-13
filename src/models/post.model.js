@@ -162,3 +162,23 @@ export const deletePostById = async(id, connection = pool) => {
 
     return result.rowCount > 0
 }
+
+export const searchPosts = async (searchTerm) => {
+    const query = `
+        SELECT id, title, slug, preview, image_url, updated_at,
+        ts_rank(
+            setweight(to_tsvector('spanish', title), 'A') ||
+            setweight(to_tsvector('spanish', preview), 'B'),
+            plainto_tsquery('spanish', $1)
+        ) AS rank
+        FROM posts
+        WHERE 
+            setweight(to_tsvector('spanish', title), 'A') ||
+            setweight(to_tsvector('spanish', preview), 'B')
+            @@ plainto_tsquery('spanish', $1)
+        ORDER BY rank DESC, updated_at DESC
+        LIMIT 10;
+    `
+    const result = await pool.query(query, [searchTerm])
+    return result.rows
+}
