@@ -18,6 +18,7 @@ import categoriesRoutes from "./routes/categories.routes.js"
 import uploadsRoutes from "./routes/uploads.routes.js"
 import adminRoutes from "./routes/admin.routes.js"
 import commentsRoutes from "./routes/comments.routes.js"
+import healthRoutes from "./routes/health.routes.js"
 
 const app = express()
 
@@ -45,6 +46,7 @@ app.use('/api/categories', categoriesRoutes)
 app.use('/api/uploads', uploadsRoutes)
 app.use('/api', commentsRoutes)
 app.use('/admin', adminRoutes)
+app.use('/health', healthRoutes)
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
