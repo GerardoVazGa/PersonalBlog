@@ -1,0 +1,245 @@
+.search-blog-container {
+    margin: 3rem auto;
+    width: 100%;
+    max-width: 900px;
+    padding: 0 1rem;
+}
+
+.search-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.search-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0;
+    background: var(--black);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.search-subtitle {
+    font-size: 1rem;
+    color: var(--dim-gray);
+    margin: 0.5rem 0 0;
+}
+
+.search-wrapper {
+    display: flex;
+    gap: 0.8rem;
+    margin-bottom: 1.5rem;
+}
+
+.search-input-group {
+    flex: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-icon-left {
+    position: absolute;
+    left: 1rem;
+    color: #999;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.search-input {
+    width: 100%;
+    padding: 0.9rem 1rem 0.9rem 2.8rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    background-color: #fafafa;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--spring-green);
+    background-color: #fff;
+    box-shadow: 0 0 0 6px rgba(102, 126, 234, 0.08);
+    transform: translateY(-2px);
+}
+
+.search-input::placeholder {
+    color: #bbb;
+}
+
+.search-clear-icon {
+    position: absolute;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    color: #999;
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    z-index: 2;
+}
+
+.search-clear-icon:hover {
+    color: var(--black);
+    background-color: rgba(102, 126, 234, 0.08);
+}
+
+.search-btn {
+    padding: 0.9rem 2rem;
+    background: var(--gradient-secondary);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px var(--dim-gray);
+    white-space: nowrap;
+}
+
+.search-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px var(--pistachio);
+}
+
+.search-btn:active {
+    transform: translateY(0);
+}
+
+/* Search Results */
+
+.search-results {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 0;
+    margin-top: 1.5rem;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.search-result-item {
+    display: block;
+    padding: 1.2rem 1.5rem;
+    border-bottom: 1px solid #f0f0f0;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.search-result-item:last-child {
+    border-bottom: none;
+}
+
+.search-result-item:hover {
+    background: var(--gradient-light);
+    padding-left: 2rem;
+}
+
+.search-result-title {
+    font-weight: 600;
+    color: var(--black);
+    margin-bottom: 0.4rem;
+    font-size: 1.05rem;
+}
+
+.search-result-preview {
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.no-results {
+    text-align: center;
+    color: var(--dim-gray);
+    padding: 2.5rem 1rem;
+    font-size: 1rem;
+}
+
+.search-loading {
+    text-align: center;
+    padding: 2rem;
+    color: var(--dim-gray);
+}
+
+.search-loading::after {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background-color: #667eea;
+    border-radius: 50%;
+    animation: dots 1.4s infinite;
+    margin-left: 0.3rem;
+}
+
+@keyframes dots {
+    0%, 60%, 100% {
+        opacity: 0.3;
+    }
+    30% {
+        opacity: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    .search-blog-container {
+        margin: 2rem auto;
+    }
+
+    .search-title {
+        font-size: 1.5rem;
+    }
+
+    .search-subtitle {
+        font-size: 0.9rem;
+    }
+
+    .search-wrapper {
+        flex-direction: column;
+    }
+
+    .search-btn {
+        width: 100%;
+    }
+
+    .search-result-item:hover {
+        padding-left: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .search-blog-container {
+        padding: 0 0.75rem;
+    }
+
+    .search-title {
+        font-size: 1.3rem;
+    }
+
+    .search-input {
+        font-size: 0.95rem;
+        padding: 0.8rem 0.8rem 0.8rem 2.4rem;
+    }
+
+    .search-icon-left {
+        width: 18px;
+        height: 18px;
+    }
+
+    .search-btn {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.95rem;
+    }
+}
