@@ -44,15 +44,16 @@ class CommentsSection {
                 body: JSON.stringify(commentData)
             })
 
-            if(response.ok){
-
-                const newComment = await response.json()
-                this.updateStateWithNewComment(newComment)
-                this.addCommentToDOM(newComment)
-                this.commentsForm.reset()
-                this.closeReplyForm()
-                
+            if(!response.ok){
+                throw new Error('Error submitting comment')
+                return
             }
+
+            const newComment = await response.json()
+            this.updateStateWithNewComment(newComment)
+            this.addCommentToDOM(newComment)
+            this.commentsForm.reset()
+            this.closeReplyForm()
         } catch (error) {
             console.error('Error submitting comment:', error)
         }
@@ -63,11 +64,14 @@ class CommentsSection {
 
         try {
             const response = await fetch(`/api/post/${postId}/comments`)
-            if(response.ok){
-                const comments = await response.json()
-                this.state.comments = comments
-                this.renderComments(this.state.comments)
+            if(!response.ok){
+                throw new Error('Error fetching comments')
+                return
             }
+
+            const comments = await response.json()
+            this.state.comments = comments
+            this.renderComments(this.state.comments)
         } catch(error) {
             console.error('Error fetching comments: ', error)
         } 
