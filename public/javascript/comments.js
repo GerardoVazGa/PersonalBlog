@@ -290,6 +290,11 @@ class CommentsSection {
     }
 
     addCommentToDOM(newComment) {
+        const emptyState = this.commentsBox.querySelector('.empty-comments-state')
+        if(emptyState) {
+            emptyState.remove()
+        }
+        
         if(!newComment.parent_comment_id){
             this.commentsBox.prepend(this.createCommentNode(newComment, false))
         } else {
