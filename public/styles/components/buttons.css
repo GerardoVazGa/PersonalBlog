@@ -30,6 +30,9 @@
     padding: 0.6rem 1rem;
     font-size: 1.3rem;
     transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--dim-gray);
 }
 
 .hero-buttons .hero-btn:hover{
